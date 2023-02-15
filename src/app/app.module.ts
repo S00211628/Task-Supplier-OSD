@@ -36,7 +36,11 @@ import { AuthModule, AuthHttpInterceptor } from '@auth0/auth0-angular';
 import { NavbarComponent } from './Components/navbar/navbar.component';
 import { environment } from 'src/environments/environment';
 import { ProfileComponent } from './Components/profile/profile.component';
+import { MessageModalComponent } from './Components/modal/message-modal/message-modal.component';
 
+
+// Test Forms 
+import { FormsModule } from "@angular/forms";
 
 
 
@@ -54,6 +58,7 @@ import { ProfileComponent } from './Components/profile/profile.component';
     ForgotPasswordComponent,
     NavbarComponent,
     ProfileComponent,
+    MessageModalComponent,
   ],
   imports: [
     BrowserModule,
@@ -66,6 +71,7 @@ import { ProfileComponent } from './Components/profile/profile.component';
     MatSelectModule,
     MatCheckboxModule,
     MatChipsModule,
+    FormsModule,
     MatButtonModule,
     AuthModule.forRoot({
       ...environment.auth0,

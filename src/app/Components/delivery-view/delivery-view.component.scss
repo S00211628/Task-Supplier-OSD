@@ -1,6 +1,9 @@
 @import "../../../main-style.scss";
 
-
+html {
+  background: linear-gradient(to right top, $turquoise, $green);
+  font-size: 10px;
+}
 
 .delivery-manager-container {
   display: flex;
