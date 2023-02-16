@@ -1,7 +1,7 @@
 @import "../../../main-style.scss";
 
 
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: 0;
@@ -9,7 +9,7 @@
 
 
 
-.form-container{
+.form-container {
     height: 100%;
     width: 100%;
     display: flex;
@@ -17,56 +17,56 @@
     align-items: center;
 }
 
-.form{
+.form {
     position: relative;
-    max-width: 40rem;
+    width:500px;
     padding: 10rem 0;
     color: #fff;
     background-color: #fff;
     border-radius: 1rem;
-    box-shadow: 0 1px 1rem rgba(0,0,0,.1);
+    box-shadow: 0 1px 1rem rgba(0, 0, 0, .1);
     isolation: isolate;
 }
 
-.form::before{
+.form::before {
     content: "";
     position: absolute;
     top: 0;
     left: 0;
+    height: 50%;
     width: 100%;
-    height: 10rem;
     background: $light-green;
-    border-radius: 1rem 1rem 100% 100%;
     z-index: -1;
 }
 
-.form_title{
+.form_title {
     position: absolute;
     top: 3.5rem;
-    left: 50%;
+    left: 75%;
+    width: 100%;
     transform: translateX(-50%);
     font-size: 2.5rem;
 }
 
-.form>form{
+.form>form {
     padding: 2.5rem;
     background-color: inherit;
 }
 
-.form_input{
+.form_input {
     position: relative;
     display: flex;
     align-items: baseline;
     margin: 0 auto;
 }
 
-.form_input>i{
+.form_input>i {
     font-size: 2rem;
     margin-right: 1rem;
     color: #fc6767;
 }
 
-.form_input input{
+.form_input input {
     position: relative;
     width: 100%;
     font: inherit;
@@ -76,35 +76,26 @@
     outline: none;
 }
 
-.form_input .bar{
+.form_input .bar {
     position: absolute;
     left: 0;
     bottom: 0;
-    background-color: rgba(0,0,0,.1);
+    background-color: rgba(0, 0, 0, .1);
     width: 100%;
     height: 1px;
 }
 
-.form_input .bar::before{
-    content: "";
-    position: absolute;
-    background-color: #fc6767;
-    width: 100%;
-    height: 2px;
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform .5s;
-}
 
-.form_input>input:focus+.bar::before{
+
+.form_input>input:focus+.bar::before {
     transform: scaleX(1);
 }
 
-.form_button{
+.form_button {
     display: block;
     margin: 2.5rem auto 3rem;
     padding: 1rem 5rem;
-    background: linear-gradient(to left, $turquoise,$light-green);
+    background: linear-gradient(to left, $turquoise, $light-green);
     color: #fff;
     font: inherit;
     border: .5rem solid #fff;
@@ -113,22 +104,22 @@
     border-radius: 3rem;
 }
 
-.form_button:hover{
+.form_button:hover {
     background: linear-gradient(to right, #fc6767, #ec008c);
 }
 
-.invalid-feedback{
+.invalid-feedback {
     display: inline;
 }
 
 .form_button:disabled,
-button[disabled]{
-        border: 1px solid #999999;
-        background: #cccccc;
-        color: #666666;
-    }
+button[disabled] {
+    border: 1px solid #999999;
+    background: #cccccc;
+    color: #666666;
+}
 
-.form_switch{
+.form_switch {
     display: block;
     text-align: center;
     font-size: 1.5rem;
@@ -140,39 +131,22 @@ button[disabled]{
     color: #fc6767;
 }
 
-.form_switch a:hover{
+.form_switch a:hover {
     text-decoration: underline;
 }
 
-.middle-col{
-    // margin-left: 20%;
+
+
+
+.container-fluid {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 
-.container-fluid{
-   height: 100%;
-   display: flex;
-   justify-content: center;
-   align-items: center;
-}
-
-
-label{
+label {
     color: black;
 }
 
-@media screen and (min-width: 43.75rem){
-    .form::before{
-        height: 30rem;
-    }
-    .form_title{
-        left:10rem;
-        transform: none;
-    }
-
-    .form>form{
-        transform:  translateX(10rem);
-        border-radius: inherit;
-        box-shadow: inherit;
-    }
-}

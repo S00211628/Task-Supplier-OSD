@@ -41,6 +41,7 @@ import { MessageModalComponent } from './Components/modal/message-modal/message-
 
 // Test Forms 
 import { FormsModule } from "@angular/forms";
+import { VerifyEmailComponent } from './Components/verify-email/verify-email.component';
 
 
 
@@ -59,6 +60,7 @@ import { FormsModule } from "@angular/forms";
     NavbarComponent,
     ProfileComponent,
     MessageModalComponent,
+    VerifyEmailComponent,
   ],
   imports: [
     BrowserModule,

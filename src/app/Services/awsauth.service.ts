@@ -49,6 +49,9 @@ export class AWSAuthService {
           console.error('Failed to add user to group:', err);
           reject(err);
         } else {
+          this._router.navigate(['verify-email'], {
+            queryParams: { email: cognitoUser.getUsername() },
+          });
         }
       });
     });
@@ -101,6 +104,29 @@ export class AWSAuthService {
       onFailure: (err) => {
         console.log(err);
       },
+    });
+  }
+
+  // Confirm User registration.
+  public confirmRegistration(
+    email: string,
+    confirmationCode: string
+  ): Promise<void> {
+    const cognitoUser = new CognitoUser({
+      Username: email,
+      Pool: this.userPool,
+    });
+
+    return new Promise<void>((resolve, reject) => {
+      cognitoUser.confirmRegistration(confirmationCode, true, (err, result) => {
+        if (err) {
+          console.log(err);
+          reject(err);
+        } else {
+          console.log('Successfully confirmed registration');
+          resolve();
+        }
+      });
     });
   }
 

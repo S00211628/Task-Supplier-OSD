@@ -9,11 +9,13 @@ import { NewProductComponent } from './Components/new-product/new-product.compon
 import { NewSupplierComponent } from './Components/new-supplier/new-supplier.component';
 import { ProfileComponent } from './Components/profile/profile.component';
 import { SignUpComponent } from './Components/sign-up/sign-up.component';
+import { VerifyEmailComponent } from './Components/verify-email/verify-email.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'suppliers/', pathMatch: 'full'},
   {path: 'login', component: LoginComponent},
   {path: 'sign-up', component: SignUpComponent},
+  {path: 'verify-email', component:VerifyEmailComponent},
   {path: 'new-supplier', component: NewSupplierComponent},
   {path: 'suppliers/:supplierId', component: DeliveryViewComponent},
   {path: 'suppliers/:supplierId/new-product', component: NewProductComponent},

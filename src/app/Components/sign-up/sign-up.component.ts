@@ -10,18 +10,18 @@ import { AWSAuthService } from '../../Services/awsauth.service';
 })
 export class SignUpComponent implements OnInit {
   signupForm!: FormGroup;
-  submitted = false;
+
 
   constructor(
     private formBuilder: FormBuilder,
     private authService: AWSAuthService,
-    private router: Router
+    private _router: Router
   ) {}
 
   ngOnInit() {
     this.signupForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
+      password: ['', [Validators.required, Validators.minLength(8)]],
       role: ['', Validators.required],
     });
   }
@@ -34,25 +34,19 @@ export class SignUpComponent implements OnInit {
     return this.signupForm.get('password')!.value;
   }
 
-  get role(){
-    return this.signupForm.get('role')!.value
+  get role() {
+    return this.signupForm.get('role')!.value;
   }
 
+  get emailErrors() {
+    return this.signupForm.get('email');
+  }
+
+  get passwordErrors() {
+    return this.signupForm.get('password');
+  }
 
   onSubmit() {
-    if (this.signupForm.valid) {
-      this.authService
-        .signUp(
-          this.email,
-          this.password,
-          this.role
-        )
-        .then(() => {
-          console.log('Successfully signed up user');
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
+      this.authService.signUp(this.email, this.password, this.role)
   }
 }
