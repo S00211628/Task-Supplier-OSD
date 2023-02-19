@@ -21,31 +21,48 @@ export class DeliveryViewComponent implements OnInit {
     private _router: Router
   ) {}
 
+  // ngOnInit(): void {
+  //   // get params from the url
+  //   this._activatedRouter.params.subscribe((params: Params) => {
+  //     // get all the products from the supplier id in the url
+  //     this._supplierService
+  //       .getProducts(params['supplierId'])
+  //       .subscribe((products: Product[]) => {
+  //         // set products list to the retrieved products
+  //         this.Products = products;
+
+  //         // set variables
+  //         if (this.Products.length == 0) {
+  //           this.ProductsLoaded = false;
+  //         } else {
+  //           this.ProductsLoaded = true;
+  //         }
+
+  //         // selected supplier id is equal to the supplier id in the url
+  //         this.SelectedSupplierID = params['supplierId'];
+  //       });
+  //   });
+
+  //   // get all the suppliers and assign them to the supplier list variable.
+  //   this._supplierService.getSuppliers().subscribe((suppliers: any) => {
+  //     this.Suppliers = suppliers;
+  //   });
+  // }
+
   ngOnInit(): void {
-    // get params from the url
-    this._activatedRouter.params.subscribe((params: Params) => {
-      // get all the products from the supplier id in the url
-      this._supplierService
-        .getProducts(params['supplierId'])
-        .subscribe((products: Product[]) => {
-          // set products list to the retrieved products
+    this._activatedRouter.params.subscribe((params) => {
+      const supplierId = params['supplierId'];
+      if (supplierId) {
+        this._supplierService.getProducts(supplierId).subscribe((products) => {
           this.Products = products;
-
-          // set variables
-          if (this.Products.length == 0) {
-            this.ProductsLoaded = false;
-          } else {
-            this.ProductsLoaded = true;
-          }
-
-          // selected supplier id is equal to the supplier id in the url
-          this.SelectedSupplierID = params['supplierId'];
+          this.ProductsLoaded = this.Products.length > 0;
+          this.SelectedSupplierID = supplierId;
         });
-    });
+      } else {
+         // If no supplierId is available, use a default supplierId or display a message to the user
+    this.SelectedSupplierID = '0'; // Replace with your default supplierId or logic for displaying a message
 
-    // get all the suppliers and assign them to the supplier list variable.
-    this._supplierService.getSuppliers().subscribe((suppliers: any) => {
-      this.Suppliers = suppliers;
+      }
     });
   }
 

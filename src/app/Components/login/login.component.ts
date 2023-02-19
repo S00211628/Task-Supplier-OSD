@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AWSAuthService } from 'src/app/Services/awsauth.service';
 
 @Component({
@@ -10,11 +11,13 @@ import { AWSAuthService } from 'src/app/Services/awsauth.service';
 export class LoginComponent implements OnInit {
 
   signupForm!: FormGroup;
+  errorMessage:string;
 
 
  constructor(
     private formBuilder: FormBuilder,
     private authService: AWSAuthService,
+    private _router:Router
   ) {}
 
   ngOnInit(): void {
@@ -45,7 +48,21 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(){
-    this.authService.signIn(this.email, this.password)
+    this.authService.login(this.email, this.password).subscribe(
+      (isLoggedIn) =>{
+        if (isLoggedIn){
+          this.errorMessage = null;
+        }
+      },
+      (error) =>{
+        console.error(error);
+        this.errorMessage = "Incorrect Email or Password."
+      }
+    )
+  }
+
+  goToSignUp(){
+    this._router.navigate(['sign-up'])
   }
 
 }

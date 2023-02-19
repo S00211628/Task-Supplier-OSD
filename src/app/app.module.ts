@@ -32,7 +32,7 @@ import { ConfirmationComponent } from './Components/confirmation/confirmation.co
 import { ForgotPasswordComponent } from './Components/forgot-password/forgot-password.component';
 // End of Angular Material
 
-import { AuthModule, AuthHttpInterceptor } from '@auth0/auth0-angular';
+// import { AuthModule, AuthHttpInterceptor } from '@auth0/auth0-angular';
 import { NavbarComponent } from './Components/navbar/navbar.component';
 import { environment } from 'src/environments/environment';
 import { ProfileComponent } from './Components/profile/profile.component';
@@ -42,6 +42,8 @@ import { MessageModalComponent } from './Components/modal/message-modal/message-
 // Test Forms 
 import { FormsModule } from "@angular/forms";
 import { VerifyEmailComponent } from './Components/verify-email/verify-email.component';
+import { ShopConfigurationComponent } from './Components/shop-configuration/shop-configuration.component';
+import { ConfirmForgotPasswordComponent } from './Components/confirm-forgot-password/confirm-forgot-password.component';
 
 
 
@@ -61,6 +63,8 @@ import { VerifyEmailComponent } from './Components/verify-email/verify-email.com
     ProfileComponent,
     MessageModalComponent,
     VerifyEmailComponent,
+    ShopConfigurationComponent,
+    ConfirmForgotPasswordComponent,
   ],
   imports: [
     BrowserModule,
@@ -75,19 +79,19 @@ import { VerifyEmailComponent } from './Components/verify-email/verify-email.com
     MatChipsModule,
     FormsModule,
     MatButtonModule,
-    AuthModule.forRoot({
-      ...environment.auth0,
-      httpInterceptor: {
-        allowedList: [`${environment.apiUri}suppliers`],
-      },
-    }),
+    // AuthModule.forRoot({
+    //   ...environment.auth0,
+    //    : {
+    //     allowedList: [`${environment.apiUri}suppliers`],
+    //   },
+    // }),
   ],
   providers: [
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthHttpInterceptor,
-      multi: true,
-    },
+    // {
+    //   provide: HTTP_INTERCEPTORS,
+    //   useClass: AuthHttpInterceptor,
+    //   multi: true,
+    // },
   ],
 
   bootstrap: [AppComponent],

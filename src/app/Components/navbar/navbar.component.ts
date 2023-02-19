@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { DOCUMENT } from "@angular/common";
-import { AuthService } from '@auth0/auth0-angular';
 import { Router } from '@angular/router';
+import { AWSAuthService } from 'src/app/Services/awsauth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -9,24 +9,15 @@ import { Router } from '@angular/router';
   styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent implements OnInit {
-  isAuthenticated$ = this.authService.isAuthenticated$;
-
   constructor(
     @Inject(DOCUMENT) public document: Document,
     private router: Router,
-    public authService: AuthService
+    private _authService:AWSAuthService
   ) {}
 
   ngOnInit(): void {}
 
-  handleLogout() {
-    this.authService.logout();
-  }
-
-  handleLogin() {
-    this.authService.loginWithRedirect({ appState: { target: '/profile' } });
-  }
-  handleSignUp() {
-    this.authService.loginWithRedirect({ screen_hint: 'signup' });
+  logout(){
+    this._authService.logout();
   }
 }

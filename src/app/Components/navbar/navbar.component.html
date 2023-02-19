@@ -14,10 +14,7 @@
 
 
                     <a class="button is-primary" routerLink="/home">Home</a>
-                    <a class="button is-primary" *ngIf="isAuthenticated$ | async" routerLink="/profile" routerLinkActive="active">Profile</a>
-                    <a class="button is-primary" *ngIf="!(isAuthenticated$ | async)" (click)="handleLogin()">Login</a>
-                    <a class="button is-primary" *ngIf="!(isAuthenticated$ | async)" (click)="handleSignUp()">SignUp</a>
-                    <a class="button is-primary" *ngIf="(isAuthenticated$ | async)" (click)="handleLogout()">Log Out</a>
+                    <a class="button is-primary" (click)="logout()">Logout</a>
 
                 </div>
             </div>

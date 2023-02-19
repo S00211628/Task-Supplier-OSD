@@ -129,10 +129,23 @@ button[disabled] {
 }
 
 .form_switch {
+
     display: block;
     text-align: center;
     font-size: 1.5rem;
     color: #a1a1a1;
+
+}
+
+.incorrectEmailOrPassword{
+    color: red;
+    margin-left: 15px;
+}
+
+.forgot-password {
+    display: block;
+    text-align: center;
+    margin-top: 1.5rem;
 }
 
 .form_switch a {
@@ -142,10 +155,6 @@ button[disabled] {
 
 .form_switch a:hover {
     text-decoration: underline;
-}
-
-.middle-col {
-    // margin-left: 20%;
 }
 
 

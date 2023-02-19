@@ -7,19 +7,14 @@ import {
 } from 'amazon-cognito-identity-js';
 import { environment } from 'src/environments/environment';
 import { CognitoIdentityServiceProvider } from 'aws-sdk';
-import * as AWS from 'aws-sdk';
 import { Router } from '@angular/router';
+import {Observable, from } from 'rxjs';
+
 @Injectable({
   providedIn: 'root',
 })
 export class AWSAuthService {
-  poolData = {
-    UserPoolId: environment.cognito.userPoolId,
-    ClientId: environment.cognito.userPoolWebClientId,
-    region: environment.cognito.region,
-  };
-
-  userPool = new CognitoUserPool(this.poolData);
+  private userPool: CognitoUserPool;
 
   ROLE_GROUP_MAPPING = {
     supplier: 'Suppliers',
@@ -27,23 +22,30 @@ export class AWSAuthService {
   };
 
   constructor(private _router: Router) {
-    AWS.config.update({
-      accessKeyId: environment.aws.AccessKey,
-      secretAccessKey: environment.aws.SecretAccessKey,
+    const poolData = {
+      UserPoolId: environment.cognito.userPoolId,
+      ClientId: environment.cognito.userPoolWebClientId,
       region: environment.cognito.region,
-    });
+    };
+    this.userPool = new CognitoUserPool(poolData);
   }
 
   // Define a function to add a user to a group
   addUserToGroup(cognitoUser: CognitoUser, groupName: string): Promise<void> {
+    console.log('add user to group');
     return new Promise<void>((resolve, reject) => {
       const params = {
-        UserPoolId: this.poolData.UserPoolId,
+        UserPoolId: this.userPool.getUserPoolId(),
         GroupName: groupName,
         Username: cognitoUser.getUsername(),
       };
-      const cognitoIdentityServiceProvider =
-        new CognitoIdentityServiceProvider();
+      const cognitoIdentityServiceProvider = new CognitoIdentityServiceProvider(
+        {
+          accessKeyId: environment.aws.AccessKey,
+          secretAccessKey: environment.aws.SecretAccessKey,
+          region: environment.cognito.region,
+        }
+      );
       cognitoIdentityServiceProvider.adminAddUserToGroup(params, (err) => {
         if (err) {
           console.error('Failed to add user to group:', err);
@@ -86,25 +88,107 @@ export class AWSAuthService {
     });
   }
 
-  public signIn(email: string, password: string) {
-    const authDetails = new AuthenticationDetails({
-      Username: email,
-      Password: password,
-    });
+  login(username: string, password: string): Observable<boolean> {
+    const authenticationData = { Username: username, Password: password };
+    const authenticationDetails = new AuthenticationDetails(authenticationData);
+    const userData = { Username: username, Pool: this.userPool };
+    const cognitoUser = new CognitoUser(userData);
 
-    const cognitoUser = new CognitoUser({
-      Username: email,
-      Pool: this.userPool,
-    });
+    return from(
+      new Promise<boolean>((resolve, reject) => {
+        cognitoUser.authenticateUser(authenticationDetails, {
+          onSuccess: (session) => {
+            cognitoUser.getUserAttributes((error, attributes) => {
+              if (error) {
+                reject(error);
+              } else {
+                const attributeMap = {};
 
-    cognitoUser.authenticateUser(authDetails, {
-      onSuccess: (result) => {
-        this._router.navigate(['/suppliers']);
-      },
-      onFailure: (err) => {
-        console.log(err);
-      },
-    });
+                attributes.forEach((attribute) => {
+                  attributeMap[attribute.getName()] = attribute.getValue();
+                });
+
+                console.log('Attribute Map: ', attributeMap);
+
+                if (attributeMap['custom:role'] === 'supplier') {
+                  this._router.navigate(['/shop-configuration']);
+                } else if (attributeMap['custom:role'] === 'customer') {
+                  this._router.navigate(['/suppliers']);
+                }
+
+                resolve(true);
+              }
+            });
+          },
+          onFailure: (error) => {
+            reject(error);
+          },
+        });
+      })
+    );
+  }
+
+  getUserAttributes(): Observable<any> {
+    const currentUser: CognitoUser = this.userPool.getCurrentUser();
+
+    if (currentUser === null) {
+      return from(Promise.resolve({}));
+    }
+
+    return from(
+      new Promise<any>((resolve, reject) => {
+        currentUser.getSession((error, session) => {
+          if (error) {
+            reject(error);
+          } else {
+            currentUser.getUserAttributes((error, attributes) => {
+              if (error) {
+                reject(error);
+              } else {
+                const attributeMap = {};
+
+                attributes.forEach((attribute) => {
+                  attributeMap[attribute.getName()] = attribute.getValue();
+                });
+
+                resolve(attributeMap);
+              }
+            });
+          }
+        });
+      })
+    );
+  }
+
+  logout() {
+    const currentUser: CognitoUser = this.userPool.getCurrentUser();
+
+    if (currentUser !== null) {
+      currentUser.signOut();
+      this._router.navigate(['/login']);
+    }
+  }
+
+  isLoggedIn(): Observable<boolean> {
+    const currentUser: CognitoUser = this.userPool.getCurrentUser();
+
+    if (currentUser === null) {
+      return from(Promise.resolve(false));
+    }
+
+    return from(
+      new Promise<boolean>((resolve, reject) => {
+        currentUser.getSession((error, session) => {
+          if (error) {
+            reject(error);
+          } else if (!session.isValid()) {
+            resolve(false);
+          } else {
+            resolve(true);
+          }
+        });
+      })
+    );
   }
 
   // Confirm User registration.
@@ -124,58 +208,59 @@ export class AWSAuthService {
           reject(err);
         } else {
           console.log('Successfully confirmed registration');
+          this._router.navigate(['/login']);
           resolve();
         }
       });
     });
   }
 
-  public async isAdmin() {
-    const cognitoUser = this.userPool.getCurrentUser();
-    if (!cognitoUser) {
-      return false;
-    }
-    const attributes = await this.getUserAttributes(cognitoUser);
-    const attribute = attributes.find(
-      (attr) => attr.getName() === 'custom:role'
-    );
-    return attribute?.getValue() === 'admin';
-  }
-
-  public async isSupplier() {
-    const cognitoUser = this.userPool.getCurrentUser();
-    if (!cognitoUser) {
-      return false;
-    }
-    const attributes = await this.getUserAttributes(cognitoUser);
-    const attribute = attributes.find(
-      (attr) => attr.getName() === 'custom:role'
-    );
-    return attribute?.getValue() === 'supplier';
-  }
-
-  public async isCustomer() {
-    const cognitoUser = this.userPool.getCurrentUser();
-    if (!cognitoUser) {
-      return false;
-    }
-    const attributes = await this.getUserAttributes(cognitoUser);
-    const attribute = attributes.find(
-      (attr) => attr.getName() === 'custom:role'
-    );
-    return attribute?.getValue() === 'customer';
-  }
-
-  public async getUserAttributes(
-    cognitoUser: CognitoUser
-  ): Promise<CognitoUserAttribute[]> {
-    return new Promise((resolve, reject) => {
-      cognitoUser.getUserAttributes((err, result) => {
-        if (err) {
+  // Forgot Password
+  forgotPassword(email: string): Promise<void> {
+    const cognitoUser = new CognitoUser({
+      Username: email,
+      Pool: this.userPool,
+    });
+    return new Promise<void>((resolve, reject) => {
+      cognitoUser.forgotPassword({
+        onSuccess: () => {
+          console.log('Password reset instructions sent');
+          this._router.navigate(['/confirm-forgot-password', email]);
+          resolve();
+        },
+        onFailure: (err) => {
+          console.log(err);
           reject(err);
-        } else {
-          resolve(result || []);
-        }
+        },
+      });
+    });
+  }
+
+  // Confirm Forgot Password
+  confirmForgotPassword(
+    email: string,
+    code: string,
+    password: string
+  ): Promise<void> {
+    const userData = {
+      Username: email,
+      Pool: this.userPool,
+    };
+
+
+    const cognitoUser = new CognitoUser(userData);
+
+    return new Promise<void>((resolve, reject) => {
+      cognitoUser.confirmPassword(code, password, {
+        onSuccess: () => {
+          console.log('Successfully confirmed new password.');
+          this._router.navigate(['/login']);
+          resolve();
+        },
+        onFailure: (err) => {
+          console.error('Failed to confirm new password.', err);
+          reject(err);
+        },
       });
     });
   }

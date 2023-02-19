@@ -2,6 +2,7 @@
     <div class="form">
         <span class="form_title">Login</span>
         <form [formGroup]="signupForm">
+            <div class="incorrectEmailOrPassword" *ngIf="errorMessage">{{errorMessage}}</div>
             <div class="form-group">
                 <div class="form_input">
                     <i class="ri-user-line"></i>
@@ -26,8 +27,11 @@
                     <div *ngIf="passwordErrors.errors['minlength'] ">Password must be at least 8 characters</div>
                 </div>
             </div>
-            <button class="form_button" type="button" [disabled]="!signupForm.valid" (click)="onSubmit()">Sign
-                Up</button>
+
+
+            <a class="forgot-password" [routerLink]="['/forgot-password']" [routerLinkActive]="['active-link']">Forgot Password?</a>
+
+            <button class="form_button" type="button" [disabled]="!signupForm.valid" (click)="onSubmit()">Login</button>
             <span class="form_switch">
                 Need an Account? <a [routerLink]="['/sign-up']">Sign up</a>
             </span>

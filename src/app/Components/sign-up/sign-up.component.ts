@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { PasswordService } from 'src/app/Services/password.service';
 import { AWSAuthService } from '../../Services/awsauth.service';
 
 @Component({
@@ -15,13 +16,14 @@ export class SignUpComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private authService: AWSAuthService,
-    private _router: Router
+    private _router: Router,
+    private _passwordService:PasswordService
   ) {}
 
   ngOnInit() {
     this.signupForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(8)]],
+      password: ['', [Validators.required, this._passwordService.passwordValidator]],
       role: ['', Validators.required],
     });
   }
