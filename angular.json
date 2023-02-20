@@ -36,8 +36,8 @@
               "./node_modules/bootstrap/scss/bootstrap.scss"
             ],
             "scripts": [
-              "./node_modules/jquery/dist/jquery.js",
-              "./node_modules/bootstrap/dist/js/bootstrap.js"
+              "node_modules/jquery/dist/jquery.js",
+              "node_modules/bootstrap/dist/js/bootstrap.js"
             ]
           },
           "configurations": {
@@ -113,5 +113,8 @@
       }
     }
   },
-  "defaultProject": "Task-Supplier"
+  "defaultProject": "Task-Supplier",
+  "cli": {
+    "analytics": "e2fa0e51-8843-44f2-99c1-784f722e9342"
+  }
 }

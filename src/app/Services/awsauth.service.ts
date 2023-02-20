@@ -15,11 +15,14 @@ import {Observable, from } from 'rxjs';
 })
 export class AWSAuthService {
   private userPool: CognitoUserPool;
+  private currentUser: CognitoUser;
 
   ROLE_GROUP_MAPPING = {
     supplier: 'Suppliers',
     customer: 'Customers',
   };
+
+  AuthenticatedCognitoUser: CognitoUser;
 
   constructor(private _router: Router) {
     const poolData = {
@@ -28,6 +31,7 @@ export class AWSAuthService {
       region: environment.cognito.region,
     };
     this.userPool = new CognitoUserPool(poolData);
+    this.currentUser = this.userPool.getCurrentUser();
   }
 
   // Define a function to add a user to a group
@@ -92,33 +96,35 @@ export class AWSAuthService {
     const authenticationData = { Username: username, Password: password };
     const authenticationDetails = new AuthenticationDetails(authenticationData);
     const userData = { Username: username, Pool: this.userPool };
-    const cognitoUser = new CognitoUser(userData);
+    this.AuthenticatedCognitoUser = new CognitoUser(userData);
 
     return from(
       new Promise<boolean>((resolve, reject) => {
-        cognitoUser.authenticateUser(authenticationDetails, {
+        this.AuthenticatedCognitoUser.authenticateUser(authenticationDetails, {
           onSuccess: (session) => {
-            cognitoUser.getUserAttributes((error, attributes) => {
-              if (error) {
-                reject(error);
-              } else {
-                const attributeMap = {};
+            this.AuthenticatedCognitoUser.getUserAttributes(
+              (error, attributes) => {
+                if (error) {
+                  reject(error);
+                } else {
+                  const attributeMap = {};
 
-                attributes.forEach((attribute) => {
-                  attributeMap[attribute.getName()] = attribute.getValue();
-                });
+                  attributes.forEach((attribute) => {
+                    attributeMap[attribute.getName()] = attribute.getValue();
+                  });
 
-                console.log('Attribute Map: ', attributeMap);
+                  console.log('Attribute Map: ', attributeMap);
 
-                if (attributeMap['custom:role'] === 'supplier') {
-                  this._router.navigate(['/shop-configuration']);
-                } else if (attributeMap['custom:role'] === 'customer') {
-                  this._router.navigate(['/suppliers']);
+                  if (attributeMap['custom:role'] === 'supplier') {
+                    this._router.navigate(['/shop-configuration']);
+                  } else if (attributeMap['custom:role'] === 'customer') {
+                    this._router.navigate(['/suppliers']);
+                  }
+
+                  resolve(true);
                 }
-
-                resolve(true);
               }
-            });
+            );
           },
           onFailure: (error) => {
             reject(error);
@@ -150,6 +156,8 @@ export class AWSAuthService {
                 attributes.forEach((attribute) => {
                   attributeMap[attribute.getName()] = attribute.getValue();
                 });
+
+                attributeMap['shop_name'] = attributeMap['custom:shop_name'];
 
                 resolve(attributeMap);
               }
@@ -247,8 +255,7 @@ export class AWSAuthService {
       Pool: this.userPool,
     };
 
-
-    console.log("Code : ",code);
+    console.log('Code : ', code);
 
     const cognitoUser = new CognitoUser(userData);
 
@@ -266,4 +273,65 @@ export class AWSAuthService {
       });
     });
   }
+
+  // Update Supplier Profile Information Section
+
+  async getAuthenticatedUser(): Promise<CognitoUser> {
+    if (this.currentUser) {
+      return new Promise<CognitoUser>((resolve, reject) => {
+        this.currentUser.getSession((err, session) => {
+          if (err) {
+            console.error('Failed to get user session:', err);
+            reject(err);
+          } else if (!session.isValid()) {
+            console.error('User session is invalid');
+            reject(new Error('User session is invalid'));
+          } else {
+            const cognitoUser = new CognitoUser({
+              Username: this.currentUser.getUsername(),
+              Pool: this.userPool,
+            });
+            cognitoUser.setSignInUserSession(session);
+            resolve(cognitoUser);
+          }
+        });
+      });
+    } else {
+      console.error('User is not logged in');
+      throw new Error('User is not logged in');
+    }
+  }
+
+  async updateShopName(shopName: string): Promise<void> {
+    try {
+      const authenticatedUser = await this.getAuthenticatedUser();
+      if (!authenticatedUser) {
+        throw new Error('User is not authenticated');
+      }
+
+      const attributeList: CognitoUserAttribute[] = [
+        new CognitoUserAttribute({ Name: 'custom:shop_name', Value: shopName }),
+      ];
+
+      await new Promise<void>((resolve, reject) => {
+        authenticatedUser.updateAttributes(attributeList, (err, result) => {
+          if (err) {
+            console.error('Failed to update user attributes:', err);
+            reject(err);
+          } else {
+            console.log('Successfully updated user attributes:', result);
+            resolve();
+          }
+        });
+      });
+    } catch (error) {
+      console.error('Failed to update shop name:', error);
+      throw error;
+    }
+  }
 }
+
+
+  
+
+

@@ -10,6 +10,7 @@ import { NewProductComponent } from './Components/new-product/new-product.compon
 import { NewSupplierComponent } from './Components/new-supplier/new-supplier.component';
 import { ProfileComponent } from './Components/profile/profile.component';
 import { ShopConfigurationComponent } from './Components/shop-configuration/shop-configuration.component';
+import { ShopProfileSetupComponent } from './Components/shop-profile-configuration/shop-profile-setup.component';
 import { SignUpComponent } from './Components/sign-up/sign-up.component';
 import { VerifyEmailComponent } from './Components/verify-email/verify-email.component';
 import { IsLoggedInGuard } from './Guards/is-logged-in.guard';
@@ -32,6 +33,11 @@ const routes: Routes = [
     path: 'shop-configuration',
     component: ShopConfigurationComponent,
     canActivate: [IsLoggedInGuard, ShopConfigurationGuard],
+  },
+  {
+    path: 'edit-supplier-profile',
+    component: ShopProfileSetupComponent,
+    canActivate:[IsLoggedInGuard, ShopConfigurationGuard]
   },
   {
     path: 'suppliers',

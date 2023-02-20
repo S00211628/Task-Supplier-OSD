@@ -13,8 +13,10 @@
                 <div class="buttons">
 
 
-                    <a class="button is-primary" routerLink="/home">Home</a>
+                    <a *ngIf="currentUserRole === 'supplier'" class="button is-primary" [routerLink]="['/shop-configuration']">Home</a>
+                    <a *ngIf="currentUserRole === 'customer'" class="button is-primary" [routerLink]="['/suppliers']">Home</a>
                     <a class="button is-primary" (click)="logout()">Logout</a>
+                    <a class="button is-primary" (click)="editProfile()" *ngIf="currentUserRole === 'supplier'">Edit Profile</a>
 
                 </div>
             </div>

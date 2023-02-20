@@ -45,6 +45,10 @@ import { VerifyEmailComponent } from './Components/verify-email/verify-email.com
 import { ShopConfigurationComponent } from './Components/shop-configuration/shop-configuration.component';
 import { ConfirmForgotPasswordComponent } from './Components/confirm-forgot-password/confirm-forgot-password.component';
 
+// jQuery
+import * as $ from 'jquery';
+import { ShopProfileSetupComponent } from './Components/shop-profile-configuration/shop-profile-setup.component'
+import * as AWS from 'aws-sdk';
 
 
 @NgModule({
@@ -65,6 +69,7 @@ import { ConfirmForgotPasswordComponent } from './Components/confirm-forgot-pass
     VerifyEmailComponent,
     ShopConfigurationComponent,
     ConfirmForgotPasswordComponent,
+    ShopProfileSetupComponent,
   ],
   imports: [
     BrowserModule,
@@ -79,12 +84,6 @@ import { ConfirmForgotPasswordComponent } from './Components/confirm-forgot-pass
     MatChipsModule,
     FormsModule,
     MatButtonModule,
-    // AuthModule.forRoot({
-    //   ...environment.auth0,
-    //    : {
-    //     allowedList: [`${environment.apiUri}suppliers`],
-    //   },
-    // }),
   ],
   providers: [
     // {

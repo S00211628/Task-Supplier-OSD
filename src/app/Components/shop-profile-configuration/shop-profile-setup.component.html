@@ -1,0 +1,38 @@
+<div class="form-container">
+    <h2>Update Profile</h2>
+    <form [formGroup]="supplierProfileForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label for="shopName">Shop Name</label>
+            <input type="text" id="shopName" formControlName="shopName">
+            <div
+                *ngIf="shopName.invalid && (shopName.dirty ||shopName.touched)">
+                <div *ngIf="shopName.errors['required']">Shop name is required</div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="address">Address</label>
+            <input type="text" id="address" formControlName="address">
+            <div
+                *ngIf="shopName.invalid && (shopName.dirty || shopName.touched)">
+                <div *ngIf="shopName.errors['required']">Address is required</div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="shopType">Shop Type</label>
+            <select id="shopType" formControlName="shopType">
+                <option value="">Select shop type</option>
+                <option value="Retail">Retail</option>
+                <option value="Grocer">Grocer</option>
+                <option value="Butcher">Butcher</option>
+                <option value="Baker">Baker</option>
+                <option value="Fishmonger">Fishmonger</option>
+                <option value="Whole Sale">Whole Sale</option>
+            </select>
+            <div
+                *ngIf="shopName.invalid && (shopName.dirty || shopName.touched)">
+                <div *ngIf="shopName.errors['required']">Shop type is required</div>
+            </div>
+        </div>
+        <button type="submit" [disabled]="!supplierProfileForm.valid">Update Profile</button>
+    </form>
+</div>

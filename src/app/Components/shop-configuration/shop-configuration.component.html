@@ -1,24 +1,20 @@
 <app-navbar></app-navbar>
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display': displayStyle}">
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="myModalLabel">Modal Header</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Howdy</h4>
             </div>
             <div class="modal-body">
-                Modal Body
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <p>Looks like you haven't finished setting up your shop profile</p>
+                <p>How about you go do that?</p>
+                <button type="button" class="btn btn-primary" (click)="navigateToShopConfiguration()">Set up
+                    shop</button>
             </div>
         </div>
     </div>
 </div>
 
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Open Modal</button>
 
 
-<p>shop-configuration works!</p>

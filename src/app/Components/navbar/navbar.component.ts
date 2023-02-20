@@ -9,15 +9,32 @@ import { AWSAuthService } from 'src/app/Services/awsauth.service';
   styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent implements OnInit {
+
+  currentUserRole:string;
+
   constructor(
     @Inject(DOCUMENT) public document: Document,
     private router: Router,
-    private _authService:AWSAuthService
+    private _authService: AWSAuthService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
 
-  logout(){
+    this._authService.getUserAttributes().subscribe((attribute) => {
+      if (attribute['custom:role'] === "customer") {
+          this.currentUserRole = "customer"
+      }
+      else{
+        this.currentUserRole = "supplier"
+      }
+    })
+  }
+
+  logout() {
     this._authService.logout();
+  }
+
+  editProfile(){
+    this.router.navigate(['/edit-supplier-profile']);
   }
 }
