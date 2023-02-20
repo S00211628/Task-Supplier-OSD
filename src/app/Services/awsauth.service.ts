@@ -123,9 +123,6 @@ export class AWSAuthService {
                   attributes.forEach((attribute) => {
                     attributeMap[attribute.getName()] = attribute.getValue();
                   });
-
-                  console.log('Attribute Map: ', attributeMap);
-
                   if (attributeMap['custom:role'] === 'supplier') {
                     this._router.navigate(['/shop-configuration']);
                   } else if (attributeMap['custom:role'] === 'customer') {
@@ -266,8 +263,6 @@ export class AWSAuthService {
       Pool: this.userPool,
     };
 
-    console.log('Code : ', code);
-
     const cognitoUser = new CognitoUser(userData);
 
     return new Promise<void>((resolve, reject) => {
@@ -347,8 +342,14 @@ export class AWSAuthService {
       Username: email,
     };
 
+
     await this.cognitoIdentityServiceProvider.adminDeleteUser(params).promise();
     this.logout();
+    localStorage.removeItem(
+      'CognitoIdentityServiceProvider.' +
+        environment.cognito.userPoolWebClientId +
+        '.idToken'
+    );
   }
 
 }

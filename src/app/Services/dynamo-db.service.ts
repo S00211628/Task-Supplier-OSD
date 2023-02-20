@@ -16,7 +16,7 @@ export class DynamoDBService {
   });
   supplierEmail: string;
 
-  constructor(private _authService: AWSAuthService, private _router:Router) {}
+  constructor(private _authService: AWSAuthService, private _router: Router) {}
 
   // Get the Suppliers info.
   async getShopInfoByEmail(): Promise<any> {
@@ -27,11 +27,13 @@ export class DynamoDBService {
         .toPromise();
       if (attributes.email != undefined) {
         this.supplierEmail = attributes.email;
-        console.log(this.supplierEmail);
+        console.log("Supplier email",this.supplierEmail);
       } else {
         console.log('No Supplier Email Found');
         return null;
       }
+
+
 
       // query the database using the supplier email
       const params = {
@@ -129,6 +131,7 @@ export class DynamoDBService {
         .updateItem(updateParams)
         .promise();
 
+      this._router.navigate(['/shop-configuration']);
       return Attributes;
     } catch (error) {
       console.error('Failed to update supplier:', error);
@@ -138,28 +141,28 @@ export class DynamoDBService {
 
   async deleteSupplier(): Promise<void> {
     try {
-
-      const supplierEmail = await this._authService.getUserAttributes().subscribe((atr) =>{
-        return atr;
-      });
+      const supplierEmail = await this._authService
+        .getUserAttributes()
+        .subscribe((atr) => {
+          return atr;
+        });
       console.log(supplierEmail);
 
       const supplier = await this.getShopInfoByEmail();
       if (!supplier) {
-        throw new Error(`Supplier with email ${this.supplierEmail} not found`);
+        // throw new Error(`Supplier with email ${this.supplierEmail} not found`);
       }
 
-       const params = {
-         TableName: 'Supplier',
-         IndexName: 'Email-index',
-         KeyConditionExpression: 'Email = :Email',
-         ExpressionAttributeValues: {
-           ':Email': {
-             S: this.supplierEmail,
-           },
-         },
-       };
-
+      const params = {
+        TableName: 'Supplier',
+        IndexName: 'Email-index',
+        KeyConditionExpression: 'Email = :Email',
+        ExpressionAttributeValues: {
+          ':Email': {
+            S: this.supplierEmail,
+          },
+        },
+      };
 
       const { Items } = await this.dynamoDB.query(params).promise();
       console.log('Supplier info', Items);

@@ -31,8 +31,6 @@ export class ShopProfileSetupComponent implements OnInit {
 
   ngOnInit(): void {
     this._dynamoDBService.getShopInfoByEmail().then((SupplierInfo) => {
-      console.log(SupplierInfo);
-
       if (SupplierInfo) {
         this.shopName.setValue(SupplierInfo.shop_name.S || '');
         this.address.setValue(SupplierInfo.shop_address.S || '');
@@ -64,13 +62,11 @@ export class ShopProfileSetupComponent implements OnInit {
   async onSubmit() {
     try {
       // Update the supplier information in DynamoDB and Cognito
-      console.log(this.shopName, this.address, this.shopType);
       await this._dynamoDBService.updateShopAndCognito(
         this.shopName.value,
         this.address.value,
         this.shopType.value
       );
-      console.log('Shop and Cognito updated successfully');
     } catch (error) {
       console.error('Failed to update shop and Cognito:', error);
       // Handle the error here
