@@ -239,14 +239,16 @@ export class AWSAuthService {
   // Confirm Forgot Password
   confirmForgotPassword(
     email: string,
-    code: string,
-    password: string
+    password: string,
+    code: string
   ): Promise<void> {
     const userData = {
       Username: email,
       Pool: this.userPool,
     };
 
+
+    console.log("Code : ",code);
 
     const cognitoUser = new CognitoUser(userData);
 
