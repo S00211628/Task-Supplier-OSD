@@ -1,3 +1,4 @@
+<app-navbar></app-navbar>
 <div class="form-container">
     <h2>Update Profile</h2>
     <form [formGroup]="supplierProfileForm" (ngSubmit)="onSubmit()">
@@ -35,4 +36,22 @@
         </div>
         <button type="submit" [disabled]="!supplierProfileForm.valid">Update Profile</button>
     </form>
+</div>
+
+<button class="btn btn-danger" (click)=deleteAccount()>Delete Account</button>
+
+
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display': displayStyle}">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Howdy</h4>
+            </div>
+            <div class="modal-body">
+                <p>Looks like you're about to Delete your account</p>
+                <p>Are you sure?</p>
+                <button type="button" class="btn btn-danger" (click)="ConfirmDeleteAccount()">Delete Account</button>
+            </div>
+        </div>
+    </div>
 </div>

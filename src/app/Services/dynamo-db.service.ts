@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 // import { DynamoDB } from "aws-sdk";
 import * as AWS from 'aws-sdk';
 import { environment } from 'src/environments/environment';
@@ -15,7 +16,7 @@ export class DynamoDBService {
   });
   supplierEmail: string;
 
-  constructor(private _authService: AWSAuthService) {}
+  constructor(private _authService: AWSAuthService, private _router:Router) {}
 
   // Get the Suppliers info.
   async getShopInfoByEmail(): Promise<any> {
@@ -64,8 +65,7 @@ export class DynamoDBService {
         shopAddress
       );
 
-      await this._authService
-        .updateShopName(shopName)
+      await this._authService.updateShopName(shopName);
 
       console.log('Shop and Cognito updated successfully');
       console.log('Updated attributes:', updatedAttributes);
@@ -132,6 +132,53 @@ export class DynamoDBService {
       return Attributes;
     } catch (error) {
       console.error('Failed to update supplier:', error);
+      throw error;
+    }
+  }
+
+  async deleteSupplier(): Promise<void> {
+    try {
+
+      const supplierEmail = await this._authService.getUserAttributes().subscribe((atr) =>{
+        return atr;
+      });
+      console.log(supplierEmail);
+
+      const supplier = await this.getShopInfoByEmail();
+      if (!supplier) {
+        throw new Error(`Supplier with email ${this.supplierEmail} not found`);
+      }
+
+       const params = {
+         TableName: 'Supplier',
+         IndexName: 'Email-index',
+         KeyConditionExpression: 'Email = :Email',
+         ExpressionAttributeValues: {
+           ':Email': {
+             S: this.supplierEmail,
+           },
+         },
+       };
+
+
+      const { Items } = await this.dynamoDB.query(params).promise();
+      console.log('Supplier info', Items);
+
+      const deleteParams = {
+        TableName: 'Supplier',
+        Key: {
+          SupplierID: {
+            S: Items[0]['SupplierID'].S,
+          },
+        },
+      };
+
+      await this.dynamoDB.deleteItem(deleteParams).promise();
+      await this._authService.deleteUser(this.supplierEmail);
+
+      console.log(`Supplier ${this.supplierEmail} deleted successfully`);
+    } catch (error) {
+      console.error('Failed to delete supplier:', error);
       throw error;
     }
   }

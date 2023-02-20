@@ -6,7 +6,10 @@ import {
   AuthenticationDetails,
 } from 'amazon-cognito-identity-js';
 import { environment } from 'src/environments/environment';
-import { CognitoIdentityServiceProvider } from 'aws-sdk';
+import CognitoIdentityServiceProvider from 'aws-sdk/clients/cognitoidentityserviceprovider';
+import * as AWS from 'aws-sdk'
+
+
 import { Router } from '@angular/router';
 import {Observable, from } from 'rxjs';
 
@@ -16,6 +19,7 @@ import {Observable, from } from 'rxjs';
 export class AWSAuthService {
   private userPool: CognitoUserPool;
   private currentUser: CognitoUser;
+  private cognitoIdentityServiceProvider: CognitoIdentityServiceProvider;
 
   ROLE_GROUP_MAPPING = {
     supplier: 'Suppliers',
@@ -30,6 +34,13 @@ export class AWSAuthService {
       ClientId: environment.cognito.userPoolWebClientId,
       region: environment.cognito.region,
     };
+
+    this.cognitoIdentityServiceProvider = new AWS.CognitoIdentityServiceProvider({
+      region: environment.aws.Region,
+      accessKeyId: environment.aws.AccessKey,
+      secretAccessKey: environment.aws.SecretAccessKey
+    })
+
     this.userPool = new CognitoUserPool(poolData);
     this.currentUser = this.userPool.getCurrentUser();
   }
@@ -329,6 +340,17 @@ export class AWSAuthService {
       throw error;
     }
   }
+
+  async deleteUser(email: string): Promise<void> {
+    const params = {
+      UserPoolId: environment.cognito.userPoolId,
+      Username: email,
+    };
+
+    await this.cognitoIdentityServiceProvider.adminDeleteUser(params).promise();
+    this.logout();
+  }
+
 }
 
 
