@@ -11,6 +11,24 @@ import { DeliveryViewComponent } from './Components/delivery-view/delivery-view.
 import { EditProductComponent } from './Components/edit-product/edit-product.component';
 import { EditSupplierComponent } from './Components/edit-supplier/edit-supplier.component';
 import { NewSupplierComponent } from './Components/new-supplier/new-supplier.component';
+import { NewProductComponent } from './Components/new-product/new-product.component';
+import { LoginComponent } from './Components/login/login.component';
+import { SignUpComponent } from './Components/sign-up/sign-up.component';
+import { ConfirmationComponent } from './Components/confirmation/confirmation.component';
+import { ForgotPasswordComponent } from './Components/forgot-password/forgot-password.component';
+import { NavbarComponent } from './Components/navbar/navbar.component';
+import { ProfileComponent } from './Components/profile/profile.component';
+import { MessageModalComponent } from './Components/modal/message-modal/message-modal.component';
+import { ShopConfigurationComponent } from './Components/shop-configuration/shop-configuration.component';
+import { ConfirmForgotPasswordComponent } from './Components/confirm-forgot-password/confirm-forgot-password.component';
+import { ShopProfileSetupComponent } from './Components/shop-profile-configuration/shop-profile-setup.component';
+import { SalesByMonthComponent } from './Components/sales-by-month/sales-by-month.component';
+import { SalesByCategoryComponent } from './Components/sales-by-category/sales-by-category.component';
+import { RecentTransactionsComponent } from './Components/recent-transactions/recent-transactions.component';
+import { TopThreeProductsComponent } from './Components/top-three-products/top-three-products.component';
+import { ShopConfigurationMainComponent } from './Components/shop-configuration-main/shop-configuration-main.component';
+import { TopWidgetsComponent } from './Components/top-widgets/top-widgets.component';
+import { VerifyEmailComponent } from './Components/verify-email/verify-email.component';
 // End of Components.
 
 // HTTP 
@@ -25,30 +43,16 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatButtonModule } from '@angular/material/button';
-import { NewProductComponent } from './Components/new-product/new-product.component';
-import { LoginComponent } from './Components/login/login.component';
-import { SignUpComponent } from './Components/sign-up/sign-up.component';
-import { ConfirmationComponent } from './Components/confirmation/confirmation.component';
-import { ForgotPasswordComponent } from './Components/forgot-password/forgot-password.component';
+import { MatToolbarModule } from "@angular/material/toolbar";
+import { matDrawerAnimations, MatSidenavModule } from "@angular/material/sidenav";
+import { MatListModule} from '@angular/material/list';
 // End of Angular Material
 
-// import { AuthModule, AuthHttpInterceptor } from '@auth0/auth0-angular';
-import { NavbarComponent } from './Components/navbar/navbar.component';
-import { environment } from 'src/environments/environment';
-import { ProfileComponent } from './Components/profile/profile.component';
-import { MessageModalComponent } from './Components/modal/message-modal/message-modal.component';
-
-
-// Test Forms 
+// Misc
 import { FormsModule } from "@angular/forms";
-import { VerifyEmailComponent } from './Components/verify-email/verify-email.component';
-import { ShopConfigurationComponent } from './Components/shop-configuration/shop-configuration.component';
-import { ConfirmForgotPasswordComponent } from './Components/confirm-forgot-password/confirm-forgot-password.component';
-
-// jQuery
-import * as $ from 'jquery';
-import { ShopProfileSetupComponent } from './Components/shop-profile-configuration/shop-profile-setup.component'
-import * as AWS from 'aws-sdk';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { ChartModule } from 'angular-highcharts';
+import { MatDividerModule } from '@angular/material/divider';
 
 
 @NgModule({
@@ -70,6 +74,12 @@ import * as AWS from 'aws-sdk';
     ShopConfigurationComponent,
     ConfirmForgotPasswordComponent,
     ShopProfileSetupComponent,
+    SalesByMonthComponent,
+    SalesByCategoryComponent,
+    RecentTransactionsComponent,
+    TopThreeProductsComponent,
+    ShopConfigurationMainComponent,
+    TopWidgetsComponent,
   ],
   imports: [
     BrowserModule,
@@ -84,6 +94,12 @@ import * as AWS from 'aws-sdk';
     MatChipsModule,
     FormsModule,
     MatButtonModule,
+    MatListModule,
+    MatSidenavModule,
+    MatToolbarModule,
+    FontAwesomeModule,
+    ChartModule,
+    MatDividerModule,
   ],
   providers: [
     // {

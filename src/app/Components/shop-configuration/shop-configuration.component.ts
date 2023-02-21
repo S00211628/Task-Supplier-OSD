@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { BreakpointObserver } from '@angular/cdk/layout';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatSidenav } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
 import { AWSAuthService } from 'src/app/Services/awsauth.service';
 
@@ -9,9 +11,16 @@ import { AWSAuthService } from 'src/app/Services/awsauth.service';
 })
 export class ShopConfigurationComponent implements OnInit {
   displayStyle = 'none';
-  shopName?:string;
+  shopName?: string;
 
-  constructor(private _router: Router, private _authService: AWSAuthService) {}
+  @ViewChild(MatSidenav)
+  sidenav!: MatSidenav;
+
+  constructor(
+    private _router: Router,
+    private _authService: AWSAuthService,
+    private observer: BreakpointObserver
+  ) {}
 
   // userAttributes:
 
@@ -19,11 +28,23 @@ export class ShopConfigurationComponent implements OnInit {
 
   ngOnInit(): void {
     this._authService.getUserAttributes().subscribe((attributes) => {
-     this.shopName = attributes.shop_name;
+      this.shopName = attributes.shop_name;
       if (this.shopName == undefined) {
-        this.displayStyle = 'block'
+        this.displayStyle = 'block';
       } else {
         console.log(this.shopName);
+      }
+    });
+  }
+
+  ngAfterViewInit() {
+    this.observer.observe(['(max-width: 800px)']).subscribe((res) => {
+      if (res.matches) {
+        this.sidenav.mode = 'over';
+        this.sidenav.close();
+      } else {
+        this.sidenav.mode = 'side';
+        this.sidenav.open();
       }
     });
   }
