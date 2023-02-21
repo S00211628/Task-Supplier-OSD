@@ -15,6 +15,8 @@ export class ShopProfileSetupComponent implements OnInit {
   supplierAddress: string;
   supplierShopType: string;
 
+  Shops:string[] = ["Retail","Grocer","Butcher","Baker","Fishmonger","Whole Sale"]
+
   displayStyle: string;
 
   constructor(

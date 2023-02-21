@@ -1,44 +1,49 @@
 <app-navbar></app-navbar>
-<div class="form-container">
-    <h2>Update Profile</h2>
-    <form [formGroup]="supplierProfileForm" (ngSubmit)="onSubmit()">
-        <div class="form-group">
-            <label for="shopName">Shop Name</label>
-            <input type="text" id="shopName" formControlName="shopName">
-            <div
-                *ngIf="shopName.invalid && (shopName.dirty ||shopName.touched)">
-                <div *ngIf="shopName.errors['required']">Shop name is required</div>
+<div class="centered-content">
+    <div class="form">
+        <span class="form_title">Update Profile</span>
+        <form [formGroup]="supplierProfileForm" (ngSubmit)="onSubmit()">
+
+
+            <div class="form_grouop">
+                <mat-form-field appearance="fill" style="width: 100%; color:black;">
+                    <input matInput type="text" placeholder="Shop Name" formControlName="shopName">
+                    <mat-error
+                        *ngIf="shopName.invalid && (shopName.dirty || shopName.touched) && shopName.errors['required']">Shop Name
+                        is required</mat-error>
+                </mat-form-field>
             </div>
-        </div>
-        <div class="form-group">
-            <label for="address">Address</label>
-            <input type="text" id="address" formControlName="address">
-            <div
-                *ngIf="shopName.invalid && (shopName.dirty || shopName.touched)">
-                <div *ngIf="shopName.errors['required']">Address is required</div>
+
+            <div class="form_grouop">
+                <mat-form-field appearance="fill" style="width: 100%; color:black;">
+                    <input matInput type="text" placeholder="address" formControlName="address" id="address">
+                    <mat-error
+                        *ngIf="address.invalid && (address.dirty || address.touched) && address.errors['required']">Address
+                        is required</mat-error>
+                </mat-form-field>
             </div>
-        </div>
-        <div class="form-group">
-            <label for="shopType">Shop Type</label>
-            <select id="shopType" formControlName="shopType">
-                <option value="">Select shop type</option>
-                <option value="Retail">Retail</option>
-                <option value="Grocer">Grocer</option>
-                <option value="Butcher">Butcher</option>
-                <option value="Baker">Baker</option>
-                <option value="Fishmonger">Fishmonger</option>
-                <option value="Whole Sale">Whole Sale</option>
-            </select>
-            <div
-                *ngIf="shopName.invalid && (shopName.dirty || shopName.touched)">
-                <div *ngIf="shopName.errors['required']">Shop type is required</div>
+
+            <div class="form_group">
+                <mat-form-field appearance="fill" style="width:100%;">
+                    <mat-select placeholder="Shop Type" formControlName="shopType">
+                        <mat-option *ngFor="let shop of Shops" [value]="shop">
+                            {{shop}}
+                        </mat-option>
+                    </mat-select>
+                    <div *ngIf="shopName.invalid && (shopName.dirty || shopName.touched)">
+                        <div *ngIf="shopName.errors['required']">Shop type is required</div>
+                    </div>
+                </mat-form-field>
             </div>
-        </div>
-        <button type="submit" [disabled]="!supplierProfileForm.valid">Update Profile</button>
-    </form>
+
+            <button class="form_button" type="submit" [disabled]="!supplierProfileForm.valid">Update Profile</button>
+        </form>
+
+        <button class="delete_account" (click)=deleteAccount()>Delete Account</button>
+    </div>
 </div>
 
-<button class="btn btn-danger" (click)=deleteAccount()>Delete Account</button>
+
 
 
 <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display': displayStyle}">

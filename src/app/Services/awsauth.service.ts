@@ -176,6 +176,7 @@ export class AWSAuthService {
     );
   }
 
+  // Logout the user
   logout() {
     const currentUser: CognitoUser = this.userPool.getCurrentUser();
 
@@ -185,6 +186,7 @@ export class AWSAuthService {
     }
   }
 
+  // Check if there is a user currently logged in.
   isLoggedIn(): Observable<boolean> {
     const currentUser: CognitoUser = this.userPool.getCurrentUser();
 
@@ -308,6 +310,8 @@ export class AWSAuthService {
     }
   }
 
+
+  // Update shop_name attribute
   async updateShopName(shopName: string): Promise<void> {
     try {
       const authenticatedUser = await this.getAuthenticatedUser();
@@ -336,20 +340,14 @@ export class AWSAuthService {
     }
   }
 
+  // Delete user and sign them out
   async deleteUser(email: string): Promise<void> {
     const params = {
       UserPoolId: environment.cognito.userPoolId,
       Username: email,
     };
-
-
     await this.cognitoIdentityServiceProvider.adminDeleteUser(params).promise();
     this.logout();
-    localStorage.removeItem(
-      'CognitoIdentityServiceProvider.' +
-        environment.cognito.userPoolWebClientId +
-        '.idToken'
-    );
   }
 
 }
