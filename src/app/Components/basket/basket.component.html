@@ -1,8 +1,51 @@
 <app-navbar></app-navbar>
 
-<div *ngFor="let product of Products">
-    <h2>{{ product.product_name }}</h2>
-    <p>{{ product.product_desc }}</p>
-    <p>{{ product.product_price }}</p>
+
+<div class="background p-5">
+    <div class="delivery-items-container has-background-light">
+        <h1 class="title has-text-primary">
+            Basket
+        </h1>
+
+        <div class="container">
+            <div class="row">
+                <div class="col text-center">
+                    <p class="subtitle">Title</p>
+                </div>
+                <div class="col text-center">
+                    <p class="subtitle">Description</p>
+
+                </div>
+                <div class="col text-center">
+                    <p class="subtitle">Price</p>
+
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- Delivery Elements -->
+        <div class="outer-container">
+            <div class="inner-container">
+                <div class="delivery" *ngFor="let product of Products">
+
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <p class="product-elements text-center">{{product.product_name}}</p>
+                            </div>
+                            <div class="col">
+                                <p class="product-elements text-center">{{product.product_desc}}</p>
+                            </div>
+                            <div class="col">
+                                <p class="product-elements text-center">${{product.product_price}}</p>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<p>basket works!</p>

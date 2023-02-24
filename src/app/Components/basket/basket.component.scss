@@ -1,0 +1,127 @@
+@import '../../../main-style.scss';
+
+.column{
+    border: 1px solid black;
+}
+
+*{
+    color:#112A46;
+    font-family: 'Inter';
+}
+
+.delivery-manager-container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    max-width: 1250px;
+    max-height: 680px;
+}
+
+.delivery-items-container {
+    position: relative;
+    display: flex;
+    flex-grow: 1;
+    padding: 42px;
+    flex-direction: column;
+    border-radius: 8px;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+    margin-right: auto;
+    background: $green;
+
+    .top-bar {
+        display: flex;
+
+        .title {
+            flex-grow: 1;
+        }
+    }
+}
+
+.delivery {
+    background: white;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    border-radius: 5px;
+    margin-top: 10px;
+
+    &:not(.out-of-stock) {
+        cursor: pointer;
+        transition: box-shadow 0.1s ease, transform 0.1s ease;
+
+        &:hover {
+            box-shadow: 0 0 0 5px #eeeeee;
+        }
+
+        &:active {
+            transform: scale(0.95);
+        }
+    }
+
+    &.out-of-stock {
+        // text-decoration: line-through;
+        opacity: .5;
+    }
+}
+
+
+
+
+.deleteIcon:hover {
+    color: red;
+    opacity: 1;
+    cursor: pointer;
+}
+
+
+.deleteIcon {
+    transition: .3s ease;
+}
+
+
+.delivery-title {
+    background: white;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+
+.circle-add-button {
+    position: absolute;
+    height: 75px;
+    width: 75px;
+    bottom: 35px;
+    right: 35px;
+    border-radius: 100px;
+
+}
+
+.column {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.outer-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    overflow: auto;
+
+}
+
+
+.inner-container {
+    width: 100%;
+    height: 100%;
+}
+
+.product-elements{
+    font-size: 1rem;
+}
