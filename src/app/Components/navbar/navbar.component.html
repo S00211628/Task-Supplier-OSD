@@ -8,13 +8,15 @@
     </div>
 
     <div id="navbarBasicExample" class="navbar-menu">
+        <div class="shopName">
+           <h1 class="shopNameText">{{supplierShopName}}</h1> 
+        </div>
         <div class="navbar-end">
             <div class="navbar-item">
                 <div class="buttons">
-
-
                     <a *ngIf="currentUserRole === 'supplier'" class="button is-primary" [routerLink]="['/shop-configuration']">Home</a>
                     <a *ngIf="currentUserRole === 'customer'" class="button is-primary" [routerLink]="['/suppliers']">Home</a>
+                    <a *ngIf="currentUserRole === 'customer'" class="button is-primary" [routerLink]="['/basket']">Basket</a> 
                     <a class="button is-primary" (click)="logout()">Logout</a>
                     <a class="button is-primary" (click)="editProfile()" *ngIf="currentUserRole === 'supplier'">Edit Profile</a>
 

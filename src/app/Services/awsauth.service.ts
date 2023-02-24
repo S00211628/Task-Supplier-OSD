@@ -285,6 +285,7 @@ export class AWSAuthService {
   // Update Supplier Profile Information Section
 
   async getAuthenticatedUser(): Promise<CognitoUser> {
+    this.currentUser = this.userPool.getCurrentUser();
     if (this.currentUser) {
       return new Promise<CognitoUser>((resolve, reject) => {
         this.currentUser.getSession((err, session) => {

@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { Product } from 'src/app/models/product.models';
+import { map } from 'rxjs';
+import { Product, Supplier } from 'src/app/models/supplier';
 import { Suppliers } from 'src/app/models/suppliers.models';
+import { ApiGatewayService } from 'src/app/Services/api-gateway.service';
+import { AWSAuthService } from 'src/app/Services/awsauth.service';
 import { SuppliersService } from 'src/app/Services/suppliers.service';
 
 @Component({
@@ -11,106 +14,123 @@ import { SuppliersService } from 'src/app/Services/suppliers.service';
 })
 export class DeliveryViewComponent implements OnInit {
   Suppliers?: Suppliers[];
-  Products?: Product[];
+  // Products?: Product[];
   ProductsLoaded: Boolean = true;
   SelectedSupplierID!: string;
   SelectedProductID!: string;
+
+  suppliers: Supplier[] = [];
+  products: Product[] = [];
+
   constructor(
     private _supplierService: SuppliersService,
     private _activatedRouter: ActivatedRoute,
-    private _router: Router
+    private _router: Router,
+    private _aipService: ApiGatewayService,
+    private _authService:AWSAuthService
   ) {}
-
-  // ngOnInit(): void {
-  //   // get params from the url
-  //   this._activatedRouter.params.subscribe((params: Params) => {
-  //     // get all the products from the supplier id in the url
-  //     this._supplierService
-  //       .getProducts(params['supplierId'])
-  //       .subscribe((products: Product[]) => {
-  //         // set products list to the retrieved products
-  //         this.Products = products;
-
-  //         // set variables
-  //         if (this.Products.length == 0) {
-  //           this.ProductsLoaded = false;
-  //         } else {
-  //           this.ProductsLoaded = true;
-  //         }
-
-  //         // selected supplier id is equal to the supplier id in the url
-  //         this.SelectedSupplierID = params['supplierId'];
-  //       });
-  //   });
-
-  //   // get all the suppliers and assign them to the supplier list variable.
-  //   this._supplierService.getSuppliers().subscribe((suppliers: any) => {
-  //     this.Suppliers = suppliers;
-  //   });
-  // }
 
   ngOnInit(): void {
     this._activatedRouter.params.subscribe((params) => {
       const supplierId = params['supplierId'];
       if (supplierId) {
         this._supplierService.getProducts(supplierId).subscribe((products) => {
-          this.Products = products;
-          this.ProductsLoaded = this.Products.length > 0;
-          this.SelectedSupplierID = supplierId;
+          // this.Products = products;
+          // this.ProductsLoaded = this.Products.length > 0;
+          // this.SelectedSupplierID = supplierId;
         });
       } else {
-         // If no supplierId is available, use a default supplierId or display a message to the user
-    this.SelectedSupplierID = '0'; // Replace with your default supplierId or logic for displaying a message
-
+        // If no supplierId is available, use a default supplierId or display a message to the user
+        this.SelectedSupplierID = '0'; // Replace with your default supplierId or logic for displaying a message
       }
     });
+
+    this._aipService.getAllSuppliers().subscribe(
+      (data) => {
+        const supplierArray = JSON.parse(data);
+        this.suppliers = supplierArray.map((supplierObj: any) => {
+          return {
+            shop_name: supplierObj.shop_name,
+            SupplierID: supplierObj.SupplierID,
+            shop_address: supplierObj.shop_address,
+            shop_type: supplierObj.shop_type,
+            Email: supplierObj.Email,
+            Products: supplierObj.Products,
+          };
+        });
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
-  onAddedToBasket(product: Product) {
-    // We want to set the product to added to basket
-    this._supplierService.addedToBasket(product).subscribe(() => {
-      // The product has been added successfully
-      product.addedToBasket = !product.addedToBasket;
+  getProductsBySupplierId(email: string) {
+    this._aipService.getSupplier(email).subscribe((data) => {
+      console.log('Data : ', data['Products']);
+      const supplier: Supplier = data[0];
+      this.products = data['Products'];
     });
   }
 
-  DeleteItem(product: Product) {
-    // we want to send the product to be deleted to the webservice
-    this._supplierService.deleteProduct(product).subscribe((res) => {
-      console.log(res);
-    });
-    window.location.reload();
+  onSupplierClicked(supplier: Supplier) {
+    supplier.isClicked = !supplier.isClicked;
   }
 
-  async DeleteSupplier() {
-    this._supplierService
-      .deleteSupplier(this.SelectedSupplierID)
-      .subscribe((res: any) => {
-        console.log(res);
-      });
+  addProductToBasket(product:Product){
 
-    this._supplierService
-      .deleteAllProducts(this.SelectedSupplierID)
-      .subscribe((res: any) => {
-        console.log(res);
-      });
+   this._authService.getUserAttributes().subscribe((data) =>{
+    const userEmail = data['email'];
+    this._aipService.addProductToBasket(userEmail, product)
+   })
 
-    this._supplierService.getSuppliers().subscribe((suppliers) => {
-      window.location.replace('/suppliers');
-    });
   }
 
-  EditProduct(product: Product) {
-    this.SelectedProductID = product._id;
+  // onAddedToBasket(product: Product) {
+  //   // We want to set the product to added to basket
+  //   this._supplierService.addedToBasket(product).subscribe(() => {
+  //     // The product has been added successfully
+  //     product.addedToBasket = !product.addedToBasket;
+  //   });
+  // }
 
-    this._router.navigate([
-      `/suppliers/${this.SelectedSupplierID}/products/${this.SelectedProductID}/edit-product`,
-    ]);
-  }
+  // DeleteItem(product: Product) {
+  //   // we want to send the product to be deleted to the webservice
+  //   this._supplierService.deleteProduct(product).subscribe((res) => {
+  //     console.log(res);
+  //   });
+  //   window.location.reload();
+  // }
 
-  editSupplier(supplier: Suppliers) {
-    this._router.navigate([
-      `/suppliers/${this.SelectedSupplierID}/edit-supplier`,
-    ]);
-  }
+  // async DeleteSupplier() {
+  //   this._supplierService
+  //     .deleteSupplier(this.SelectedSupplierID)
+  //     .subscribe((res: any) => {
+  //       console.log(res);
+  //     });
+
+  //   this._supplierService
+  //     .deleteAllProducts(this.SelectedSupplierID)
+  //     .subscribe((res: any) => {
+  //       console.log(res);
+  //     });
+
+  //   this._supplierService.getSuppliers().subscribe((suppliers) => {
+  //     window.location.replace('/suppliers');
+  //   });
+  // }
+
+  // EditProduct(product: Product) {
+  //   this.SelectedProductID = product._id;
+
+  //   this._router.navigate([
+  //     `/suppliers/${this.SelectedSupplierID}/products/${this.SelectedProductID}/edit-product`,
+  //   ]);
+  // }
+
+  // editSupplier(supplier: Suppliers) {
+  //   this._router.navigate([
+  //     `/suppliers/${this.SelectedSupplierID}/edit-supplier`,
+  //   ]);
+  // }
 }

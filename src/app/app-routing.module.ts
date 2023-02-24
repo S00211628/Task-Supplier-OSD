@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { BasketComponent } from './Components/basket/basket.component';
 import { ConfirmForgotPasswordComponent } from './Components/confirm-forgot-password/confirm-forgot-password.component';
 import { DeliveryViewComponent } from './Components/delivery-view/delivery-view.component';
 import { EditProductComponent } from './Components/edit-product/edit-product.component';
@@ -45,12 +46,17 @@ const routes: Routes = [
     canActivate: [IsLoggedInGuard, SuppliersGuard],
   },
   {
+    path:'basket',
+    component:BasketComponent,
+    canActivate:[IsLoggedInGuard, SuppliersGuard]
+  },
+  {
     path: 'suppliers/:supplierId',
     component: DeliveryViewComponent,
     canActivate: [IsLoggedInGuard, ShopConfigurationGuard],
   },
   {
-    path: 'suppliers/:supplierId/new-product',
+    path: 'new-product',
     component: NewProductComponent,
     canActivate: [IsLoggedInGuard, ShopConfigurationGuard],
   },

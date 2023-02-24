@@ -34,9 +34,9 @@ export class ShopProfileSetupComponent implements OnInit {
   ngOnInit(): void {
     this._dynamoDBService.getShopInfoByEmail().then((SupplierInfo) => {
       if (SupplierInfo) {
-        this.shopName.setValue(SupplierInfo.shop_name.S || '');
-        this.address.setValue(SupplierInfo.shop_address.S || '');
-        this.shopType.setValue(SupplierInfo.shop_type.S || '');
+        this.shopName.setValue(SupplierInfo.shop_name || '');
+        this.address.setValue(SupplierInfo.shop_address || '');
+        this.shopType.setValue(SupplierInfo.shop_type || '');
       }
     });
   }

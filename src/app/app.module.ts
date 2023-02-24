@@ -29,6 +29,7 @@ import { TopThreeProductsComponent } from './Components/top-three-products/top-t
 import { ShopConfigurationMainComponent } from './Components/shop-configuration-main/shop-configuration-main.component';
 import { TopWidgetsComponent } from './Components/top-widgets/top-widgets.component';
 import { VerifyEmailComponent } from './Components/verify-email/verify-email.component';
+import { BasketComponent } from "./Components/basket/basket.component";
 // End of Components.
 
 // HTTP 
@@ -80,6 +81,7 @@ import { MatDividerModule } from '@angular/material/divider';
     TopThreeProductsComponent,
     ShopConfigurationMainComponent,
     TopWidgetsComponent,
+    BasketComponent,
   ],
   imports: [
     BrowserModule,

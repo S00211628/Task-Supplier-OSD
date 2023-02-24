@@ -1,4 +1,3 @@
-
 <app-navbar></app-navbar>
 <div class="centered-content">
     <div class="delivery-manager-container">
@@ -7,19 +6,11 @@
                 suppliers
             </h1>
             <div class="delivery-menu">
-                <a class="delivery-menu-items" *ngFor="let suppliers of Suppliers;index as i"
-                    [routerLink]="['/suppliers', suppliers._id]" routerLinkActive="is-active">
-                    <p class="supplierName">{{suppliers.SupplierName}}</p>
-                    <mat-icon class="Supplier-Delete-Icon" (click)="DeleteSupplier()">delete_outline</mat-icon>
-                    <mat-icon class="Supplier-Edit-Icon" (click)="editSupplier(suppliers)">edit</mat-icon>
+                <a class="delivery-menu-items" [ngClass]="{'selected': 'supplier.isClicked'}"
+                    (click)=getProductsBySupplierId(supplier.Email) *ngFor="let supplier of suppliers;index as i">
+                    <p class="supplierName">{{supplier.shop_name}}</p>
                 </a>
             </div>
-
-
-            
-
-            <button class="button is-primary has-text-white" routerLink="/new-supplier">+ New Supplier</button>
-
         </div>
 
         <div class="delivery-items-container has-background-light">
@@ -42,50 +33,36 @@
             <!-- Delivery Elements -->
             <div class="outer-container">
 
-                <div class="NoProductsLoaded" *ngIf="!ProductsLoaded && Suppliers">
-                    There are no products! Click the add button to create some.
-                </div>
-
-                <div class="NoSupplierSelected" *ngIf="!Suppliers&&!SelectedSupplierID">
-                    Create a supplier!
-                </div>
-
                 <div class="NoSupplierSelected" *ngIf="ProductsLoaded && !SelectedSupplierID">
                     Select a Supplier
                 </div>
 
-                <div class="inner-container" *ngIf="ProductsLoaded && SelectedSupplierID">
-                    <div class="delivery" *ngFor="let products of Products" (click)="onAddedToBasket(products)"
-                        [ngClass]="{'out-of-stock' : products.addedToBasket}">
+                <div class="inner-container">
+                    <div class="delivery" *ngFor="let product of products">
                         <div class="container">
                             <div class="columns">
                                 <div class="column is-2">
-                                    <p class="product-elements">{{products.title}}</p>
+                                    <p class="product-elements">{{product.product_name}}</p>
 
                                 </div>
                                 <div class="column is-8">
-                                    <p class="product-elements">{{products.Description}}</p>
+                                    <p class="product-elements">{{product.product_desc}}</p>
 
                                 </div>
                                 <div class="column is-1">
-                                    <p class="product-elements">${{products.Price}}</p>
+                                    <p class="product-elements">${{product.product_price}}</p>
 
                                 </div>
 
                             </div>
                         </div>
-                        <div class="column is-1">
-                            <mat-icon class="deleteIcon" (click)="DeleteItem(products)">delete_outline</mat-icon>
+                        <div class="column is-1" (click)="addProductToBasket(product)">
+                            <mat-icon >add_shopping_cart</mat-icon>
                         </div>
                         <div class="column is-1">
-                            <mat-icon class="editIcon" (click)="EditProduct(products)">edit</mat-icon>
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <div *ngIf="SelectedSupplierID" routerLink="./new-product" class="circle-add-button button is-primary">
-                <img src="../../../assets/plus-icon.svg" alt="plus icon">
             </div>
         </div>
     </div>
