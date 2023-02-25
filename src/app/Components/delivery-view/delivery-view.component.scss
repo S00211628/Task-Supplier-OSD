@@ -153,7 +153,7 @@ font-family: "Rubik";
   }
   &.out-of-stock {
     // text-decoration: line-through;
-    opacity: .5;
+      opacity: .5;
   }
 }
 
@@ -163,22 +163,27 @@ font-family: "Rubik";
 .deleteIcon:hover{
   color: red;
   opacity: 1;
+  scale: 1.5;
   cursor: pointer;
 }
 
-.editIcon:hover{
+.addToBasket:hover{
   color:blue;
   opacity: 1;
+  scale: 1.5;
   cursor: pointer;
 }
 
-.editIcon{
+.addToBasket{
   transition: .3s ease;
 }
 
 .deleteIcon{
   transition: .3s ease;
+
 }
+
+
 
 
 .delivery-title{
@@ -255,4 +260,9 @@ font-family: "Rubik";
 
 .product-elements{
   margin: 20px;
+}
+
+
+.in-basket{
+    opacity: .5;
 }

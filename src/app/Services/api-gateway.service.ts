@@ -21,8 +21,13 @@ export class ApiGatewayService {
   }
 
 
+  getSupplierByID(SupplierID:string){
+    const url = this.supplierRootURL + 'id/' + SupplierID;
+    return this._http.get<Supplier>(url);
+  }
+
   getSupplier(email: string) {
-    const url = this.supplierRootURL + email;
+    const url = this.supplierRootURL +'email/' + email;
     return this._http.get(url);
   }
 
@@ -57,7 +62,7 @@ export class ApiGatewayService {
     shopAddress: string,
     ShopType: string
   ) {
-    const url = this.supplierRootURL + email;
+    const url = this.supplierRootURL + 'email/' + email; // Assume this works.
     const body = {
       shop_name: shopName,
       shop_address: shopAddress,
@@ -81,7 +86,7 @@ export class ApiGatewayService {
   }
 
   deleteSupplier(email: string) {
-    const url = this.supplierRootURL + email;
+    const url = this.supplierRootURL + 'email/' +  email;  // Assume this works.
     return this._http.delete(url).subscribe((data) => {
       console.log('Supplier Delete : ', data);
     });

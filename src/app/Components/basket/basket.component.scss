@@ -19,6 +19,7 @@
 
 .delivery-items-container {
     position: relative;
+    max-height: 650px;
     display: flex;
     flex-grow: 1;
     padding: 42px;
@@ -124,4 +125,8 @@
 
 .product-elements{
     font-size: 1rem;
+}
+
+.price_style{
+    text-decoration: underline;
 }

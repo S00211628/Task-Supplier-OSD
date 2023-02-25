@@ -16,6 +16,9 @@ export interface Product {
   product_price: number;
   product_name: string;
   product_id: string;
+  product_stock?:string;
+  product_quantity?:number;
+  product_in_basket?:boolean;
 }
 
 export interface Customer{

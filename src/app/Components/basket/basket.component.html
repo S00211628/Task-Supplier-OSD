@@ -13,22 +13,23 @@
                     <p class="subtitle">Title</p>
                 </div>
                 <div class="col text-center">
-                    <p class="subtitle">Description</p>
+                    <p class="subtitle">Supplier</p>
 
                 </div>
                 <div class="col text-center">
                     <p class="subtitle">Price</p>
 
                 </div>
+                <div class="col text-center">
+                    <p class="subtitle">Quantity</p>
+                </div>
             </div>
         </div>
-
-
 
         <!-- Delivery Elements -->
         <div class="outer-container">
             <div class="inner-container">
-                <div class="delivery" *ngFor="let product of Products">
+                <div class="delivery" *ngFor="let product of Products;index as i">
 
                     <div class="container">
                         <div class="row">
@@ -36,11 +37,13 @@
                                 <p class="product-elements text-center">{{product.product_name}}</p>
                             </div>
                             <div class="col">
-                                <p class="product-elements text-center">{{product.product_desc}}</p>
+                                <p class="product-elements text-center">{{SupplierShopNames[i]}}</p>
                             </div>
                             <div class="col">
-                                <p class="product-elements text-center">${{product.product_price}}</p>
-
+                                <p class="product-elements text-center">€{{product.product_price}}</p>
+                            </div>
+                            <div class="col">
+                                <p class="product-elements text-center">{{product.product_quantity}}</p>
                             </div>
                         </div>
                     </div>
@@ -48,4 +51,24 @@
             </div>
         </div>
     </div>
+
+    <div class="delivery-items-container has-background-light my-5">
+        <div class="container">
+            <div class="row">
+                <div class="col"></div>
+                <div class="col"></div>
+                <div class="col text-center">
+                    <p class="subtitle price_style">Total</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col"></div>
+                <div class="col"></div>
+                <div class="col text-center">
+                    <p class="subtitle">€{{totalPrice}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
 </div>

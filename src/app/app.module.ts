@@ -54,6 +54,7 @@ import { FormsModule } from "@angular/forms";
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ChartModule } from 'angular-highcharts';
 import { MatDividerModule } from '@angular/material/divider';
+import { QuantitySelectorComponent } from './Components/quantity-selector/quantity-selector.component';
 
 
 @NgModule({
@@ -82,6 +83,7 @@ import { MatDividerModule } from '@angular/material/divider';
     ShopConfigurationMainComponent,
     TopWidgetsComponent,
     BasketComponent,
+    QuantitySelectorComponent,
   ],
   imports: [
     BrowserModule,
