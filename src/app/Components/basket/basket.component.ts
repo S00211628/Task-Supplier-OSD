@@ -29,6 +29,8 @@ export class BasketComponent implements OnInit {
       this._apiService.getCustomer(this.UserEmail).subscribe((customer) => {
         this.Products = customer['Basket'];
 
+        console.log(JSON.stringify(this.Products));
+
         // Get the total for all the products
         for (const product of this.Products) {
           const quantity = product.product_quantity || 1; // set default quantity to 1

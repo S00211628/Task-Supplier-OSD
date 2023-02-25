@@ -57,10 +57,10 @@
                             </div>
                             <div class="col-1 d-flex flex-column justify-content-center align-items-center">
                                 <button class="addToBasket" [disabled]="product.product_quantity == 0" mat-flat-button *ngIf="!product.product_in_basket"
-                                    (click)="addProductToBasket(product, selectedQuantity)">
+                                    (click)="addProductToBasket(product, product.product_quantity)">
                                     <mat-icon>add_shopping_cart</mat-icon>
                                 </button>
-                                <button class="deleteIcon" (click)="removeProductFromBasket(product.product_id)" *ngIf="product.product_in_basket" mat-flat-button>
+                                <button class="deleteIcon" (click)="removeProductFromBasket(product)" *ngIf="product.product_in_basket" mat-flat-button>
                                     <mat-icon >delete</mat-icon>
                                 </button>
                             </div>

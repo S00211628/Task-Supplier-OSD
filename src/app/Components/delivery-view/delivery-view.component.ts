@@ -70,6 +70,7 @@ export class DeliveryViewComponent implements OnInit {
     for (let i = 0; i < this.products.length; i++) {
       if (this.products[i].product_id === productId) {
         this.products[i].product_quantity = quantity;
+        
         break;
       }
     }
@@ -97,16 +98,26 @@ export class DeliveryViewComponent implements OnInit {
     console.log(quantity);
     product.product_quantity = quantity;
 
-    console.log('Product Added ', product);
+    console.log(product.product_quantity);
 
     this._authService.getUserAttributes().subscribe((data) => {
       this.customerEmail = data['email'];
-      this._aipService.addProductToBasket(this.customerEmail, product);
+      this._aipService.addProductToBasket(this.customerEmail, product).subscribe((data) => {
+        const index = this.products.findIndex(p => p.product_id === product.product_id)
+        this.products[index].product_in_basket = true;
+      });
     });
   }
 
-  removeProductFromBasket(ProductID: string) {
-    this._aipService.removeProductFromBasket(this.customerEmail, ProductID);
+  removeProductFromBasket(product: Product) {
+    this._aipService.removeProductFromBasket(this.customerEmail, product.product_id).subscribe((data) => {
+      const index = this.products.findIndex(p => p.product_id === product.product_id)
+      this.products[index].product_in_basket = false;
+      this.products[index].product_quantity = 0;
+    });
+
+    
+
   }
 
   isSupplierSelected() {

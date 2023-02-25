@@ -50,20 +50,12 @@ export class ApiGatewayService {
       email: email,
       product: product
     }
-
-    return this._http.post(url, body).subscribe((data) => {
-      console.log("Product Added : ", data);
-    })
+    return this._http.post(url, body);
   }
 
   removeProductFromBasket(CustomerEmail:string,ProductID:string){
     const url = this.customerRootURL +CustomerEmail+ "?ProductID=" + ProductID;
-  
-
-    return this._http.delete(url).subscribe((data) => {
-      console.log("Product Removed : ", data)
-    })
-
+    return this._http.delete(url)
   }
 
   putSupplier(
