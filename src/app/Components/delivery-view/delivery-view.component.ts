@@ -66,8 +66,13 @@ export class DeliveryViewComponent implements OnInit {
     );
   }
 
-  onQuantityChanged(quantity: number) {
-    this.selectedQuantity = quantity;
+  onQuantityChanged(quantity: number, productId: string) {
+    for (let i = 0; i < this.products.length; i++) {
+      if (this.products[i].product_id === productId) {
+        this.products[i].product_quantity = quantity;
+        break;
+      }
+    }
   }
 
   getProductsBySupplierEmail(supplier: Supplier) {
@@ -100,7 +105,9 @@ export class DeliveryViewComponent implements OnInit {
     });
   }
 
- 
+  removeProductFromBasket(ProductID: string) {
+    this._aipService.removeProductFromBasket(this.customerEmail, ProductID);
+  }
 
   isSupplierSelected() {
     this.supplierSelected = true;

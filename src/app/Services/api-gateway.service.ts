@@ -56,6 +56,16 @@ export class ApiGatewayService {
     })
   }
 
+  removeProductFromBasket(CustomerEmail:string,ProductID:string){
+    const url = this.customerRootURL +CustomerEmail+ "?ProductID=" + ProductID;
+  
+
+    return this._http.delete(url).subscribe((data) => {
+      console.log("Product Removed : ", data)
+    })
+
+  }
+
   putSupplier(
     email: string,
     shopName: string,

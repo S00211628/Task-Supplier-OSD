@@ -53,14 +53,14 @@
                                 {{product.product_price}}</div>
                             <div class="col-1 d-flex flex-column  justify-content-center text-center">
                                 <app-quantity-selector [quantity]="product.product_quantity"
-                                    (quantityChanged)="onQuantityChanged($event)"></app-quantity-selector>
+                                    (quantityChanged)="onQuantityChanged($event, product.product_id)"></app-quantity-selector>
                             </div>
                             <div class="col-1 d-flex flex-column justify-content-center align-items-center">
-                                <button class="addToBasket" mat-flat-button *ngIf="!product.product_in_basket"
+                                <button class="addToBasket" [disabled]="product.product_quantity == 0" mat-flat-button *ngIf="!product.product_in_basket"
                                     (click)="addProductToBasket(product, selectedQuantity)">
                                     <mat-icon>add_shopping_cart</mat-icon>
                                 </button>
-                                <button class="deleteIcon" *ngIf="product.product_in_basket" mat-flat-button>
+                                <button class="deleteIcon" (click)="removeProductFromBasket(product.product_id)" *ngIf="product.product_in_basket" mat-flat-button>
                                     <mat-icon >delete</mat-icon>
                                 </button>
                             </div>

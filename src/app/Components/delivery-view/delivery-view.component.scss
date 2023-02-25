@@ -166,6 +166,20 @@ font-family: "Rubik";
   scale: 1.5;
   cursor: pointer;
 }
+.addToBasket[disabled] {
+  cursor: default;
+  opacity: 0.5;
+  pointer-events: none;
+  text-decoration: none !important;
+}
+
+.addToBasket[disabled]:hover {
+  background-color: inherit;
+  border-color: inherit;
+  color: inherit;
+  cursor: default;
+  text-decoration: none !important;
+}
 
 .addToBasket:hover{
   color:blue;
