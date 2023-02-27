@@ -27,6 +27,9 @@ export class DeliveryViewComponent implements OnInit {
   supplierSelected: boolean = false;
   selectedQuantity: number;
 
+  // Search 
+  searchText:string = '';
+
   constructor(
     private _supplierService: SuppliersService,
     private _activatedRouter: ActivatedRoute,
@@ -115,13 +118,17 @@ export class DeliveryViewComponent implements OnInit {
       this.products[index].product_in_basket = false;
       this.products[index].product_quantity = 0;
     });
-
-    
-
   }
 
   isSupplierSelected() {
     this.supplierSelected = true;
     console.log(this.supplierSelected);
   }
+
+  onSearchTextEntered(searchValue:string){
+    this.searchText = searchValue;
+    // console.log("Search Text ", this.searchText);
+  }
+
+
 }

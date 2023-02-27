@@ -5,10 +5,13 @@
             <h1 class="title has-text-primary">
                 suppliers
             </h1>
+            <app-search (searchTextChanged)="onSearchTextEntered($event)"></app-search>
             <div class="delivery-menu">
-                <a class="delivery-menu-items" [ngClass]="{'selected': 'supplier.isClicked'}"
+                <a class="delivery-menu-items" [ngClass]="{'selected':'searchText'}"
                     (click)=getProductsBySupplierEmail(supplier) *ngFor="let supplier of suppliers;index as i">
-                    <p class="supplierName" (click)="isSupplierSelected()">{{supplier.shop_name}}</p>
+                    <div *ngIf="searchText === '' || supplier.shop_name.toLowerCase().includes(searchText)">
+                        <p class="supplierName" (click)="isSupplierSelected()">{{supplier.shop_name}}</p>
+                    </div>
                 </a>
             </div>
         </div>
@@ -17,19 +20,20 @@
             <h1 class="title has-text-primary">
                 Products
             </h1>
+            <app-search (searchTextChanged)="onSearchTextEntered($event)"></app-search>
             <div class="row my-2">
-            <div class="columns titles">
-                <div class="col-3 text-center">
-                    <p class="subtitle">Title</p>
-                </div>
-                <div class="col-4">
-                    <p class="subtitle text-center">Description</p>
-                </div>
-                <div class="col-3 text-center">
-                    <p class="subtitle">Price</p>
-                </div>
-                <div class="col-1"></div>
-                <div class="col-1"></div>
+                <div class="columns titles">
+                    <div class="col-3 text-center">
+                        <p class="subtitle">Title</p>
+                    </div>
+                    <div class="col-4">
+                        <p class="subtitle text-center">Description</p>
+                    </div>
+                    <div class="col-3 text-center">
+                        <p class="subtitle">Price</p>
+                    </div>
+                    <div class="col-1"></div>
+                    <div class="col-1"></div>
                 </div>
             </div>
 
@@ -44,6 +48,9 @@
                 <div class="inner-container">
                     <div class="delivery" *ngFor="let product of products"
                         [ngClass]="{'in-basket':product.product_in_basket}">
+                        <div *ngIf="searchText === '' || product.product_name.toLowerCase().includes(searchText)">
+
+                        </div>
                         <div class="row w-100">
                             <div class="col-3 d-flex flex-column  justify-content-center text-center">
                                 {{product.product_name}}</div>
@@ -56,12 +63,14 @@
                                     (quantityChanged)="onQuantityChanged($event, product.product_id)"></app-quantity-selector>
                             </div>
                             <div class="col-1 d-flex flex-column justify-content-center align-items-center">
-                                <button class="addToBasket" [disabled]="product.product_quantity == 0" mat-flat-button *ngIf="!product.product_in_basket"
+                                <button class="addToBasket" [disabled]="product.product_quantity == 0" mat-flat-button
+                                    *ngIf="!product.product_in_basket"
                                     (click)="addProductToBasket(product, product.product_quantity)">
                                     <mat-icon>add_shopping_cart</mat-icon>
                                 </button>
-                                <button class="deleteIcon" (click)="removeProductFromBasket(product)" *ngIf="product.product_in_basket" mat-flat-button>
-                                    <mat-icon >delete</mat-icon>
+                                <button class="deleteIcon" (click)="removeProductFromBasket(product)"
+                                    *ngIf="product.product_in_basket" mat-flat-button>
+                                    <mat-icon>delete</mat-icon>
                                 </button>
                             </div>
                         </div>
