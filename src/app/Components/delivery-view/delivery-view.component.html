@@ -7,10 +7,10 @@
             </h1>
             <app-search (searchTextChanged)="onSearchTextEntered($event)"></app-search>
             <div class="delivery-menu">
-                <a class="delivery-menu-items" [ngClass]="{'selected':'searchText'}"
+                <a 
                     (click)=getProductsBySupplierEmail(supplier) *ngFor="let supplier of suppliers;index as i">
                     <div *ngIf="searchText === '' || supplier.shop_name.toLowerCase().includes(searchText)">
-                        <p class="supplierName" (click)="isSupplierSelected()">{{supplier.shop_name}}</p>
+                        <p class="supplierName delivery-menu-items selected" (click)="isSupplierSelected()">{{supplier.shop_name}}</p>
                     </div>
                 </a>
             </div>
