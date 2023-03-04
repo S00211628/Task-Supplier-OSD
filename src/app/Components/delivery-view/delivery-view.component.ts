@@ -5,6 +5,7 @@ import { Product, Supplier } from 'src/app/models/supplier';
 import { Suppliers } from 'src/app/models/suppliers.models';
 import { ApiGatewayService } from 'src/app/Services/api-gateway.service';
 import { AWSAuthService } from 'src/app/Services/awsauth.service';
+import { SearchService } from 'src/app/Services/search.service';
 import { SuppliersService } from 'src/app/Services/suppliers.service';
 
 @Component({
@@ -35,8 +36,13 @@ export class DeliveryViewComponent implements OnInit {
     private _activatedRouter: ActivatedRoute,
     private _router: Router,
     private _aipService: ApiGatewayService,
-    private _authService: AWSAuthService
-  ) {}
+    private _authService: AWSAuthService,
+    private _searchService:SearchService
+  ) {
+   this._searchService.searchText$.subscribe(searchText => {
+    this.searchText = searchText.toLowerCase();
+   }) 
+  }
 
   ngOnInit(): void {
     this._authService.getUserAttributes().subscribe((data) => {
