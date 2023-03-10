@@ -83,7 +83,7 @@ export class ApiGatewayService {
       email: email,
     };
     return this._http.post(url, body).subscribe((data) => {
-      console.log('Product Updated : ', data);
+      this._router.navigate(['/shop-configuration'])
     });
   }
 

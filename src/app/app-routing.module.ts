@@ -1,5 +1,7 @@
-import { NgModule } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AdminMainComponent } from './Components/admin/admin-main/admin-main.component';
+import { AdminComponent } from './Components/admin/admin/admin.component';
 import { BasketComponent } from './Components/basket/basket.component';
 import { ConfirmForgotPasswordComponent } from './Components/confirm-forgot-password/confirm-forgot-password.component';
 import { DeliveryViewComponent } from './Components/delivery-view/delivery-view.component';
@@ -74,6 +76,10 @@ const routes: Routes = [
     path: 'profile',
     component: ProfileComponent,
     canActivate: [IsLoggedInGuard],
+  },
+  {
+    path:'admin',
+    component:AdminComponent,
   },
   { path: '**', component: LoginComponent },
 ];

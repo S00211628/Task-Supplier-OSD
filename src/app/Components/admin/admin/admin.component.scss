@@ -1,0 +1,22 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+
+.container-fluid {
+    position: relative;
+
+    .sidenav-container {
+        background-color: #363740;
+        color: white;
+        height: 100vh;
+      
+    }
+
+    .main-container {
+        background-color: #F7F8FC;
+        height: 100vh;
+    }
+}
+

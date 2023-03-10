@@ -57,6 +57,9 @@ import { ChartModule } from 'angular-highcharts';
 import { MatDividerModule } from '@angular/material/divider';
 import { QuantitySelectorComponent } from './Components/quantity-selector/quantity-selector.component';
 import { SearchComponent } from './Components/search/search.component';
+import { AdminMainComponent } from "./Components/admin/admin-main/admin-main.component";
+import { AdminSidenavComponent } from './Components/admin/admin-sidenav/admin-sidenav.component';
+import { AdminComponent } from './Components/admin/admin/admin.component';
 
 
 @NgModule({
@@ -87,6 +90,9 @@ import { SearchComponent } from './Components/search/search.component';
     BasketComponent,
     QuantitySelectorComponent,
     SearchComponent,
+    AdminMainComponent,
+    AdminSidenavComponent,
+    AdminComponent,
   ],
   imports: [
     BrowserModule,

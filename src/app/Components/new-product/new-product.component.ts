@@ -18,15 +18,15 @@ export class NewProductComponent implements OnInit {
     private _activatedRouter: ActivatedRoute,
     private _router: Router,
     private _formBuilder: FormBuilder,
-    private _apiService:ApiGatewayService,
-    private _authService:AWSAuthService
+    private _apiService: ApiGatewayService,
+    private _authService: AWSAuthService
   ) {}
 
   pForm!: FormGroup;
 
   supplierId!: string;
-  products:any[] = [];
-  Email:string;
+  products: any[] = [];
+  Email: string;
 
   ngOnInit(): void {
     this._activatedRouter.params.subscribe((params: Params) => {
@@ -40,28 +40,18 @@ export class NewProductComponent implements OnInit {
     });
   }
 
-  // crateProduct(title: string, description: string, price: string) {
-  //   this._supplierService
-  //     .createProduct(title, this.supplierId, description, price)
-  //     .subscribe((newProduct: any) => {
-  //       this._router.navigate(['../'], { relativeTo: this._activatedRouter });
-  //     });
-  // }
-
-  addProduct(){
+  addProduct() {
     this.products.push({
       product_name: this.ProductName.value,
       product_desc: this.Description.value,
-      product_price: this.Price.value
-    })
-this._authService.getUserAttributes().subscribe((attributes) => {
-  console.log('Attributes : ', attributes);
-  this.Email = attributes.email;
-  console.log(JSON.stringify(this.Email) + JSON.stringify(this.products));
-  this._apiService.putProduct(this.Email, this.products);
-});
-
-
+      product_price: this.Price.value,
+    });
+    this._authService.getUserAttributes().subscribe((attributes) => {
+      console.log('Attributes : ', attributes);
+      this.Email = attributes.email;
+      console.log(JSON.stringify(this.Email) + JSON.stringify(this.products));
+      this._apiService.putProduct(this.Email, this.products);
+    });
   }
 
   get ProductName() {
