@@ -16,12 +16,37 @@
     </div>
 </div>
 
-<mat-sidenav-container>
-    <mat-sidenav>
+<mat-sidenav-container class="sidenav-conatiner">
+    <mat-sidenav class="sidnav">
 
-        <button class="btn btn-primary" [routerLink]="['/new-product']">Add Product</button>
+        <div class="sidenav-header">
+            <div class="sidenav-header-img"></div>
+            <h3 class="sidenav-header-text">Dashboard</h3>
+        </div>
+
+        <div class="sidnav-button active" [routerLink]="['/shop-configuration']">
+            <mat-icon class="sidnav-button-icon">pie_chart</mat-icon>
+            <span class="sidnav-button-text">Overview</span>
+        </div>
+        <div class="sidnav-button" [routerLink]="['/list-products']">
+            <mat-icon class="sidnav-button-icon">list</mat-icon>
+            <span class="sidnav-button-text">Products</span>
+        </div>
+        <div class="sidnav-button" [routerLink]="['/new-product']">
+            <mat-icon class="sidnav-button-icon">add</mat-icon>
+            <span class="sidnav-button-text">Add</span>
+        </div>
+        <div class="sidnav-button" [routerLink]="['/shop-configuration']">
+            <mat-icon class="sidnav-button-icon">inventory_2</mat-icon>
+            <span class="sidnav-button-text">Suppliers</span>
+        </div>
 
     </mat-sidenav>
+
+
+
+
+
     <mat-sidenav-content>
 <div class="content mat-elevation-z8">
     <app-shop-configuration-main></app-shop-configuration-main>

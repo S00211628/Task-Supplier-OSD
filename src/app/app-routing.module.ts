@@ -8,6 +8,8 @@ import { DeliveryViewComponent } from './Components/delivery-view/delivery-view.
 import { EditProductComponent } from './Components/edit-product/edit-product.component';
 import { EditSupplierComponent } from './Components/edit-supplier/edit-supplier.component';
 import { ForgotPasswordComponent } from './Components/forgot-password/forgot-password.component';
+import { ListProductsMainComponent } from './Components/list-products-main/list-products-main.component';
+import { ListProductsComponent } from './Components/list-products/list-products.component';
 import { LoginComponent } from './Components/login/login.component';
 import { NewProductComponent } from './Components/new-product/new-product.component';
 import { NewSupplierComponent } from './Components/new-supplier/new-supplier.component';
@@ -60,6 +62,11 @@ const routes: Routes = [
   {
     path: 'new-product',
     component: NewProductComponent,
+    canActivate: [IsLoggedInGuard, ShopConfigurationGuard],
+  },
+  {
+    path: 'list-products',
+    component: ListProductsMainComponent,
     canActivate: [IsLoggedInGuard, ShopConfigurationGuard],
   },
   {

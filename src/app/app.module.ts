@@ -60,6 +60,9 @@ import { SearchComponent } from './Components/search/search.component';
 import { AdminMainComponent } from "./Components/admin/admin-main/admin-main.component";
 import { AdminSidenavComponent } from './Components/admin/admin-sidenav/admin-sidenav.component';
 import { AdminComponent } from './Components/admin/admin/admin.component';
+import { ListProductsComponent } from './Components/list-products/list-products.component';
+import { ListProductsMainComponent } from './Components/list-products-main/list-products-main.component';
+
 
 
 @NgModule({
@@ -93,6 +96,8 @@ import { AdminComponent } from './Components/admin/admin/admin.component';
     AdminMainComponent,
     AdminSidenavComponent,
     AdminComponent,
+    ListProductsComponent,
+    ListProductsMainComponent,
   ],
   imports: [
     BrowserModule,
