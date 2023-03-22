@@ -48,6 +48,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { matDrawerAnimations, MatSidenavModule } from "@angular/material/sidenav";
 import { MatListModule} from '@angular/material/list';
+import { MatProgressSpinner, MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 // End of Angular Material
 
 // Misc
@@ -114,6 +115,7 @@ import { ListProductsMainComponent } from './Components/list-products-main/list-
     MatButtonModule,
     MatListModule,
     MatSidenavModule,
+    MatProgressSpinnerModule,
     MatToolbarModule,
     FontAwesomeModule,
     ChartModule,

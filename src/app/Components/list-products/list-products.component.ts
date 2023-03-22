@@ -17,10 +17,18 @@ export class ListProductsComponent implements OnInit {
   ) {}
 
   products: Product[] = [];
+  _productToDelete: Product;
+  _productToDeleteName:string;
+  isModalVisible = false;
+  isLoading = true;
 
   ngOnInit(): void {
     // Get the email of the signed in user.
-    this._authService.getUserAttributes().subscribe((attributes) => {
+    this.loadproduct();
+  }
+
+  loadproduct():void{
+  this._authService.getUserAttributes().subscribe((attributes) => {
       if (attributes) {
         let SupplierEmail = attributes.email;
         // Get the products of the signed in user.
@@ -28,26 +36,41 @@ export class ListProductsComponent implements OnInit {
           (data) => {
             const SupplierData = JSON.parse(JSON.stringify(data));
             this.products = SupplierData.Products;
+            this.isLoading = false;
             console.log(this.products[0].product_name);
           },
           (error) => {
             console.log(error);
+            this.isLoading = false;
           }
         );
       }
     });
   }
 
-
   goToEditProduct(product: Product) {
-
     const navigationExtras: NavigationExtras = {
-      state:{
-        product: product
-      }
+      state: {
+        product: product,
+      },
     };
     this._router.navigate(['/edit-product'], navigationExtras);
-
   }
 
+  productToDelete(product: Product) {
+    this._productToDelete = product;
+    this._productToDeleteName = product.product_name;
+    this.isModalVisible = true;
+  }
+
+  deleteProduct(){
+    this._apiService.deleteProduct(this._productToDelete).subscribe(()=>{
+      this.loadproduct()
+    });
+    this.hideModal();
+  }
+
+  hideModal() {
+    this.isModalVisible = false;
+  }
 }

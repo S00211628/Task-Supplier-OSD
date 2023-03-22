@@ -1,9 +1,8 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, throwError } from 'rxjs';
-import { Supplier } from '../models/supplier';
-import { Router } from "@angular/router";
-import { Product } from '../models/product.models';
+import { Product, Supplier } from '../models/supplier';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -20,18 +19,17 @@ export class ApiGatewayService {
       'https://oiqystpb83.execute-api.eu-west-1.amazonaws.com/dev/customers/';
   }
 
-
-  getSupplierByID(SupplierID:string){
+  getSupplierByID(SupplierID: string) {
     const url = this.supplierRootURL + 'id/' + SupplierID;
     return this._http.get<Supplier>(url);
   }
 
   getSupplier(email: string) {
-    const url = this.supplierRootURL +'email/' + email;
+    const url = this.supplierRootURL + 'email/' + email;
     return this._http.get(url);
   }
 
-  getCustomer(email:string){
+  getCustomer(email: string) {
     const url = this.customerRootURL + email;
     return this._http.get(url);
   }
@@ -44,18 +42,19 @@ export class ApiGatewayService {
     );
   }
 
-  addProductToBasket(email:string, product:any){
+  addProductToBasket(email: string, product: any) {
     const url = this.customerRootURL + 'add-basket';
     const body = {
       email: email,
-      product: product
-    }
+      product: product,
+    };
     return this._http.post(url, body);
   }
 
-  removeProductFromBasket(CustomerEmail:string,ProductID:string){
-    const url = this.customerRootURL +CustomerEmail+ "?ProductID=" + ProductID;
-    return this._http.delete(url)
+  removeProductFromBasket(CustomerEmail: string, ProductID: string) {
+    const url =
+      this.customerRootURL + CustomerEmail + '?ProductID=' + ProductID;
+    return this._http.delete(url);
   }
 
   putSupplier(
@@ -83,12 +82,51 @@ export class ApiGatewayService {
       email: email,
     };
     return this._http.post(url, body).subscribe((data) => {
-      this._router.navigate(['/shop-configuration'])
+      this._router.navigate(['/shop-configuration']);
     });
   }
 
+  editProduct(product: Product) {
+    const {
+      product_id,
+      SupplierID,
+      product_name,
+      product_price,
+      product_desc,
+    } = product;
+    const url = this.supplierRootURL + 'edit-product';
+    const body = {
+      product_id: product_id,
+      SupplierID: SupplierID,
+      product_name: product_name,
+      product_price: product_price,
+      product_desc: product_desc,
+    };
+
+    return this._http.post(url, body).subscribe(() => {
+      this._router.navigate(['/list-products']);
+    });
+  }
+
+  deleteProduct(product: Product) {
+    const url = this.supplierRootURL + 'delete-product';
+
+     const options = {
+       headers: new HttpHeaders({
+         'Content-Type': 'application/json',
+       }),
+       body: {
+         product_id: product.product_id,
+         SupplierID: product.SupplierID,
+       },
+     };
+
+    
+    return this._http.delete(url, options)
+  }
+
   deleteSupplier(email: string) {
-    const url = this.supplierRootURL + 'email/' +  email;  // Assume this works.
+    const url = this.supplierRootURL + 'email/' + email; // Assume this works.
     return this._http.delete(url).subscribe((data) => {
       console.log('Supplier Delete : ', data);
     });

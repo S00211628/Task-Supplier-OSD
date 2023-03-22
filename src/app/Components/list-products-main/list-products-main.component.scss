@@ -36,6 +36,7 @@
                 padding-left: 25%;
                 align-items: center;
                 justify-content: left;
+                cursor: pointer;
 
                 .sidenav-items-icon {
                     margin-right: 10px;
@@ -50,6 +51,7 @@
     }
 
     .main {
+        position: relative;
         margin: 20px;
         width: 100%;
         border-radius: 5px;

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { Product } from 'src/app/models/supplier';
+import { ApiGatewayService } from 'src/app/Services/api-gateway.service';
 import { SuppliersService } from 'src/app/Services/suppliers.service';
 
 @Component({
@@ -13,7 +14,8 @@ export class EditProductComponent implements OnInit {
   constructor(
     private _activatedRouter: ActivatedRoute,
     private _router: Router,
-    private _formBuilder: FormBuilder
+    private _formBuilder: FormBuilder,
+    private _apiService:ApiGatewayService
   ) {}
 
  
@@ -45,9 +47,13 @@ export class EditProductComponent implements OnInit {
     return this.pForm.get('Price');
   }
 
-  updateProduct(Name: string, Description: string, Price: string) {
+  updateProduct() {
 
+    this.product.product_name = this.ProductName?.value;
+    this.product.product_desc = this.Description?.value;
+    this.product.product_price = this.Price?.value;
 
+    this._apiService.editProduct(this.product)
 
   }
     
