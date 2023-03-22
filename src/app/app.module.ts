@@ -63,12 +63,16 @@ import { AdminSidenavComponent } from './Components/admin/admin-sidenav/admin-si
 import { AdminComponent } from './Components/admin/admin/admin.component';
 import { ListProductsComponent } from './Components/list-products/list-products.component';
 import { ListProductsMainComponent } from './Components/list-products-main/list-products-main.component';
+import { ProductFilterPipe } from './models//ProductFilterPipe';
+import { SearchProductComponent } from './Components/search-product/search-product.component';
+
 
 
 
 @NgModule({
   declarations: [
     AppComponent,
+    ProductFilterPipe,
     DeliveryViewComponent,
     EditProductComponent,
     EditSupplierComponent,
@@ -99,6 +103,7 @@ import { ListProductsMainComponent } from './Components/list-products-main/list-
     AdminComponent,
     ListProductsComponent,
     ListProductsMainComponent,
+    SearchProductComponent,
   ],
   imports: [
     BrowserModule,

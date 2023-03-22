@@ -28,8 +28,9 @@ export class DeliveryViewComponent implements OnInit {
   supplierSelected: boolean = false;
   selectedQuantity: number;
 
-  // Search 
-  searchText:string = '';
+  // Search
+  searchText: string = '';
+  searchProductText: string = '';
 
   isLoading = true;
 
@@ -39,11 +40,11 @@ export class DeliveryViewComponent implements OnInit {
     private _router: Router,
     private _aipService: ApiGatewayService,
     private _authService: AWSAuthService,
-    private _searchService:SearchService
+    private _searchService: SearchService
   ) {
-   this._searchService.searchText$.subscribe(searchText => {
-    this.searchText = searchText.toLowerCase();
-   }) 
+    this._searchService.searchText$.subscribe((searchText) => {
+      this.searchText = searchText.toLowerCase();
+    });
   }
 
   ngOnInit(): void {
@@ -70,13 +71,11 @@ export class DeliveryViewComponent implements OnInit {
             Products: supplierObj.Products,
           };
         });
-          this.isLoading = false;
-
+        this.isLoading = false;
       },
       (error) => {
         console.log(error);
-          this.isLoading = false;
-
+        this.isLoading = false;
       }
     );
   }
@@ -85,7 +84,7 @@ export class DeliveryViewComponent implements OnInit {
     for (let i = 0; i < this.products.length; i++) {
       if (this.products[i].product_id === productId) {
         this.products[i].product_quantity = quantity;
-        
+
         break;
       }
     }
@@ -117,19 +116,27 @@ export class DeliveryViewComponent implements OnInit {
 
     this._authService.getUserAttributes().subscribe((data) => {
       this.customerEmail = data['email'];
-      this._aipService.addProductToBasket(this.customerEmail, product).subscribe((data) => {
-        const index = this.products.findIndex(p => p.product_id === product.product_id)
-        this.products[index].product_in_basket = true;
-      });
+      this._aipService
+        .addProductToBasket(this.customerEmail, product)
+        .subscribe((data) => {
+          const index = this.products.findIndex(
+            (p) => p.product_id === product.product_id
+          );
+          this.products[index].product_in_basket = true;
+        });
     });
   }
 
   removeProductFromBasket(product: Product) {
-    this._aipService.removeProductFromBasket(this.customerEmail, product.product_id).subscribe((data) => {
-      const index = this.products.findIndex(p => p.product_id === product.product_id)
-      this.products[index].product_in_basket = false;
-      this.products[index].product_quantity = 0;
-    });
+    this._aipService
+      .removeProductFromBasket(this.customerEmail, product.product_id)
+      .subscribe((data) => {
+        const index = this.products.findIndex(
+          (p) => p.product_id === product.product_id
+        );
+        this.products[index].product_in_basket = false;
+        this.products[index].product_quantity = 0;
+      });
   }
 
   isSupplierSelected() {
@@ -137,10 +144,13 @@ export class DeliveryViewComponent implements OnInit {
     console.log(this.supplierSelected);
   }
 
-  onSearchTextEntered(searchValue:string){
+  onSearchTextEntered(searchValue: string) {
+    console.log("here");
     this.searchText = searchValue;
-    // console.log("Search Text ", this.searchText);
   }
 
-
+  onSearchProductTextEntered(searchValue: string) {
+    console.log("should be here");
+    this.searchProductText = searchValue;
+  }
 }

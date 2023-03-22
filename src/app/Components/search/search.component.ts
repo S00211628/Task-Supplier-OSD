@@ -17,6 +17,7 @@ export class SearchComponent implements OnInit {
   ngOnInit(): void {}
 
   onSearchTextChanged() {
+    console.log("should not be here");
     this._searchService.setSearchText(this.enteredSearchValue);
   }
 
