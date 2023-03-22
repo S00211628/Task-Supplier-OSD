@@ -31,6 +31,8 @@ export class DeliveryViewComponent implements OnInit {
   // Search 
   searchText:string = '';
 
+  isLoading = true;
+
   constructor(
     private _supplierService: SuppliersService,
     private _activatedRouter: ActivatedRoute,
@@ -68,9 +70,13 @@ export class DeliveryViewComponent implements OnInit {
             Products: supplierObj.Products,
           };
         });
+          this.isLoading = false;
+
       },
       (error) => {
         console.log(error);
+          this.isLoading = false;
+
       }
     );
   }

@@ -12,7 +12,7 @@
             </div>
 
             <div class="progress-spinner" *ngIf="isLoading">
-                <mat-progress-spinner class="spinner" color="accent" mode="indeterminate"></mat-progress-spinner>
+                <mat-progress-spinner class="spinner" color="accent" mode="indeterminate" minDuration="3000" ></mat-progress-spinner>
             </div>
 
             <div class="row" *ngFor="let product of products">
