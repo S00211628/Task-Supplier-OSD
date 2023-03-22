@@ -1,5 +1,13 @@
 @import "../../../main-style.scss";
 
+html {
+  background: linear-gradient(to right top, $turquoise, $green);
+  font-size: 10px;
+}
+
+a{
+  text-decoration: none;
+}
 
 
 .delivery-manager-container {
@@ -68,7 +76,7 @@ font-family: "Rubik";
   .delivery-menu-items {
     display: flex;
     align-items: center;
-    padding: 10px 15px;
+    padding: 20px 15px;
     border-radius: 5px;
     width: 300px;
     color: #5f5f5f;
@@ -86,7 +94,7 @@ font-family: "Rubik";
       background: $light;
     }
 
-    &.is-active {
+    &.selected {
       background-color: #cff8ef;
       color: $dark-green;
 
@@ -110,6 +118,7 @@ font-family: "Rubik";
       }
       &:hover {
       box-shadow: 0 0 0 5px #eeeeee;
+      
     }
     }
 
@@ -150,7 +159,7 @@ font-family: "Rubik";
   }
   &.out-of-stock {
     // text-decoration: line-through;
-    opacity: .5;
+      opacity: .5;
   }
 }
 
@@ -160,22 +169,41 @@ font-family: "Rubik";
 .deleteIcon:hover{
   color: red;
   opacity: 1;
+  scale: 1.5;
   cursor: pointer;
 }
+.addToBasket[disabled] {
+  cursor: default;
+  opacity: 0.5;
+  pointer-events: none;
+  text-decoration: none !important;
+}
 
-.editIcon:hover{
+.addToBasket[disabled]:hover {
+  background-color: inherit;
+  border-color: inherit;
+  color: inherit;
+  cursor: default;
+  text-decoration: none !important;
+}
+
+.addToBasket:hover{
   color:blue;
   opacity: 1;
+  scale: 1.5;
   cursor: pointer;
 }
 
-.editIcon{
+.addToBasket{
   transition: .3s ease;
 }
 
 .deleteIcon{
   transition: .3s ease;
+
 }
+
+
 
 
 .delivery-title{
@@ -247,9 +275,14 @@ font-family: "Rubik";
   font-family: Inter;
   font-weight: bold;
   font-size: larger;
-  margin: 10px;
+  // margin: 10px;
 }
 
 .product-elements{
   margin: 20px;
+}
+
+
+.in-basket{
+    opacity: .5;
 }

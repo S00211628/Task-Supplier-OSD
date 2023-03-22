@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { Product } from 'src/app/models/product.models';
+import { map } from 'rxjs';
+import { Product, Supplier } from 'src/app/models/supplier';
 import { Suppliers } from 'src/app/models/suppliers.models';
+import { ApiGatewayService } from 'src/app/Services/api-gateway.service';
+import { AWSAuthService } from 'src/app/Services/awsauth.service';
+import { SearchService } from 'src/app/Services/search.service';
 import { SuppliersService } from 'src/app/Services/suppliers.service';
 
 @Component({
@@ -11,89 +15,142 @@ import { SuppliersService } from 'src/app/Services/suppliers.service';
 })
 export class DeliveryViewComponent implements OnInit {
   Suppliers?: Suppliers[];
-  Products?: Product[];
+  // Products?: Product[];
   ProductsLoaded: Boolean = true;
   SelectedSupplierID!: string;
   SelectedProductID!: string;
+
+  suppliers: Supplier[] = [];
+  products: Product[] = [];
+  customerEmail: string;
+  customerBasket: Product[] = [];
+  quantity = 0;
+  supplierSelected: boolean = false;
+  selectedQuantity: number;
+
+  // Search
+  searchText: string = '';
+  searchProductText: string = '';
+
+  isLoading = true;
+
   constructor(
     private _supplierService: SuppliersService,
     private _activatedRouter: ActivatedRoute,
-    private _router: Router
-  ) {}
+    private _router: Router,
+    private _aipService: ApiGatewayService,
+    private _authService: AWSAuthService,
+    private _searchService: SearchService
+  ) {
+    this._searchService.searchText$.subscribe((searchText) => {
+      this.searchText = searchText.toLowerCase();
+    });
+  }
 
   ngOnInit(): void {
-    // get params from the url
-    this._activatedRouter.params.subscribe((params: Params) => {
-      // get all the products from the supplier id in the url
-      this._supplierService
-        .getProducts(params['supplierId'])
-        .subscribe((products: Product[]) => {
-          // set products list to the retrieved products
-          this.Products = products;
-
-          // set variables
-          if (this.Products.length == 0) {
-            this.ProductsLoaded = false;
-          } else {
-            this.ProductsLoaded = true;
-          }
-
-          // selected supplier id is equal to the supplier id in the url
-          this.SelectedSupplierID = params['supplierId'];
+    this._authService.getUserAttributes().subscribe((data) => {
+      this.customerEmail = data['email'];
+      this._aipService
+        .getCustomer(this.customerEmail)
+        .subscribe((data: any) => {
+          this.customerBasket = data['Basket'];
+          console.log('Customers basket : ', this.customerBasket);
         });
     });
 
-    // get all the suppliers and assign them to the supplier list variable.
-    this._supplierService.getSuppliers().subscribe((suppliers: any) => {
-      this.Suppliers = suppliers;
-    });
+    this._aipService.getAllSuppliers().subscribe(
+      (data) => {
+        const supplierArray = JSON.parse(data);
+        this.suppliers = supplierArray.map((supplierObj: any) => {
+          return {
+            shop_name: supplierObj.shop_name,
+            SupplierID: supplierObj.SupplierID,
+            shop_address: supplierObj.shop_address,
+            shop_type: supplierObj.shop_type,
+            Email: supplierObj.Email,
+            Products: supplierObj.Products,
+          };
+        });
+        this.isLoading = false;
+      },
+      (error) => {
+        console.log(error);
+        this.isLoading = false;
+      }
+    );
   }
 
-  onAddedToBasket(product: Product) {
-    // We want to set the product to added to basket
-    this._supplierService.addedToBasket(product).subscribe(() => {
-      // The product has been added successfully
-      product.addedToBasket = !product.addedToBasket;
-    });
+  onQuantityChanged(quantity: number, productId: string) {
+    for (let i = 0; i < this.products.length; i++) {
+      if (this.products[i].product_id === productId) {
+        this.products[i].product_quantity = quantity;
+
+        break;
+      }
+    }
   }
 
-  DeleteItem(product: Product) {
-    // we want to send the product to be deleted to the webservice
-    this._supplierService.deleteProduct(product).subscribe((res) => {
-      console.log(res);
-    });
-    window.location.reload();
-  }
-
-  async DeleteSupplier() {
-    this._supplierService
-      .deleteSupplier(this.SelectedSupplierID)
-      .subscribe((res: any) => {
-        console.log(res);
+  getProductsBySupplierEmail(supplier: Supplier) {
+    this.products = supplier['Products'];
+    this.products.forEach((product) => {
+      product['product_quantity'] = 0;
+      product['product_in_basket'] = false;
+      this.customerBasket.forEach((basketProduct) => {
+        if (product.product_id === basketProduct.product_id) {
+          product['product_quantity'] = basketProduct.product_quantity;
+          product['product_in_basket'] = true;
+        }
       });
-
-    this._supplierService
-      .deleteAllProducts(this.SelectedSupplierID)
-      .subscribe((res: any) => {
-        console.log(res);
-      });
-
-    this._supplierService.getSuppliers().subscribe((suppliers) => {
-      window.location.replace('/suppliers');
     });
   }
 
-  EditProduct(product: Product) {
-    this.SelectedProductID = product._id;
-
-    this._router.navigate([
-      `/suppliers/${this.SelectedSupplierID}/products/${this.SelectedProductID}/edit-product`,
-    ]);
+  onSupplierClicked(supplier: Supplier) {
+    supplier.isClicked = !supplier.isClicked;
   }
 
-  editSupplier(supplier: Suppliers) {
-    this._router.navigate([
-      `/suppliers/${this.SelectedSupplierID}/edit-supplier`,
-    ]);
+  addProductToBasket(product: Product, quantity: number) {
+    console.log(quantity);
+    product.product_quantity = quantity;
+
+    console.log(product.product_quantity);
+
+    this._authService.getUserAttributes().subscribe((data) => {
+      this.customerEmail = data['email'];
+      this._aipService
+        .addProductToBasket(this.customerEmail, product)
+        .subscribe((data) => {
+          const index = this.products.findIndex(
+            (p) => p.product_id === product.product_id
+          );
+          this.products[index].product_in_basket = true;
+        });
+    });
+  }
+
+  removeProductFromBasket(product: Product) {
+    this._aipService
+      .removeProductFromBasket(this.customerEmail, product.product_id)
+      .subscribe((data) => {
+        const index = this.products.findIndex(
+          (p) => p.product_id === product.product_id
+        );
+        this.products[index].product_in_basket = false;
+        this.products[index].product_quantity = 0;
+      });
+  }
+
+  isSupplierSelected() {
+    this.supplierSelected = true;
+    console.log(this.supplierSelected);
+  }
+
+  onSearchTextEntered(searchValue: string) {
+    console.log("here");
+    this.searchText = searchValue;
+  }
+
+  onSearchProductTextEntered(searchValue: string) {
+    console.log("should be here");
+    this.searchProductText = searchValue;
   }
 }

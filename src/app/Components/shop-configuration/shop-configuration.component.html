@@ -1,0 +1,56 @@
+<app-navbar></app-navbar>
+
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display': displayStyle}">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Howdy</h4>
+            </div>
+            <div class="modal-body">
+                <p>Looks like you haven't finished setting up your shop profile</p>
+                <p>How about you go do that?</p>
+                <button type="button" class="btn btn-primary" (click)="navigateToShopConfiguration()">Set up
+                    shop</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<mat-sidenav-container class="sidenav-conatiner">
+    <mat-sidenav class="sidnav">
+
+        <div class="sidenav-header">
+            <div class="sidenav-header-img"></div>
+            <h3 class="sidenav-header-text">Dashboard</h3>
+        </div>
+
+        <div class="sidnav-button active" [routerLink]="['/shop-configuration']">
+            <mat-icon class="sidnav-button-icon">pie_chart</mat-icon>
+            <span class="sidnav-button-text">Overview</span>
+        </div>
+        <div class="sidnav-button" [routerLink]="['/list-products']">
+            <mat-icon class="sidnav-button-icon">list</mat-icon>
+            <span class="sidnav-button-text">Products</span>
+        </div>
+        <div class="sidnav-button" [routerLink]="['/new-product']">
+            <mat-icon class="sidnav-button-icon">add</mat-icon>
+            <span class="sidnav-button-text">Add</span>
+        </div>
+        <div class="sidnav-button" [routerLink]="['/shop-configuration']">
+            <mat-icon class="sidnav-button-icon">inventory_2</mat-icon>
+            <span class="sidnav-button-text">Suppliers</span>
+        </div>
+
+    </mat-sidenav>
+
+
+
+
+
+    <mat-sidenav-content>
+<div class="content mat-elevation-z8">
+    <app-shop-configuration-main></app-shop-configuration-main>
+</div>
+    </mat-sidenav-content>
+</mat-sidenav-container>
+

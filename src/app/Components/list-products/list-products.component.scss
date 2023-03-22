@@ -1,0 +1,171 @@
+.container-fluid {
+    padding: 20px;
+
+    .row {
+
+
+        .progress-spinner{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+
+        .col-md-12 {
+
+            .input-group {
+                margin-bottom: 20px;
+            }
+
+            .input-group-btn {
+
+                .btn {
+                    background-color: #3e3f49;
+                    color: white;
+                    border: 1px solid #3e3f49;
+                    border-radius: 5px;
+                    font-size: 14px;
+                    font-weight: 500;
+                    font-family: 'poppins', sans-serif;
+                    padding: 10px 20px;
+                    margin-left: 10px;
+                }
+            }
+        }
+
+
+
+        .product {
+            box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+            border: 1px solid #f2f2f2;
+            margin: 5px 0;
+            cursor: pointer;
+            padding: 20px;
+            transition: background-color .3s ease-in-out;
+
+            .product-title {
+                font-size: 20px;
+                font-weight: 500;
+                font-family: 'poppins', sans-serif;
+            }
+
+            .product-description {
+                font-size: 14px;
+                font-weight: 400;
+                font-family: 'poppins', sans-serif;
+                justify-content: right;
+                width: 30%;
+            }
+
+            .product-price {
+                font-size: 14px;
+                font-weight: 700;
+                font-family: 'poppins', sans-serif;
+            }
+        }
+
+
+
+        .delete-icon,
+        .edit-icon {
+            float: right;
+            opacity: 0;
+            transition: transform .2s ease-in-out;
+            transform: scale(1.2);
+            margin-top: 20px;
+        }
+
+
+        .delete-icon {
+            color: red;
+        }
+
+        .edit-icon {
+            margin-right: 20px;
+            color: blue;
+        }
+
+        .edit-icon:hover,
+        .delete-icon:hover {
+            transform: scale(1.5);
+        }
+
+        .product:hover {
+            background-color: lightgrey;
+
+            .edit-icon {
+                opacity: 1;
+            }
+
+            .delete-icon {
+                opacity: 1;
+            }
+        }
+    }
+}
+
+
+.modal-container {
+    width: 50%;
+    height: auto;
+    padding-bottom: 20px;
+    background-color: white;
+
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.6);
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 10px;
+    display: none;
+
+    .modal-title {
+        font-size: 24px;
+        font-weight: 500;
+        font-family: 'poppins', sans-serif;
+        margin-top: 20px;
+        margin-left: 20px;
+    }
+
+    .modal-content {
+
+        margin-left: 20px;
+
+        .product-name {
+            font-size: 20px;
+            font-weight: 700;
+            font-family: 'poppins', sans-serif;
+            margin-bottom: 20px;
+        }
+    }
+
+    .modal-buttons {
+        display: flex;
+        justify-content: flex-start;
+        margin-top: 20px;
+
+        .btn {
+            background-color: #3e3f49;
+            color: white;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: 500;
+            font-family: 'poppins', sans-serif;
+            padding: 10px 20px;
+            margin-left: 10px;
+        }
+
+        .delete-button:hover{
+            background-color: red;
+        }
+
+        .cancel-button:hover{
+            background-color: blue;
+        }
+    }
+}
+
+.modal-container.visible {
+    display: block;
+}

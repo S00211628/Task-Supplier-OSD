@@ -7,6 +7,7 @@ $green: #27d7a1;
 $light-green: #45f69e;
 $light: #f8f8f8;
 $dark-green: rgb(0,100,80);
+$blush-red: #bc544b;
 
 // Update Bulma Global Variables.
 $family-sans-serif: "Inter","sans-serif";
@@ -22,7 +23,7 @@ $input-shadow: none;
 // Set Custom Global Styles (Will be applied to whole app).
 
 html{
-    background:linear-gradient(to right top, $turquoise, $green);
+    background:linear-gradient(to right top, $turquoise, $green)!important;
 }
 
 html, body{
@@ -33,6 +34,13 @@ html, body{
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to right top, $turquoise, $green) !important;
+}
+
+.background{
+  background: linear-gradient(to right top, $turquoise, $green) !important;
   width: 100%;
   height: 100%;
 }

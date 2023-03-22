@@ -1,0 +1,20 @@
+<div class="centered-content">
+    <div class="form">
+        <span class="form_title">Verify Account</span>
+        <form [formGroup]="verifyForm">
+            
+            <div class="form-group">
+                <div class="form_input">
+                    <i class="ri-rock-line"></i>
+                    <input type="text" formControlName="code" placeholder="Code"
+                        [ngClass]="{ 'is-invalid': code}" />
+                    <span class="bar"></span>
+                </div>
+                <div *ngIf="codeErrors.errors && codeErrors.touched" class="invalid-feedback">
+                    <div *ngIf="codeErrors.errors['required']">Code is required</div>
+                </div>
+            </div>
+            <button class="form_button" type="button" [disabled]="!verifyForm.valid" (click)="onSubmit()">verify</button>
+        </form>
+    </div>
+</div>

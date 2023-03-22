@@ -1,7 +1,11 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import { DOCUMENT } from "@angular/common";
-import { AuthService } from '@auth0/auth0-angular';
 import { Router } from '@angular/router';
+import { AWSAuthService } from 'src/app/Services/awsauth.service';
+import { MatSidenav } from '@angular/material/sidenav';
+import { BreakpointObserver } from "@angular/cdk/layout";
+import { ApiGatewayService } from 'src/app/Services/api-gateway.service';
+
 
 @Component({
   selector: 'app-navbar',
@@ -9,24 +13,48 @@ import { Router } from '@angular/router';
   styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent implements OnInit {
-  isAuthenticated$ = this.authService.isAuthenticated$;
+  currentUserRole: string;
+  supplierShopName:string;
+  @ViewChild('sidenav') sidenav!: MatSidenav;
 
   constructor(
     @Inject(DOCUMENT) public document: Document,
     private router: Router,
-    public authService: AuthService
+    private _authService: AWSAuthService,
+    private observer: BreakpointObserver,
+    private _apiService:ApiGatewayService
   ) {}
 
-  ngOnInit(): void {}
-
-  handleLogout() {
-    this.authService.logout();
+  ngOnInit(): void {
+    this._authService.getUserAttributes().subscribe((attribute) => {
+      if (attribute['custom:role'] === 'customer') {
+        this.currentUserRole = 'customer';
+      } else {
+        this.currentUserRole = 'supplier';
+        this.supplierShopName = attribute['shop_name']
+      }
+    });
   }
 
-  handleLogin() {
-    this.authService.loginWithRedirect({ appState: { target: '/profile' } });
+  ngAfterViewInit() {
+    this.observer.observe(['(max-width: 800px)']).subscribe((res) => {
+      if (res.matches) {
+        this.sidenav.mode = 'over';
+        this.sidenav.close();
+      } else {
+        this.sidenav.mode = 'side';
+        this.sidenav.open();
+      }
+    });
   }
-  handleSignUp() {
-    this.authService.loginWithRedirect({ screen_hint: 'signup' });
+
+
+
+  logout() {
+    this._authService.logout();
+  }
+
+  editProfile() {
+    this.router.navigate(['/edit-supplier-profile']);
   }
 }
