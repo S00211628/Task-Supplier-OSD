@@ -75,7 +75,7 @@ const routes: Routes = [
     canActivate: [IsLoggedInGuard, ShopConfigurationGuard],
   },
   {
-    path: 'suppliers/:supplierId/products/:productId/edit-product',
+    path: 'edit-product',
     component: EditProductComponent,
     canActivate: [IsLoggedInGuard, ShopConfigurationGuard],
   },

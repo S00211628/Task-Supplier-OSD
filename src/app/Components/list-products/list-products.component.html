@@ -1,1 +1,19 @@
-<p>list-products works!</p>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="input-group w-25">
+                <input type="text" class="form-control" placeholder="Search for...">
+                <span class="input-group-btn">
+                    <button class="btn" type="button">Go!</button>
+                </span>
+        </div>
+    <div class="row" *ngFor="let product of products">
+        <div class="product">
+            <mat-icon class="delete-icon">delete</mat-icon>
+            <mat-icon class="edit-icon" (click)="goToEditProduct(product)">edit</mat-icon>
+            <div class="product-title">{{product.product_name}}</div>
+            <div class="product-description">{{product.product_desc}}</div>
+            <div class="product-price">${{product.product_price}}</div>
+        </div>
+    </div>
+</div>

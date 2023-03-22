@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, Params } from '@angular/router';
+import { Product } from 'src/app/models/supplier';
 import { SuppliersService } from 'src/app/Services/suppliers.service';
 
 @Component({
@@ -11,26 +12,24 @@ import { SuppliersService } from 'src/app/Services/suppliers.service';
 export class EditProductComponent implements OnInit {
   constructor(
     private _activatedRouter: ActivatedRoute,
-    private _supplierService: SuppliersService,
     private _router: Router,
     private _formBuilder: FormBuilder
   ) {}
 
-  supplierId!: string;
-  id!: string;
+ 
   pForm!: FormGroup;
+  product:Product;
 
   ngOnInit(): void {
-    this._activatedRouter.params.subscribe((params: Params) => {
-      console.log(params);
-      this.supplierId = params['supplierId'];
-      this.id = params['productId'];
-    });
+
+    this.product = history.state.product;
+
+    console.log(this.product);
 
     this.pForm = this._formBuilder.group({
-      ProductName: ['', [Validators.required, Validators.minLength(3)]],
-      Description: ['', [Validators.required, Validators.minLength(3)]],
-      Price: ['', [Validators.required]],
+      ProductName: [this.product.product_name, [Validators.required, Validators.minLength(3)]],
+      Description: [this.product.product_desc, [Validators.required, Validators.minLength(3)]],
+      Price: [this.product.product_price, [Validators.required]],
     });
   }
 
@@ -47,10 +46,9 @@ export class EditProductComponent implements OnInit {
   }
 
   updateProduct(Name: string, Description: string, Price: string) {
-    this._supplierService
-      .UpdateProduct(this.id, Name, this.supplierId, Description, Price)
-      .subscribe((res) => {
-        this._router.navigate(['suppliers', this.supplierId]);
-      });
+
+
+
   }
+    
 }

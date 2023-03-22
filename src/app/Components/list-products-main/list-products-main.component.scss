@@ -63,8 +63,10 @@
         }
 
         .main-content {
+            
             margin: 25px;
-            height: 500px;
+            height:  750px;
+            overflow: auto;
             border: 1px solid lightgrey;
             box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
         }
