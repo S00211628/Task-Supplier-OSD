@@ -66,6 +66,13 @@ import { ListProductsMainComponent } from './Components/list-products-main/list-
 import { ProductFilterPipe } from './models//ProductFilterPipe';
 import { SearchProductComponent } from './Components/search-product/search-product.component';
 
+// Stripe 
+import { StripeModule } from "stripe-angular"
+// import { NgxStripeModule } from "ngx-stripe";
+import { environment } from 'src/environments/environment';
+import { CheckoutComponent } from './Components/checkout/checkout.component';
+
+
 
 
 
@@ -104,6 +111,7 @@ import { SearchProductComponent } from './Components/search-product/search-produ
     ListProductsComponent,
     ListProductsMainComponent,
     SearchProductComponent,
+    CheckoutComponent,
   ],
   imports: [
     BrowserModule,
@@ -126,6 +134,7 @@ import { SearchProductComponent } from './Components/search-product/search-produ
     ChartModule,
     MatDividerModule,
     SharedModule,
+    StripeModule.forRoot(environment.stripe.publishableKey),
   ],
   providers: [
     // {

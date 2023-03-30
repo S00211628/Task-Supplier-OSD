@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AdminMainComponent } from './Components/admin/admin-main/admin-main.component';
 import { AdminComponent } from './Components/admin/admin/admin.component';
 import { BasketComponent } from './Components/basket/basket.component';
+import { CheckoutComponent } from './Components/checkout/checkout.component';
 import { ConfirmForgotPasswordComponent } from './Components/confirm-forgot-password/confirm-forgot-password.component';
 import { DeliveryViewComponent } from './Components/delivery-view/delivery-view.component';
 import { EditProductComponent } from './Components/edit-product/edit-product.component';
@@ -24,6 +25,7 @@ import { SuppliersGuard } from './Guards/suppliers-guard.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
+  {path: 'checkout', component: CheckoutComponent},
   { path: 'login', component: LoginComponent },
   { path: 'sign-up', component: SignUpComponent },
   { path: 'verify-email', component: VerifyEmailComponent },
