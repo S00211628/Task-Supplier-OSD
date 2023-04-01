@@ -12,9 +12,9 @@ import { AWSAuthService } from './awsauth.service';
 })
 export class DynamoDBService {
   dynamoDB = new AWS.DynamoDB({
-    region: environment.aws.Region,
-    accessKeyId: environment.aws.AccessKey,
-    secretAccessKey: environment.aws.SecretAccessKey,
+    region: environment.aws.region,
+    accessKeyId: environment.aws.accessKeyId,
+    secretAccessKey: environment.aws.secretAccessKey,
   });
   supplierEmail: string;
 

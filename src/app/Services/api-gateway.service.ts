@@ -31,7 +31,12 @@ export class ApiGatewayService {
 
   getCustomer(email: string) {
     const url = this.customerRootURL + email;
-    return this._http.get(url);
+    return this._http.get(url).pipe(
+      catchError((error) => {
+        console.error('Error:', error);
+        return throwError('Something went wrong. Please try again later.');
+      })
+    );
   }
 
   getAllSuppliers(): Observable<string> {
@@ -103,7 +108,11 @@ export class ApiGatewayService {
       product_desc: product_desc,
     };
 
+    console.log('here : ', body);
+
     return this._http.post(url, body).subscribe(() => {
+
+
       this._router.navigate(['/list-products']);
     });
   }
@@ -111,18 +120,19 @@ export class ApiGatewayService {
   deleteProduct(product: Product) {
     const url = this.supplierRootURL + 'delete-product';
 
-     const options = {
-       headers: new HttpHeaders({
-         'Content-Type': 'application/json',
-       }),
-       body: {
-         product_id: product.product_id,
-         SupplierID: product.SupplierID,
-       },
-     };
+    const options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+      body: {
+        product_id: product.product_id,
+        SupplierID: product.SupplierID,
+      },
+    };
 
-    
-    return this._http.delete(url, options)
+    return this._http.delete(url, options).subscribe(() => {
+      this._router.navigate(['/list-products']);
+    });
   }
 
   deleteSupplier(email: string) {

@@ -36,9 +36,9 @@ export class AWSAuthService {
     };
 
     this.cognitoIdentityServiceProvider = new AWS.CognitoIdentityServiceProvider({
-      region: environment.aws.Region,
-      accessKeyId: environment.aws.AccessKey,
-      secretAccessKey: environment.aws.SecretAccessKey
+      region: environment.aws.region,
+      accessKeyId: environment.aws.accessKeyId,
+      secretAccessKey: environment.aws.secretAccessKey
     })
 
     this.userPool = new CognitoUserPool(poolData);
@@ -56,8 +56,8 @@ export class AWSAuthService {
       };
       const cognitoIdentityServiceProvider = new CognitoIdentityServiceProvider(
         {
-          accessKeyId: environment.aws.AccessKey,
-          secretAccessKey: environment.aws.SecretAccessKey,
+          accessKeyId: environment.aws.accessKeyId,
+          secretAccessKey: environment.aws.secretAccessKey,
           region: environment.cognito.region,
         }
       );
