@@ -18,7 +18,6 @@ import { SignUpComponent } from './Components/sign-up/sign-up.component';
 import { ConfirmationComponent } from './Components/confirmation/confirmation.component';
 import { ForgotPasswordComponent } from './Components/forgot-password/forgot-password.component';
 import { NavbarComponent } from './Components/navbar/navbar.component';
-import { ProfileComponent } from './Components/profile/profile.component';
 import { MessageModalComponent } from './Components/modal/message-modal/message-modal.component';
 import { ShopConfigurationComponent } from './Components/shop-configuration/shop-configuration.component';
 import { ConfirmForgotPasswordComponent } from './Components/confirm-forgot-password/confirm-forgot-password.component';
@@ -30,7 +29,8 @@ import { TopThreeProductsComponent } from './Components/top-three-products/top-t
 import { ShopConfigurationMainComponent } from './Components/shop-configuration-main/shop-configuration-main.component';
 import { TopWidgetsComponent } from './Components/top-widgets/top-widgets.component';
 import { VerifyEmailComponent } from './Components/verify-email/verify-email.component';
-import { BasketComponent } from "./Components/basket/basket.component";
+import { BasketComponent } from "./Components/Customer/basket/basket.component";
+import { ProfileComponent } from "./Components/Customer/profile/profile.component";
 // End of Components.
 
 // HTTP 

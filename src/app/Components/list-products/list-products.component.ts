@@ -18,7 +18,7 @@ export class ListProductsComponent implements OnInit {
 
   products: Product[] = [];
   _productToDelete: Product;
-  _productToDeleteName:string;
+  _productToDeleteName: string;
   isModalVisible = false;
   isLoading = true;
 
@@ -27,8 +27,8 @@ export class ListProductsComponent implements OnInit {
     this.loadproduct();
   }
 
-  loadproduct():void{
-  this._authService.getUserAttributes().subscribe((attributes) => {
+  loadproduct(): void {
+    this._authService.getUserAttributes().subscribe((attributes) => {
       if (attributes) {
         let SupplierEmail = attributes.email;
         // Get the products of the signed in user.
@@ -63,10 +63,17 @@ export class ListProductsComponent implements OnInit {
     this.isModalVisible = true;
   }
 
-  deleteProduct(){
-    this._apiService.deleteProduct(this._productToDelete).subscribe(()=>{
-      this.loadproduct()
-    });
+  deleteProduct() {
+    this._apiService.deleteProduct(this._productToDelete)
+
+      console.log("Product deleted");
+      // Filter the products array to remove the deleted product
+      this.products = this.products.filter(
+        (product) => product.product_id !== this._productToDelete.product_id
+      );
+
+      // Call the loadproduct() function to update the products list
+      this.loadproduct();
     this.hideModal();
   }
 

@@ -2,7 +2,7 @@ import { Component, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminMainComponent } from './Components/admin/admin-main/admin-main.component';
 import { AdminComponent } from './Components/admin/admin/admin.component';
-import { BasketComponent } from './Components/basket/basket.component';
+import { BasketComponent } from './Components/Customer/basket/basket.component';
 import { ConfirmForgotPasswordComponent } from './Components/confirm-forgot-password/confirm-forgot-password.component';
 import { DeliveryViewComponent } from './Components/delivery-view/delivery-view.component';
 import { EditProductComponent } from './Components/edit-product/edit-product.component';
@@ -13,7 +13,6 @@ import { ListProductsComponent } from './Components/list-products/list-products.
 import { LoginComponent } from './Components/login/login.component';
 import { NewProductComponent } from './Components/new-product/new-product.component';
 import { NewSupplierComponent } from './Components/new-supplier/new-supplier.component';
-import { ProfileComponent } from './Components/profile/profile.component';
 import { ShopConfigurationComponent } from './Components/shop-configuration/shop-configuration.component';
 import { ShopProfileSetupComponent } from './Components/shop-profile-configuration/shop-profile-setup.component';
 import { SignUpComponent } from './Components/sign-up/sign-up.component';
@@ -21,6 +20,7 @@ import { VerifyEmailComponent } from './Components/verify-email/verify-email.com
 import { IsLoggedInGuard } from './Guards/is-logged-in.guard';
 import { ShopConfigurationGuard } from './Guards/shop-configuration-guard.guard';
 import { SuppliersGuard } from './Guards/suppliers-guard.guard';
+import { ProfileComponent } from './Components/Customer/profile/profile.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
