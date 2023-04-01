@@ -19,7 +19,7 @@
                     <a *ngIf="currentUserRole === 'customer'" class="button is-primary" [routerLink]="['/basket']">Basket</a> 
                     <a *ngIf="currentUserRole === 'customer'" class="button is-primary" [routerLink]="['/profile']">Profile</a>
                     <a class="button is-primary" (click)="logout()">Logout</a>
-                    <a class="button is-primary" (click)="editProfile()" *ngIf="currentUserRole === 'supplier'">Edit Profile</a>
+                    <a class="button is-primary" (click)="editProfile()" *ngIf="currentUserRole === 'supplier'">Profile</a>
 
                 </div>
             </div>

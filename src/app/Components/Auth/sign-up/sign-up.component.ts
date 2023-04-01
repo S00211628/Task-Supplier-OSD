@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { PasswordService } from 'src/app/Services/password.service';
-import { AWSAuthService } from '../../Services/awsauth.service';
+import { AWSAuthService } from '../../../Services/awsauth.service';
 
 @Component({
   selector: 'app-sign-up',

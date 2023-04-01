@@ -8,27 +8,26 @@ import {SharedModule} from './shared/shared.module';
 
 
 // Components
-import { DeliveryViewComponent } from './Components/delivery-view/delivery-view.component';
-import { EditProductComponent } from './Components/edit-product/edit-product.component';
-import { EditSupplierComponent } from './Components/edit-supplier/edit-supplier.component';
-import { NewSupplierComponent } from './Components/new-supplier/new-supplier.component';
-import { NewProductComponent } from './Components/new-product/new-product.component';
-import { LoginComponent } from './Components/login/login.component';
-import { SignUpComponent } from './Components/sign-up/sign-up.component';
-import { ConfirmationComponent } from './Components/confirmation/confirmation.component';
-import { ForgotPasswordComponent } from './Components/forgot-password/forgot-password.component';
-import { NavbarComponent } from './Components/navbar/navbar.component';
-import { MessageModalComponent } from './Components/modal/message-modal/message-modal.component';
-import { ShopConfigurationComponent } from './Components/shop-configuration/shop-configuration.component';
-import { ConfirmForgotPasswordComponent } from './Components/confirm-forgot-password/confirm-forgot-password.component';
-import { ShopProfileSetupComponent } from './Components/shop-profile-configuration/shop-profile-setup.component';
-import { SalesByMonthComponent } from './Components/sales-by-month/sales-by-month.component';
-import { SalesByCategoryComponent } from './Components/sales-by-category/sales-by-category.component';
-import { RecentTransactionsComponent } from './Components/recent-transactions/recent-transactions.component';
-import { TopThreeProductsComponent } from './Components/top-three-products/top-three-products.component';
-import { ShopConfigurationMainComponent } from './Components/shop-configuration-main/shop-configuration-main.component';
-import { TopWidgetsComponent } from './Components/top-widgets/top-widgets.component';
-import { VerifyEmailComponent } from './Components/verify-email/verify-email.component';
+import { DeliveryViewComponent } from './Components/Customer/delivery-view/delivery-view.component';
+import { EditProductComponent } from './Components/Supplier/edit-product/edit-product.component';
+import { EditSupplierComponent } from './Components/Supplier/edit-supplier/edit-supplier.component';
+import { NewProductComponent } from './Components/Supplier/new-product/new-product.component';
+import { LoginComponent } from './Components/Auth/login/login.component';
+import { SignUpComponent } from "./Components/Auth/sign-up/sign-up.component";
+import { ConfirmationComponent } from './Components/Auth/confirmation/confirmation.component';
+import { ForgotPasswordComponent } from './Components/Auth/forgot-password/forgot-password.component';
+import { NavbarComponent } from './Components/Common/navbar/navbar.component';
+import { MessageModalComponent } from './Components/Common/message-modal/message-modal.component';
+import { ShopConfigurationComponent } from './Components/Supplier/shop-configuration/shop-configuration.component';
+import { ConfirmForgotPasswordComponent } from './Components/Auth/confirm-forgot-password/confirm-forgot-password.component';
+import { ShopProfileSetupComponent } from './Components/Supplier/shop-profile-configuration/shop-profile-setup.component';
+import { SalesByMonthComponent } from './Components/Supplier/sales-by-month/sales-by-month.component';
+import { SalesByCategoryComponent } from './Components/Supplier/sales-by-category/sales-by-category.component';
+import { RecentTransactionsComponent } from './Components/Supplier/recent-transactions/recent-transactions.component';
+import { TopThreeProductsComponent } from './Components/Supplier/top-three-products/top-three-products.component';
+import { ShopConfigurationMainComponent } from './Components/Supplier/shop-configuration-main/shop-configuration-main.component';
+import { TopWidgetsComponent } from './Components/Supplier/top-widgets/top-widgets.component';
+import { VerifyEmailComponent } from './Components/Auth/verify-email/verify-email.component';
 import { BasketComponent } from "./Components/Customer/basket/basket.component";
 import { ProfileComponent } from "./Components/Customer/profile/profile.component";
 // End of Components.
@@ -56,15 +55,15 @@ import { FormsModule } from "@angular/forms";
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ChartModule } from 'angular-highcharts';
 import { MatDividerModule } from '@angular/material/divider';
-import { QuantitySelectorComponent } from './Components/quantity-selector/quantity-selector.component';
-import { SearchComponent } from './Components/search/search.component';
+import { QuantitySelectorComponent } from './Components/Common/quantity-selector/quantity-selector.component';
+import { SearchComponent } from './Components/Common/search/search.component';
 import { AdminMainComponent } from "./Components/admin/admin-main/admin-main.component";
 import { AdminSidenavComponent } from './Components/admin/admin-sidenav/admin-sidenav.component';
 import { AdminComponent } from './Components/admin/admin/admin.component';
-import { ListProductsComponent } from './Components/list-products/list-products.component';
-import { ListProductsMainComponent } from './Components/list-products-main/list-products-main.component';
+import { ListProductsComponent } from './Components/Supplier/list-products/list-products.component';
+import { ListProductsMainComponent } from './Components/Supplier/list-products-main/list-products-main.component';
 import { ProductFilterPipe } from './models//ProductFilterPipe';
-import { SearchProductComponent } from './Components/search-product/search-product.component';
+import { SearchProductComponent } from './Components/Common/search-product/search-product.component';
 
 
 
@@ -76,7 +75,6 @@ import { SearchProductComponent } from './Components/search-product/search-produ
     DeliveryViewComponent,
     EditProductComponent,
     EditSupplierComponent,
-    NewSupplierComponent,
     NewProductComponent,
     LoginComponent,
     SignUpComponent,
