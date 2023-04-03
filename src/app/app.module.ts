@@ -69,6 +69,7 @@ import { SearchProductComponent } from './Components/Common/search-product/searc
 import { MyDetailsComponent } from './Components/Customer/my-details/my-details.component';
 import { MyOrdersComponent } from './Components/Customer/my-orders/my-orders.component';
 import { MyBalanceComponent } from './Components/Customer/my-balance/my-balance.component';
+import { DatePipe } from "@angular/common";
 
 
 
@@ -135,13 +136,7 @@ import { MyBalanceComponent } from './Components/Customer/my-balance/my-balance.
     MatDividerModule,
     SharedModule,
   ],
-  providers: [
-    // {
-    //   provide: HTTP_INTERCEPTORS,
-    //   useClass: AuthHttpInterceptor,
-    //   multi: true,
-    // },
-  ],
+  providers: [DatePipe],
 
   bootstrap: [AppComponent],
 })

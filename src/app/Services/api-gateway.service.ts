@@ -62,6 +62,18 @@ export class ApiGatewayService {
     return this._http.delete(url);
   }
 
+  updateCustomerDetails(dateOfBirth:string, firstName:string, lastName:string, phoneNumber:string, email:string){
+    const url = this.customerRootURL + 'update-details';
+    const body = {
+      email: email,
+      dateOfBirth: dateOfBirth,
+      firstName: firstName,
+      lastName: lastName,
+      phoneNumber: phoneNumber,
+    };
+    return this._http.put(url, body);
+  }
+
   putSupplier(
     email: string,
     shopName: string,

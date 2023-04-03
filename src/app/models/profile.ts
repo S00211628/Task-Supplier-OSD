@@ -1,5 +1,5 @@
 export interface Profile {
-    customerID:number;
+    CustomerID:string;
     firstName:string;
     lastName:string;
     dateOfBirth:string;
