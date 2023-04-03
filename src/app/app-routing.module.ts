@@ -20,6 +20,9 @@ import { IsLoggedInGuard } from './Guards/is-logged-in.guard';
 import { ShopConfigurationGuard } from './Guards/shop-configuration-guard.guard';
 import { SuppliersGuard } from './Guards/suppliers-guard.guard';
 import { ProfileComponent } from './Components/Customer/profile/profile.component';
+import { MyOrdersComponent } from './Components/Customer/my-orders/my-orders.component';
+import { MyDetailsComponent } from './Components/Customer/my-details/my-details.component';
+import { MyBalanceComponent } from './Components/Customer/my-balance/my-balance.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -27,7 +30,10 @@ const routes: Routes = [
   { path: 'sign-up', component: SignUpComponent },
   { path: 'verify-email', component: VerifyEmailComponent },
   { path: 'forgot-password', component: ForgotPasswordComponent },
-  { path: 'confirm-forgot-password/:email', component: ConfirmForgotPasswordComponent },
+  {
+    path: 'confirm-forgot-password/:email',
+    component: ConfirmForgotPasswordComponent,
+  },
   {
     path: 'shop-configuration',
     component: ShopConfigurationComponent,
@@ -36,7 +42,7 @@ const routes: Routes = [
   {
     path: 'edit-supplier-profile',
     component: ShopProfileSetupComponent,
-    canActivate:[IsLoggedInGuard, ShopConfigurationGuard]
+    canActivate: [IsLoggedInGuard, ShopConfigurationGuard],
   },
   {
     path: 'suppliers',
@@ -44,9 +50,24 @@ const routes: Routes = [
     canActivate: [IsLoggedInGuard, SuppliersGuard],
   },
   {
-    path:'basket',
-    component:BasketComponent,
-    canActivate:[IsLoggedInGuard, SuppliersGuard]
+    path: 'my-orders',
+    component: MyOrdersComponent,
+    canActivate: [IsLoggedInGuard, SuppliersGuard],
+  },
+  {
+    path: 'my-details',
+    component: MyDetailsComponent,
+    canActivate: [IsLoggedInGuard, SuppliersGuard],
+  },
+  {
+    path: 'my-balance',
+    component: MyBalanceComponent,
+    canActivate: [IsLoggedInGuard, SuppliersGuard],
+  },
+  {
+    path: 'basket',
+    component: BasketComponent,
+    canActivate: [IsLoggedInGuard, SuppliersGuard],
   },
   {
     path: 'suppliers/:supplierId',
@@ -79,8 +100,8 @@ const routes: Routes = [
     canActivate: [IsLoggedInGuard],
   },
   {
-    path:'admin',
-    component:AdminComponent,
+    path: 'admin',
+    component: AdminComponent,
   },
   { path: '**', component: LoginComponent },
 ];

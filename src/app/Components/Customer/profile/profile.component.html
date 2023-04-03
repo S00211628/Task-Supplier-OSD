@@ -9,31 +9,32 @@
     <div class="row">
         <div class="col-sm-12 col-md-2">
             <div class="sidebar">
-                <div class="sidebar-item">
+                <div class="sidebar-item" (click)="selectedComponent=MyDetailsComponent">
                     <h3 class="sidebar-title">My Details</h3>
                 </div>
-
-                <div class="sidebar-item">
+            
+                <div class="sidebar-item" (click)="selectedComponent=MyBalanceComponent">
                     <h3>Balance</h3>
                 </div>
-
-                <div class="sidebar-item">
+            
+                <div class="sidebar-item" (click)="selectedComponent=MyOrdersComponent">
                     <h3>My Orders</h3>
                 </div>
-
-                <div class="sidebar-item">
+            
+                <div class="sidebar-item" (click)="selectedComponent=MyDetailsComponent">
                     <h3>Account Settings</h3>
                 </div>
             </div>
+
         </div>
 
         <div class="col-sm-12 col-md-10 details">
             <div class="row">
                 <div class="col-sm-12">
-                   <h3>My Details</h3>
-                   <h4> Personal Information</h4>
-                   <hr>
-                   
+                    <ng-container *ngIf="selectedComponent">
+                        <ng-container *ngComponentOutlet="selectedComponent"></ng-container>
+                    </ng-container>
+
 
                 </div>
             </div>

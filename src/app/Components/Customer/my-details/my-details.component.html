@@ -1,0 +1,134 @@
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="title">My Details</div>
+            <div class="second-title">Personal Information</div>
+            <div class="text-center">
+                <hr class="mx-auto">
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+
+
+        <div class="col-sm-12 col-md-3 py-4">
+            <div class="info-text ">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellat, sit at. Commodi labore, saepe minus
+                quod excepturi quos beatae iste porro voluptatibus ad harum earum modi debitis incidunt fugiat quasi!
+            </div>
+        </div>
+
+
+        <div class="col-sm-12 col-md-9 py-4">
+
+            <form [formGroup]="profileForm" (ngSubmit)="onProfileSubmit()" class="profile-Form">
+
+                <div class="row">
+                    <div class="col-sm-12 col-md-6 d-flex flex-column">
+                        <mat-form-field appearance="fill">
+                            <mat-label>First Name</mat-label>
+                            <input matInput formControlName="firstName">
+                            <mat-error *ngIf="profileForm.get('firstName').invalid">Please enter a first name with at
+                                least 3 characters.</mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="fill">
+                            <mat-label>Phone Number</mat-label>
+                            <input matInput formControlName="phoneNumber" pattern="[0-9]*">
+                            <mat-error *ngIf="profileForm.get('phoneNumber').invalid">Please enter a 10-digit phone
+                                number with numbers only.</mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="fill">
+                            <mat-label>Date of Birth</mat-label>
+                            <input matInput [matDatepicker]="datePicker" formControlName="dateOfBirth">
+                            <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
+                            <mat-datepicker #datePicker></mat-datepicker>
+                            <mat-error *ngIf="profileForm.get('dateOfBirth').invalid">Please enter a valid date of
+                                birth.</mat-error>
+                        </mat-form-field>
+
+                    </div>
+
+                    <div class="col-sm-12 col-md-6 d-flex flex-column">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Last Name</mat-label>
+                            <input matInput formControlName="lastName">
+                            <mat-error *ngIf="profileForm.get('lastName').invalid">Please enter a last name with at
+                                least 3 characters.</mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <button mat-raised-button class="form-button mr-4" *ngIf="isProfileFormDisabled" color="primary" type="button"
+                            (click)="enableProfileForm()">Edit</button>
+                        
+                        <button mat-raised-button class="form-button" *ngIf="!isProfileFormDisabled" color="primary" type="submit">Save</button>
+
+                    </div>
+                </div>
+
+            </form>
+
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="second-title">E-mail Address</div>
+            <div class="text-center">
+                <hr class="mx-auto">
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+    
+    
+        <div class="col-sm-12 col-md-3 py-4">
+            <div class="info-text ">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellat, sit at. Commodi labore, saepe minus
+                quod excepturi quos beatae iste porro voluptatibus ad harum earum modi debitis incidunt fugiat quasi!
+            </div>
+        </div>
+    
+    
+        <div class="col-sm-12 col-md-9 py-4">
+    
+            <form [formGroup]="emailForm" (ngSubmit)="onEmailFormSubmit()" class="profile-Form">
+    
+                <div class="row">
+                    <div class="col-sm-12 col-md-6 d-flex flex-column">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Email</mat-label>
+                            <input matInput formControlName="email">
+                            <mat-error *ngIf="emailForm.get('email').invalid">Please enter a valid email</mat-error>
+                        </mat-form-field>
+    
+                    </div>
+    
+                    
+                </div>
+    
+                <div class="row">
+                    <div class="col-sm-12 mt-3">
+                        <button mat-raised-button class="form-button mr-4" *ngIf="isEmailFormDisabled" color="primary"
+                            type="button" (click)="enableEmailForm()">Edit</button>
+    
+                        <button mat-raised-button class="form-button" *ngIf="!isEmailFormDisabled" color="primary"
+                            type="submit">Save</button>
+                    </div>
+                </div>
+    
+            </form>
+    
+    
+        </div>
+    </div>
+
+</div>

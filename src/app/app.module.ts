@@ -48,6 +48,8 @@ import { MatToolbarModule } from "@angular/material/toolbar";
 import { matDrawerAnimations, MatSidenavModule } from "@angular/material/sidenav";
 import { MatListModule} from '@angular/material/list';
 import { MatProgressSpinner, MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 // End of Angular Material
 
 // Misc
@@ -64,6 +66,9 @@ import { ListProductsComponent } from './Components/Supplier/list-products/list-
 import { ListProductsMainComponent } from './Components/Supplier/list-products-main/list-products-main.component';
 import { ProductFilterPipe } from './models//ProductFilterPipe';
 import { SearchProductComponent } from './Components/Common/search-product/search-product.component';
+import { MyDetailsComponent } from './Components/Customer/my-details/my-details.component';
+import { MyOrdersComponent } from './Components/Customer/my-orders/my-orders.component';
+import { MyBalanceComponent } from './Components/Customer/my-balance/my-balance.component';
 
 
 
@@ -102,6 +107,9 @@ import { SearchProductComponent } from './Components/Common/search-product/searc
     ListProductsComponent,
     ListProductsMainComponent,
     SearchProductComponent,
+    MyDetailsComponent,
+    MyOrdersComponent,
+    MyBalanceComponent,
   ],
   imports: [
     BrowserModule,
@@ -110,6 +118,8 @@ import { SearchProductComponent } from './Components/Common/search-product/searc
     HttpClientModule,
     MatIconModule,
     ReactiveFormsModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     MatInputModule,
     MatSelectModule,
     MatCheckboxModule,
