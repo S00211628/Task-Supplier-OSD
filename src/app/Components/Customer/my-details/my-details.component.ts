@@ -115,30 +115,32 @@ export class MyDetailsComponent implements OnInit {
   }
 
 
-  onEmailFormSubmit() {
-     this._apiGatewayService
-       .updateCustomerDetails(
-         this.dateOfBirth.toString(),
-         this.firstName,
-         this.lastName,
-         this.phoneNumber,
-         this.customerEmail
-       )
-       .subscribe((data) => {
-         console.log(data);
-         this.emailForm.disable();
-         this.isEmailFormDisabled = true;
-       });
-  }
+  // async onEmailFormSubmit() {
+
+
+  //    this._apiGatewayService
+  //      .updateCustomerDetails(
+  //        this.dateOfBirth.toString(),
+  //        this.firstName,
+  //        this.lastName,
+  //        this.phoneNumber,
+  //        this.customerEmail
+  //      )
+  //      .subscribe((data) => {
+  //        console.log(data);
+  //        this.emailForm.disable();
+  //        this.isEmailFormDisabled = true;
+  //      });
+  // }
 
   enableProfileForm() {
     this.profileForm.enable();
     this.isProfileFormDisabled = false;
   }
 
-  enableEmailForm() {
-    this.emailForm.enable();
-    this.isEmailFormDisabled = false;
-  }
+  // enableEmailForm() {
+  //   this.emailForm.enable();
+  //   this.isEmailFormDisabled = false;
+  // }
 
 }
