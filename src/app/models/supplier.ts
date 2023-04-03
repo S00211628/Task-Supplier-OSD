@@ -25,4 +25,8 @@ export interface Customer{
   CustomerID:string;
   Email:string;
   Products:Product[];
+  dateOfBirth:string;
+  firstName:string;
+  lastName:string;
+  phoneNumber:string;
 }
