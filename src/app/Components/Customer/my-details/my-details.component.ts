@@ -16,7 +16,7 @@ export class MyDetailsComponent implements OnInit {
 
   customerEmail:string;
 
-  userDetails: Profile = {firstName: '', lastName: '', dateOfBirth: '', phoneNumber: '', email: '', CustomerID: ''};
+  userDetails: Profile = {firstName: '', lastName: '', dateOfBirth: '', phoneNumber: '', email: '', CustomerID: '', balance: ''};
 
   emailForm = new FormGroup({
     email: new FormControl('', [
@@ -81,7 +81,7 @@ export class MyDetailsComponent implements OnInit {
             this.userDetails.dateOfBirth = data['dateOfBirth'];
             this.userDetails.phoneNumber = data['phoneNumber'];
             this.userDetails.email = data['Email'];
-
+            this.userDetails.balance = data['balance'];
               this.profileForm.setValue({
                 firstName: this.userDetails.firstName,
                 lastName: this.userDetails.lastName,
@@ -97,7 +97,6 @@ export class MyDetailsComponent implements OnInit {
   }
 
 
-
   onProfileSubmit() {
     this._apiGatewayService
       .updateCustomerDetails(
@@ -108,39 +107,16 @@ export class MyDetailsComponent implements OnInit {
         this.customerEmail
       )
       .subscribe((data) => {
-        console.log(data);
         this.profileForm.disable();
         this.isProfileFormDisabled = true;
       });
   }
-
-
-  // async onEmailFormSubmit() {
-
-
-  //    this._apiGatewayService
-  //      .updateCustomerDetails(
-  //        this.dateOfBirth.toString(),
-  //        this.firstName,
-  //        this.lastName,
-  //        this.phoneNumber,
-  //        this.customerEmail
-  //      )
-  //      .subscribe((data) => {
-  //        console.log(data);
-  //        this.emailForm.disable();
-  //        this.isEmailFormDisabled = true;
-  //      });
-  // }
 
   enableProfileForm() {
     this.profileForm.enable();
     this.isProfileFormDisabled = false;
   }
 
-  // enableEmailForm() {
-  //   this.emailForm.enable();
-  //   this.isEmailFormDisabled = false;
-  // }
+
 
 }

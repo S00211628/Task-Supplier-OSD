@@ -1,1 +1,55 @@
-<p>Balance works!</p>
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="title">My Balance</div>
+            <div class="second-title">Balance Information</div>
+            <div class="text-center">
+                <hr class="mx-auto">
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+
+
+        <div class="col-sm-12 col-md-3 py-4">
+            <div class="info-text ">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellat, sit at. Commodi labore, saepe minus
+                quod excepturi quos beatae iste porro voluptatibus ad harum earum modi debitis incidunt fugiat quasi!
+            </div>
+        </div>
+
+
+        <div class="col-sm-12 col-md-9 py-4">
+
+
+
+            <form [formGroup]="balanceForm" (ngSubmit)="onBalanceSubmit()" class="profile-Form">
+
+                <div class="row">
+                    <div class="col-sm-12 col-md-6 d-flex flex-column">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Balance</mat-label>
+                            <input matInput formControlName="balance">
+
+                            <mat-error *ngIf="balanceForm.get('balance').invalid">Please enter a first name with at
+                                Enter a valid amount.
+                            </mat-error>
+                        
+                        </mat-form-field>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <button mat-raised-button class="form-button mr-4" *ngIf="isBalanceFormDisabled" color="primary" type="button"
+                            (click)="enableBalanceForm()">Edit</button>
+                        
+                        <button mat-raised-button class="form-button" *ngIf="!isBalanceFormDisabled" color="primary" type="submit">Save</button>
+
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>

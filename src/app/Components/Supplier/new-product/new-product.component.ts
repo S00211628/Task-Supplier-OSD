@@ -6,6 +6,14 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ApiGatewayService } from 'src/app/Services/api-gateway.service';
 import { AWSAuthService } from 'src/app/Services/awsauth.service';
 
+function positiveNumberValidator(control) {
+  const price = control.value;
+  if (price && price <= 0) {
+    return { positiveNumber: true };
+  }
+  return null;
+}
+
 @Component({
   selector: 'app-new-product',
   templateUrl: './new-product.component.html',
@@ -36,7 +44,7 @@ export class NewProductComponent implements OnInit {
     this.pForm = this._formBuilder.group({
       ProductName: ['', [Validators.required, Validators.minLength(3)]],
       Description: ['', [Validators.required, Validators.minLength(3)]],
-      Price: ['', [Validators.required]],
+      Price: ['', [Validators.required, positiveNumberValidator]],
     });
   }
 

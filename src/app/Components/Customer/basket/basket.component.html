@@ -26,9 +26,14 @@
             </div>
         </div>
 
+        
+
         <!-- Delivery Elements -->
         <div class="outer-container">
             <div class="inner-container">
+                <div class="progress-spinner" *ngIf="isLoading">
+                    <mat-progress-spinner class="spinner" color="accent" mode="indeterminate" minDuration="3000"></mat-progress-spinner>
+                </div>
                 <div class="delivery" *ngFor="let product of Products;index as i">
 
                     <div class="container">
@@ -44,6 +49,20 @@
                             </div>
                             <div class="col">
                                 <p class="product-elements text-center">{{product.product_quantity}}</p>
+                            </div>
+                            <div class="col">
+                                <p class="product-elements text-center">{{product.product_quantity}}</p>
+                            </div>
+
+                            <div class="col d-flex flex-row justify-content-center align-items-center">
+                                <button class="addToBasket" [disabled]="product.product_quantity == 0" mat-flat-button
+                                    *ngIf="!product.product_in_basket" (click)="editProductInBasket(product, product.product_quantity)">
+                                    <mat-icon>edit</mat-icon>
+                                </button>
+                                <button class="deleteIcon" (click)="removeProductFromBasket(product)"
+                                    mat-flat-button>
+                                    <mat-icon>delete</mat-icon>
+                                </button>
                             </div>
                         </div>
                     </div>

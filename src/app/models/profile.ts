@@ -5,4 +5,5 @@ export interface Profile {
     dateOfBirth:string;
     phoneNumber:string;
     email:string;
+    balance:string;
 }

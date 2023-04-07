@@ -17,6 +17,8 @@ export class BasketComponent implements OnInit {
   totalPrice: number = 0;
   quantity = 0;
 
+  isLoading = true;
+
   constructor(
     private _router: Router,
     private _authService: AWSAuthService,
@@ -50,11 +52,23 @@ export class BasketComponent implements OnInit {
           for (let i = 0; i < suppliers.length; i++) {
             const supplier = suppliers[i];
             this.SupplierShopNames[i] = supplier.shop_name;
+            console.log('supplier shop names : ', this.SupplierShopNames[i]);
           }
+          this.isLoading = false;
         });
       });
     });
   }
 
   getSupplierInfoByID(SupplierID: string) {}
+
+  editProductInBasket(product: Product, quantity: number) {
+    // this._router.navigate(['/customer/basket/edit', product.product_id]);
+  }
+
+  removeProductFromBasket(product: Product) {
+    // this._apiService.removeProductFromBasket(this.UserEmail, product.product_id).subscribe((data) => {
+    //   console.log(data);
+    // });
+  }
 }

@@ -62,7 +62,7 @@ export class ApiGatewayService {
     return this._http.delete(url);
   }
 
-  updateCustomerDetails(dateOfBirth:string, firstName:string, lastName:string, phoneNumber:string, email:string){
+  updateCustomerDetails(dateOfBirth?:string, firstName?:string, lastName?:string, phoneNumber?:string, email?:string , balance?:string){
     const url = this.customerRootURL + 'update-details';
     const body = {
       email: email,
@@ -70,6 +70,7 @@ export class ApiGatewayService {
       firstName: firstName,
       lastName: lastName,
       phoneNumber: phoneNumber,
+      balance: balance
     };
     return this._http.put(url, body);
   }
