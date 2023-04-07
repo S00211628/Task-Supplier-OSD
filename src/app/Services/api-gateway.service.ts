@@ -53,12 +53,29 @@ export class ApiGatewayService {
       email: email,
       product: product,
     };
+
+    console.log('body from addproducttobasket function : ', body)
+
     return this._http.post(url, body);
   }
 
-  removeProductFromBasket(CustomerEmail: string, ProductID: string) {
+  updateProductInBasket(customerEmail: string, product: Product, quantity: number) {
+    const url = this.customerRootURL + 'update-product-in-basket';
+    const body = {
+      customerEmail: customerEmail,
+      product: product,
+      quantity: quantity,
+    }
+
+    return this._http.put(url, body);
+
+  }
+
+ 
+
+  removeProductFromBasket(CustomerEmail: string, ProductID: Product) {
     const url =
-      this.customerRootURL + CustomerEmail + '?ProductID=' + ProductID;
+      this.customerRootURL + CustomerEmail + '?ProductID=' + ProductID.product_id;
     return this._http.delete(url);
   }
 

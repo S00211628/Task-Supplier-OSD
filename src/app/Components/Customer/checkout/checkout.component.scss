@@ -1,0 +1,206 @@
+@import "../../../../main-style.scss";
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.container-fluid {
+    background-color: #f6f6f6;
+    height: fit-content;
+    padding-bottom: 50px;
+
+    .shipping-container,
+    .personal-container {
+        background-color: white;
+        border-radius: 5px;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .shipping-container {
+        height: auto;
+        padding-top: 30px;
+
+        .title {
+            margin-left: 5%;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .form-row {
+
+            .form-column {
+
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+
+                mat-form-field {
+                    width: 90%;
+                }
+
+            }
+        }
+
+        .dotted-line {
+            margin-left: 5%;
+            background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' stroke='black' stroke-width='4' stroke-dasharray='6%2c 14' stroke-dashoffset='0' stroke-linecap='square'/%3e%3c/svg%3e");
+            padding: 1px;
+            display: inline-block;
+            width: 90%;
+            opacity: .2;
+
+
+        }
+
+    }
+
+
+    .delivery-columns {
+
+        display: flex;
+        justify-content: center;
+
+        .delivery-option {
+            width: 90%;
+
+            .row {
+                box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+                margin-bottom: 20px;
+            }
+
+            .delivery-button {
+
+                mat-radio-button {
+                    margin-left: 20px;
+                    margin-top: 20px;
+                }
+
+            }
+
+            .title {
+                font-size: 1rem;
+                font-weight: 500;
+                margin-bottom: 20px;
+                margin-top: 20px;
+            }
+
+            .subtitle {
+                font-size: .8rem;
+                font-weight: 300;
+                margin-bottom: 20px;
+                margin-left: 30px;
+                margin-right: 60px;
+            }
+        }
+    }
+
+
+    .summary-payment-container {
+        height: 700px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+
+
+        .summary-container,
+        .payment-container {
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .payment-container{
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            .pay-button {
+                    height: 50px;
+                    width: 200px;
+                    display: inline-block;
+                    padding: 10px 20px;
+                    font-size: 1.2rem;
+                    font-weight: 600;
+                    color: #fff;
+                    background-color: #2ecc71;
+                    border: none;
+                    border-radius: 5px;
+                    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+                    cursor: pointer;
+                }
+            
+                .pay-button:hover {
+                    background-color: #27ae60;
+                }
+        }
+
+        .summary-container {
+            height: 50%;
+
+            .horizontal-line {
+                margin-bottom: 15px;
+                margin-top: 15px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                hr {
+                    width: 90%;
+                }
+            }
+
+            .summary-title {
+                margin-top: 5%;
+                margin-left: 5%;
+                font-size: 1.2rem;
+                margin-bottom: 10px;
+                color: #767676;
+            }
+
+            .summary-subtitle {
+                margin-left: 5%;
+                margin-right: 5%;
+                font-size: .9rem;
+                margin-bottom: 20px;
+                color: #767676;
+            }
+
+            .breakdown-container {
+                .col-1 {
+                    margin-right: 13%;
+                    margin-left: 5%;
+                    font-size: 1rem;
+                    padding: 8px;
+                    padding-bottom: 10px;
+                    color: #767676;
+                }
+            }
+
+        }
+
+        .payment-container {
+            height: 40%;
+        }
+    }
+
+    .personal-container {
+        height: 500px;
+        margin-left: 8.3%;
+    }
+
+       
+
+}
+
+
+
+@media (max-width: 1300px) {
+    .summary-container .breakdown-container .row .col-1 {
+        margin-right: 25%;
+    }
+}

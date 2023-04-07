@@ -50,6 +50,8 @@ import { MatListModule} from '@angular/material/list';
 import { MatProgressSpinner, MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatButtonToggleModule } from "@angular/material/button-toggle";
+import { MatRadioModule } from "@angular/material/radio";
 // End of Angular Material
 
 // Misc
@@ -70,6 +72,7 @@ import { MyDetailsComponent } from './Components/Customer/my-details/my-details.
 import { MyOrdersComponent } from './Components/Customer/my-orders/my-orders.component';
 import { MyBalanceComponent } from './Components/Customer/my-balance/my-balance.component';
 import { DatePipe } from "@angular/common";
+import { CheckoutComponent } from './Components/Customer/checkout/checkout.component';
 
 
 
@@ -111,11 +114,15 @@ import { DatePipe } from "@angular/common";
     MyDetailsComponent,
     MyOrdersComponent,
     MyBalanceComponent,
+    CheckoutComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    MatButtonModule,
+    MatRadioModule,
+    MatButtonToggleModule,
     HttpClientModule,
     MatIconModule,
     ReactiveFormsModule,

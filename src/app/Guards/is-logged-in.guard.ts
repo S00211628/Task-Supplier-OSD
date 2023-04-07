@@ -13,7 +13,6 @@ export class IsLoggedInGuard implements CanActivate {
     return this._authService.isLoggedIn().pipe(
       map((loggedIn) => {
         if (loggedIn) {
-          console.log("Is logged in : ", loggedIn);
           return true;
         } else {
           this._router.navigate(['/login']);

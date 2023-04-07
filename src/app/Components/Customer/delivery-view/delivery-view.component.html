@@ -69,7 +69,8 @@
                             </div>
                             <div class="col-1 d-flex flex-column justify-content-center text-center">
                                 <app-quantity-selector [quantity]="product.product_quantity"
-                                    (quantityChanged)="onQuantityChanged($event, product.product_id)"></app-quantity-selector>
+                                    (quantityChanged)="onQuantityChanged($event, product.product_id)"
+                                    [isProductInBasket]="isProductInBasket(product)"></app-quantity-selector>
                             </div>
                             <div class="col-1 d-flex flex-column justify-content-center align-items-center">
                                 <button class="addToBasket" [disabled]="product.product_quantity == 0" mat-flat-button

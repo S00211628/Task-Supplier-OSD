@@ -14,6 +14,10 @@
    
 }
 
+.outline{
+    border: 1px solid black;
+}
+
 .delivery-items-container {
     position: relative;
     max-height: 600px;
@@ -77,6 +81,28 @@
 .deleteIcon {
     transition: .3s ease;
 }
+
+.editIcon:hover{
+    color: blue;
+    opacity: 1;
+    cursor: pointer;
+}
+
+.editIcon {
+    transition: .3s ease;
+}
+
+.confirmIcon:hover{
+    color: $green;
+    opacity: 1;
+    cursor: pointer;
+}
+
+.confirmIcon {
+    transition: .3s ease;
+}
+
+
 
 
 .delivery-title {

@@ -17,6 +17,7 @@ export class BasketComponent implements OnInit {
   totalPrice: number = 0;
   quantity = 0;
 
+  isEditingProductInBasket: boolean = false;
   isLoading = true;
 
   constructor(
@@ -26,16 +27,21 @@ export class BasketComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.getBasketItems();
+  }
+
+  getBasketItems() {
+    this.totalPrice = 0;
+    this.isLoading = true;
     this._authService.getUserAttributes().subscribe((data) => {
       this.UserEmail = data['email']; // Get the basket items for the customer that is logged in.
       this._apiService.getCustomer(this.UserEmail).subscribe((customer) => {
         this.Products = customer['Basket'];
 
-        console.log(JSON.stringify(this.Products));
-
         // Get the total for all the products
         for (const product of this.Products) {
           const quantity = product.product_quantity || 1; // set default quantity to 1
+          product.isEditing = false;
           const price = product.product_price;
           const totalProductPrice = quantity * price;
           this.totalPrice += totalProductPrice;
@@ -52,7 +58,6 @@ export class BasketComponent implements OnInit {
           for (let i = 0; i < suppliers.length; i++) {
             const supplier = suppliers[i];
             this.SupplierShopNames[i] = supplier.shop_name;
-            console.log('supplier shop names : ', this.SupplierShopNames[i]);
           }
           this.isLoading = false;
         });
@@ -62,13 +67,44 @@ export class BasketComponent implements OnInit {
 
   getSupplierInfoByID(SupplierID: string) {}
 
+  onQuantityChanged(quantity: number, productId: string) {
+    for (let i = 0; i < this.Products.length; i++) {
+      if (this.Products[i].product_id === productId) {
+        this.Products[i].product_quantity = quantity;
+
+        break;
+      }
+    }
+  }
+
   editProductInBasket(product: Product, quantity: number) {
-    // this._router.navigate(['/customer/basket/edit', product.product_id]);
+    this.isEditingProductInBasket = true;
+    product.isEditing = true;
+  }
+
+  confirmProductEdit(product: Product, quantity: number) {
+    this.isEditingProductInBasket = false;
+    product.isEditing = false;
+
+    this._apiService
+      .updateProductInBasket(this.UserEmail, product, quantity)
+      .subscribe(() => {
+        this.getBasketItems();
+      });
+  }
+
+  checkout(){
+
+    this._router.navigate(['/checkout']);
+
   }
 
   removeProductFromBasket(product: Product) {
-    // this._apiService.removeProductFromBasket(this.UserEmail, product.product_id).subscribe((data) => {
-    //   console.log(data);
-    // });
+    this._apiService
+      .removeProductFromBasket(this.UserEmail, product)
+      .subscribe((data) => {
+        console.log(data);
+        this.getBasketItems();
+      });
   }
 }

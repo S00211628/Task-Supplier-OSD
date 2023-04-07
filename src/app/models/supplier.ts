@@ -19,6 +19,7 @@ export interface Product {
   product_stock?:string;
   product_quantity?:number;
   product_in_basket?:boolean;
+  isEditing?:boolean;
 }
 
 export interface Customer{

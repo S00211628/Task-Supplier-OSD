@@ -8,6 +8,7 @@ import { MatSelectChange } from '@angular/material/select';
 })
 export class QuantitySelectorComponent{
   @Input() quantity: number;
+  @Input() isProductInBasket:boolean;
   @Output() quantityChanged = new EventEmitter<number>();
 
   increment() {
@@ -21,6 +22,7 @@ export class QuantitySelectorComponent{
   }
 
   onQuantityChanged(event: MatSelectChange) {
+    console.log(this.isProductInBasket);
     this.quantityChanged.emit(event.value);
   }
 }

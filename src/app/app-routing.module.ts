@@ -23,6 +23,7 @@ import { ProfileComponent } from './Components/Customer/profile/profile.componen
 import { MyOrdersComponent } from './Components/Customer/my-orders/my-orders.component';
 import { MyDetailsComponent } from './Components/Customer/my-details/my-details.component';
 import { MyBalanceComponent } from './Components/Customer/my-balance/my-balance.component';
+import { CheckoutComponent } from './Components/Customer/checkout/checkout.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -52,6 +53,11 @@ const routes: Routes = [
   {
     path: 'my-orders',
     component: MyOrdersComponent,
+    canActivate: [IsLoggedInGuard, SuppliersGuard],
+  },
+  {
+    path: 'checkout',
+    component: CheckoutComponent,
     canActivate: [IsLoggedInGuard, SuppliersGuard],
   },
   {

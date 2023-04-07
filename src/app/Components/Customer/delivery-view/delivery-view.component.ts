@@ -48,36 +48,40 @@ export class DeliveryViewComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this._authService.getUserAttributes().subscribe((data) => {
-      this.customerEmail = data['email'];
-      this._aipService
-        .getCustomer(this.customerEmail)
-        .subscribe((data: any) => {
-          this.customerBasket = data['Basket'];
-          console.log('Customers basket : ', this.customerBasket);
-        });
-    });
+    this.getSupplierProductInfo();
+  }
 
-    this._aipService.getAllSuppliers().subscribe(
-      (data) => {
-        const supplierArray = JSON.parse(data);
-        this.suppliers = supplierArray.map((supplierObj: any) => {
-          return {
-            shop_name: supplierObj.shop_name,
-            SupplierID: supplierObj.SupplierID,
-            shop_address: supplierObj.shop_address,
-            shop_type: supplierObj.shop_type,
-            Email: supplierObj.Email,
-            Products: supplierObj.Products,
-          };
-        });
-        this.isLoading = false;
-      },
-      (error) => {
-        console.log(error);
-        this.isLoading = false;
-      }
-    );
+
+  getSupplierProductInfo(){
+      this._authService.getUserAttributes().subscribe((data) => {
+        this.customerEmail = data['email'];
+        this._aipService
+          .getCustomer(this.customerEmail)
+          .subscribe((data: any) => {
+            this.customerBasket = data['Basket'];
+          });
+      });
+
+      this._aipService.getAllSuppliers().subscribe(
+        (data) => {
+          const supplierArray = JSON.parse(data);
+          this.suppliers = supplierArray.map((supplierObj: any) => {
+            return {
+              shop_name: supplierObj.shop_name,
+              SupplierID: supplierObj.SupplierID,
+              shop_address: supplierObj.shop_address,
+              shop_type: supplierObj.shop_type,
+              Email: supplierObj.Email,
+              Products: supplierObj.Products,
+            };
+          });
+          this.isLoading = false;
+        },
+        (error) => {
+          console.log(error);
+          this.isLoading = false;
+        }
+      );
   }
 
   onQuantityChanged(quantity: number, productId: string) {
@@ -88,6 +92,22 @@ export class DeliveryViewComponent implements OnInit {
         break;
       }
     }
+  }
+
+  isProductInBasket(product:Product):boolean{
+    
+
+    // Get the index of the product in the products array
+    const index = this.products.findIndex(
+      (p) => p.product_id === product.product_id
+    );
+
+
+    // Check if the product is in the basket
+    if (this.products[index].product_in_basket) {
+      return true;
+    }
+    return false;
   }
 
   getProductsBySupplierEmail(supplier: Supplier) {
@@ -109,11 +129,7 @@ export class DeliveryViewComponent implements OnInit {
   }
 
   addProductToBasket(product: Product, quantity: number) {
-    console.log(quantity);
     product.product_quantity = quantity;
-
-    console.log(product.product_quantity);
-
     this._authService.getUserAttributes().subscribe((data) => {
       this.customerEmail = data['email'];
       this._aipService
@@ -123,13 +139,14 @@ export class DeliveryViewComponent implements OnInit {
             (p) => p.product_id === product.product_id
           );
           this.products[index].product_in_basket = true;
+          console.log('products : ', this.products);
         });
     });
   }
 
   removeProductFromBasket(product: Product) {
     this._aipService
-      .removeProductFromBasket(this.customerEmail, product.product_id)
+      .removeProductFromBasket(this.customerEmail, product)
       .subscribe((data) => {
         const index = this.products.findIndex(
           (p) => p.product_id === product.product_id
@@ -141,16 +158,13 @@ export class DeliveryViewComponent implements OnInit {
 
   isSupplierSelected() {
     this.supplierSelected = true;
-    console.log(this.supplierSelected);
   }
 
   onSearchTextEntered(searchValue: string) {
-    console.log("here");
     this.searchText = searchValue;
   }
 
   onSearchProductTextEntered(searchValue: string) {
-    console.log("should be here");
     this.searchProductText = searchValue;
   }
 }
