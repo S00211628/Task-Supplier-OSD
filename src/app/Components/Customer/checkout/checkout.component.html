@@ -1,23 +1,35 @@
 <app-navbar></app-navbar>
+
+
+<div class="success-container" *ngIf="paymentTried && isSuccess">
+    <app-checkout-confirmation (close)="CloseModal()"></app-checkout-confirmation>
+</div>
+
+<div class="failure-container" *ngIf="paymentTried && !isSuccess">
+    <app-checkout-failed (close)="CloseModal()"></app-checkout-failed>
+</div>
+
+
+
 <div class="container-fluid">
-    <div class="row justify-content-evenly py-5">
-        <div class="col-sm-12 col-md-6 shipping-container mb-5">
-            <!-- shipping container content -->
+    <form [formGroup]="checkoutForm" (ngSubmit)="onSubmit()">
+        <div class="row justify-content-evenly py-5">
+            <div class="col-sm-12 col-md-6 shipping-container mb-5">
+                <!-- shipping container content -->
 
-            <div class="title">
-                <h2>Shipping Address</h2>
-            </div>
+                <div class="title">
+                    <h2>Shipping Address</h2>
+                </div>
 
-            <form [formGroup]="checkoutForm" (ngSubmit)="onSubmit()">
-
-
+                <!-- Input elements here -->
                 <div class="row form-row">
 
                     <div class="col-sm-12 col-md-6 form-column">
+
                         <mat-form-field appearance="outline">
                             <mat-label>First name</mat-label>
-                            <input matInput formControlName="firstName" required>
-                            <mat-error *ngIf="f['firstName'].hasError('required')">
+                            <input matInput formControlName="firstName">
+                            <mat-error *ngIf="firstName.invalid">
                                 First name is required.
                             </mat-error>
                         </mat-form-field>
@@ -25,7 +37,7 @@
                         <mat-form-field appearance="outline">
                             <mat-label>Last name</mat-label>
                             <input matInput formControlName="lastName" required>
-                            <mat-error *ngIf="f['lastName'].hasError('required')">
+                            <mat-error *ngIf="lastName.invalid">
                                 Last name is required.
                             </mat-error>
                         </mat-form-field>
@@ -33,7 +45,7 @@
                         <mat-form-field appearance="outline">
                             <mat-label>Phone number</mat-label>
                             <input matInput formControlName="phoneNumber" pattern="^[0-9]{10}$">
-                            <mat-error *ngIf="f['phoneNumber'].hasError('pattern')">
+                            <mat-error *ngIf="phoneNumber.invalid">
                                 Phone number must be a 10-digit number.
                             </mat-error>
                         </mat-form-field>
@@ -41,10 +53,10 @@
                         <mat-form-field appearance="outline">
                             <mat-label>Email address</mat-label>
                             <input matInput formControlName="emailAddress" required email>
-                            <mat-error *ngIf="f['emailAddress'].hasError('required')">
+                            <mat-error *ngIf="emailAddress.hasError['required']">
                                 Email address is required.
                             </mat-error>
-                            <mat-error *ngIf="f['emailAddress'].hasError('email')">
+                            <mat-error *ngIf="emailAddress.hasError['email']">
                                 Email address is invalid.
                             </mat-error>
                         </mat-form-field>
@@ -54,7 +66,7 @@
                         <mat-form-field appearance="outline">
                             <mat-label>Street address</mat-label>
                             <input matInput formControlName="streetAddress" required>
-                            <mat-error *ngIf="f['streetAddress'].hasError('required')">
+                            <mat-error *ngIf="streetAddress.invalid">
                                 Street address is required.
                             </mat-error>
                         </mat-form-field>
@@ -66,7 +78,7 @@
                         <mat-form-field appearance="outline">
                             <mat-label>City</mat-label>
                             <input matInput formControlName="city" required>
-                            <mat-error *ngIf="f['city'].hasError('required')">
+                            <mat-error *ngIf="city.invalid">
                                 City is required.
                             </mat-error>
                         </mat-form-field>
@@ -76,6 +88,9 @@
                                 <mat-form-field appearance="outline">
                                     <mat-label>County</mat-label>
                                     <input matInput formControlName="county">
+                                    <mat-error *ngIf="county.invalid">
+                                        County is required.
+                                    </mat-error>
                                 </mat-form-field>
                             </div>
 
@@ -83,7 +98,7 @@
                                 <mat-form-field appearance="outline">
                                     <mat-label>Eircode</mat-label>
                                     <input matInput formControlName="eirCode" required>
-                                    <mat-error *ngIf="f['eirCode'].hasError('required')">
+                                    <mat-error *ngIf="eirCode.invalid">
                                         Eircode is required.
                                     </mat-error>
                                 </mat-form-field>
@@ -93,99 +108,111 @@
                     </div>
 
                 </div>
-            </form>
+                <div class="dotted-line"></div>
 
 
-            <div class="dotted-line"></div>
+                <div class="title">
+                    <h2>Shipping Method</h2>
+                </div>
 
+                <div class="row">
+                    <div class="col-12 delivery-columns">
+                        <div class="delivery-option">
+                            <mat-radio-group formControlName="deliveryMethod" (change)="updateShippingCost($event)">
 
-            <div class="title">
-                <h2>Shipping Method</h2>
+                                <div class="row">
+
+                                    <div class="col-1 delivery-button">
+
+                                        <mat-radio-button value="standard"></mat-radio-button>
+
+                                    </div>
+                                    <div class="col-11">
+                                        <h3 class="title">Standard Delivery</h3>
+                                        <h4 class="subtitle">Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                                            Ipsum
+                                            sit
+                                            nisi asperiores id, impedit soluta libero sed iusto alias perferendis.
+                                            Inventore
+                                            ad
+                                            architecto laudantium, minus quo obcaecati minima! Rerum, mollitia!</h4>
+                                        <h4 class="subtitle">€5.00</h4>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-1 delivery-button">
+                                        <mat-radio-button  value="fast"></mat-radio-button>
+
+                                    </div>
+                                    <div class="col-11">
+                                        <h3 class="title">Fast Delivery</h3>
+                                        <h4 class="subtitle">Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                                            Ipsum
+                                            sit
+                                            nisi asperiores id, impedit soluta libero sed iusto alias perferendis.
+                                            Inventore
+                                            ad
+                                            architecto laudantium, minus quo obcaecati minima! Rerum, mollitia!</h4>
+                                        <h4 class="subtitle">€10.00</h4>
+                                    </div>
+                                </div>
+                            </mat-radio-group>
+
+                        </div>
+                    </div>
+                    <div class="col-12 delivery-columns">
+
+                    </div>
+                </div>
+
             </div>
 
-            <div class="row">
-                <div class="col-12 delivery-columns">
-                    <div class="delivery-option">
-                        <div class="row">
-                            <div class="col-1 delivery-button">
-                                <mat-radio-button checked  formControlName="deliveryMethod" value="standard"></mat-radio-button>
-                            </div>
-                            <div class="col-11">
-                                <h3 class="title">Standard Delivery</h3>
-                                <h4 class="subtitle">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum sit
-                                    nisi asperiores id, impedit soluta libero sed iusto alias perferendis. Inventore ad
-                                    architecto laudantium, minus quo obcaecati minima! Rerum, mollitia!</h4>
-                                    <h4 class="subtitle">€5.00</h4>
-                            </div>
-                        </div>
 
 
-                        <div class="row">
-                            <div class="col-1 delivery-button">
-                                <mat-radio-button formControlName="deliveryMethod" value="fast"></mat-radio-button>
-                            </div>
-                            <div class="col-11">
-                                <h3 class="title">Fast Delivery</h3>
-                                <h4 class="subtitle">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum sit
-                                    nisi asperiores id, impedit soluta libero sed iusto alias perferendis. Inventore ad
-                                    architecto laudantium, minus quo obcaecati minima! Rerum, mollitia!</h4>
-                                    <h4 class="subtitle">€10.00</h4>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 delivery-columns">
-
-                </div>
-            </div>
-
-        </div>
-
-
-
-        <div class="col-md-3 col-sm-12 summary-payment-container">
-            <!-- summary container content -->
-            <div class="col-12 summary-container">
-                <h3 class="summary-title">Summary</h3>
-                <h4 class="summary-subtitle">The total cost consist of the tax, insurance and the shipping charge</h4>
-                <div class="horizontal-line">
-                    <hr>
-                </div>
-                <div class="breakdown-container">
-                    <div class="row justify-content-between">
-                        <div class="col-1">Shipping</div>
-                        <div class="col-1">$59.99</div>
-                    </div>
-                    <div class="row justify-content-between">
-                        <div class="col-1">Tax</div>
-                        <div class="col-1">$59.99</div>
-                    </div>
-                    <div class="row justify-content-between">
-                        <div class="col-1">Insurance</div>
-                        <div class="col-1">$59.99</div>
-                    </div>
+            <div class="col-md-3 col-sm-12 summary-payment-container">
+                <!-- summary container content -->
+                <div class="col-12 summary-container">
+                    <h3 class="summary-title">Summary</h3>
+                    <h4 class="summary-subtitle">The total cost consist of the tax, insurance and the shipping charge
+                    </h4>
                     <div class="horizontal-line">
                         <hr>
                     </div>
-                    <div class="row justify-content-between">
-                        <div class="col-1"></div>
-                        <div class="col-1 total">$79.99</div>
+                    <div class="breakdown-container">
+                        <div class="row justify-content-between">
+                            <div class="col-1">Shipping</div>
+                            <div class="col-1">${{shippingCost | number: '1.2-2'}}</div>
+                        </div>
+                        <div class="row justify-content-between">
+                            <div class="col-1">Tax</div>
+                            <div class="col-1">${{tax | number:'1.2-2'}}</div>
+                        </div>
+                        <div class="row justify-content-between">
+                            <div class="col-1">Order</div>
+                            <div class="col-1">${{OrderProductsCost | number:'1.2-2'}}</div>
+                        </div>
+                        <div class="horizontal-line">
+                            <hr>
+                        </div>
+                        <div class="row justify-content-between">
+                            <div class="col-1"></div>
+                            <div class="col-1 total">${{OrderFinalTotal | number:'1.2-2'}}</div>
+                        </div>
+                    </div>
+
+                    <div class="payment-button-container">
+                        <button mat-raised-button class="pay-button" type="submit">Pay Now</button>
                     </div>
                 </div>
+                <!-- payment container content -->
+                <div class="col-12 payment-container">
+
+                    
+
+                </div>
+
             </div>
-            <!-- payment container content -->
-            <div class="col-12 payment-container">
 
-                <button mat-raised-button class="pay-button" type="submit" (click)="onSubmit()">Pay Now</button>
-
-            </div>
         </div>
-    </div>
-
-
-    <!-- <div class="row justify-content-start">
-        <div class="col-6  personal-container">
-            hello
-        </div>
-    </div> -->
+    </form>

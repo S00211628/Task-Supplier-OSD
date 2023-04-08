@@ -30,4 +30,24 @@ export interface Customer{
   firstName:string;
   lastName:string;
   phoneNumber:string;
+  balance:number;
+}
+
+export interface Order{
+  OrderID?:string;
+  customer:Customer;
+  OrderDate:string;
+  OrderStatus:string;
+  OrderTotal:number;
+  OrderItems:Product[];
+  deliveryAddress:Address;
+}
+
+
+export interface Address{
+  streetAddress:string;
+  aptSuite:string;
+  city:string;
+  county:string;
+  eirCode:string;
 }

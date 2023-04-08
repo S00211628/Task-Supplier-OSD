@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, throwError } from 'rxjs';
-import { Product, Supplier } from '../models/supplier';
+import { Order, Product, Supplier } from '../models/supplier';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -71,6 +71,27 @@ export class ApiGatewayService {
 
   }
 
+  addOrderToCustomerTable(CustomerID:string, balance:number, Order:Order){
+
+    console.log('balance in service file : ', balance)
+
+    const url = this.customerRootURL + 'add-order';
+    const body = {
+      CustomerID: CustomerID,
+      balance: balance,
+      Order: Order
+    }
+
+    return this._http.put(url, body);
+  }
+
+
+  clearCustomerBasket(CustomerID:string){
+    const url = this.customerRootURL + 'clear-basket';
+    const body = {CustomerID: CustomerID}
+
+    return this._http.put(url,body);
+  }
  
 
   removeProductFromBasket(CustomerEmail: string, ProductID: Product) {
@@ -145,6 +166,16 @@ export class ApiGatewayService {
 
       this._router.navigate(['/list-products']);
     });
+  }
+
+  addOrderToSupplierTable( Order:Order){
+
+    const url = this.supplierRootURL + 'add-orders';
+    const body = {
+      Order: Order
+    }
+
+    return this._http.put(url, body);
   }
 
   deleteProduct(product: Product) {

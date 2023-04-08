@@ -16,6 +16,7 @@ export class BasketComponent implements OnInit {
   SupplierShopNames: string[] = [];
   totalPrice: number = 0;
   quantity = 0;
+  Customer:Customer;
 
   isEditingProductInBasket: boolean = false;
   isLoading = true;
@@ -37,6 +38,8 @@ export class BasketComponent implements OnInit {
       this.UserEmail = data['email']; // Get the basket items for the customer that is logged in.
       this._apiService.getCustomer(this.UserEmail).subscribe((customer) => {
         this.Products = customer['Basket'];
+        this.Customer = customer as Customer;
+
 
         // Get the total for all the products
         for (const product of this.Products) {
@@ -95,7 +98,13 @@ export class BasketComponent implements OnInit {
 
   checkout(){
 
-    this._router.navigate(['/checkout']);
+    console.log('=======================================');
+    console.log("Customer :" ,this.Customer);
+    console.log("Basket Items :" ,this.Products);
+    console.log("Total Price :" ,this.totalPrice);
+    console.log('=======================================');
+
+    this._router.navigate(['/checkout'], { queryParams: { basketItems: JSON.stringify(this.Products), Customer: JSON.stringify(this.Customer), totalPrice: this.totalPrice } });
 
   }
 

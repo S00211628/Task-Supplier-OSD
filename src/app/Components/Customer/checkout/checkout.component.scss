@@ -113,34 +113,34 @@
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
         }
 
-        .payment-container{
+        .payment-container {
 
             display: flex;
             justify-content: center;
             align-items: center;
 
             .pay-button {
-                    height: 50px;
-                    width: 200px;
-                    display: inline-block;
-                    padding: 10px 20px;
-                    font-size: 1.2rem;
-                    font-weight: 600;
-                    color: #fff;
-                    background-color: #2ecc71;
-                    border: none;
-                    border-radius: 5px;
-                    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-                    cursor: pointer;
-                }
-            
-                .pay-button:hover {
-                    background-color: #27ae60;
-                }
+                height: 50px;
+                width: 200px;
+                display: inline-block;
+                padding: 10px 20px;
+                font-size: 1.2rem;
+                font-weight: 600;
+                color: #fff;
+                background-color: #2ecc71;
+                border: none;
+                border-radius: 5px;
+                box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+                cursor: pointer;
+            }
+
+            .pay-button:hover {
+                background-color: #27ae60;
+            }
         }
 
         .summary-container {
-            height: 50%;
+            height: fit-content;
 
             .horizontal-line {
                 margin-bottom: 15px;
@@ -181,11 +181,37 @@
                 }
             }
 
+            .payment-button-container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                .pay-button {
+                    height: 50px;
+                    width: 200px;
+                    display: inline-block;
+                    padding: 10px 20px;
+                    font-size: 1.2rem;
+                    font-weight: 600;
+                    color: #fff;
+                    background-color: #2ecc71;
+                    border: none;
+                    border-radius: 5px;
+                    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+                    cursor: pointer;
+                    margin-bottom: 20px;
+                }
+
+                .pay-button:hover {
+                    background-color: #27ae60;
+                }
+            }
+
+
+
         }
 
-        .payment-container {
-            height: 40%;
-        }
+
     }
 
     .personal-container {
@@ -193,7 +219,7 @@
         margin-left: 8.3%;
     }
 
-       
+
 
 }
 

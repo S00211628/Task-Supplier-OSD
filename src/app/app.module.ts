@@ -73,6 +73,8 @@ import { MyOrdersComponent } from './Components/Customer/my-orders/my-orders.com
 import { MyBalanceComponent } from './Components/Customer/my-balance/my-balance.component';
 import { DatePipe } from "@angular/common";
 import { CheckoutComponent } from './Components/Customer/checkout/checkout.component';
+import { CheckoutConfirmationComponent } from './Components/Common/checkout-confirmation/checkout-confirmation.component';
+import { CheckoutFailedComponent } from './Components/Common/checkout-failed/checkout-failed.component';
 
 
 
@@ -115,6 +117,8 @@ import { CheckoutComponent } from './Components/Customer/checkout/checkout.compo
     MyOrdersComponent,
     MyBalanceComponent,
     CheckoutComponent,
+    CheckoutConfirmationComponent,
+    CheckoutFailedComponent,
   ],
   imports: [
     BrowserModule,
