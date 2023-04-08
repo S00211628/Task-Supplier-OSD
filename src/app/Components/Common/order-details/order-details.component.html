@@ -1,0 +1,24 @@
+<div class="container">
+    <div class="order-details-container">
+        <h2 class="order-id">Order ID: {{order.OrderID}}</h2>
+        <p class="order-date">Order Date: {{order.OrderDate}}</p>
+        <p class="order-status">Order Status: {{order.OrderStatus}}</p>
+        <hr>
+
+        <div class="row">
+            <ul *ngFor="let product of order.OrderItems">
+                <li>
+                    <p class="prod-supplier-shop-name">Shop Name: {{product.SupplierShopName}}</p>
+                    <p class="prod-name">Product Name: {{product.product_name}}</p>
+                    <p class="prod-desc">Product Description: {{product.product_desc}}</p>
+                    <p class="prod-price">Product Price: {{product.product_price}}</p>
+                    <p class="prod-qty">Product Quantity: {{product.product_quantity}}</p>
+                </li>
+                <hr>
+            </ul>
+            <p class="order-total">Order Total: €{{order.OrderTotal}}</p>
+        </div>
+
+        <button class="btn btn-danger" (click)="closeModal()">Close</button>
+    </div>
+</div>

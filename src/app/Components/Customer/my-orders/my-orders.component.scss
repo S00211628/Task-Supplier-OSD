@@ -1,0 +1,125 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+.container-fluid {
+    padding: 50px;
+    .Order-container {
+        box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.2);
+        min-height: 120px;
+
+
+
+        .order-title-container {
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+
+            .order-title {
+                font-size: large;
+                font-weight: 500;
+                margin: 0px;
+
+            }
+
+            .order-ID {
+                font-size: small;
+                font-weight: 300;
+                margin-left: 10%;
+            }
+
+        }
+
+
+        .order-info-container {
+
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+
+            h4 {
+                margin: 0px;
+
+            }
+
+
+            .delivery-status-container {
+                display: flex;
+
+                .order-delivery-status-title {
+                    font-size: small;
+                    font-weight: 300;
+
+                }
+
+
+
+
+                .order-delivery-status {
+                    font-size: small;
+                    font-weight: 500;
+                    margin-left: 10%;
+                }
+
+            }
+
+            .delivery-cost-container {
+
+                display: flex;
+
+                .order-total-cost-title {
+                    font-size: small;
+                    font-weight: 300;
+                }
+
+                .order-total-cost {
+                    font-size: small;
+                    font-weight: 500;
+                    margin-left: 5%;
+                }
+            }
+        }
+
+        .order-address-container {
+            display: flex;
+            flex-direction: column;
+            h4{
+                margin: 0;
+            }
+
+            .order-address {}
+        }
+
+
+    }
+
+
+
+}
+
+
+@media (max-width: 768px) {
+
+    .container-fluid {
+        padding: 10px;
+
+        .order-title-container, .order-info-container, .order-address-container {
+            border-bottom: 1px solid black;
+        }
+
+
+        .order-info-container, .order-address-container {
+            padding: 30px;
+        }
+
+
+
+
+    }
+
+
+
+}

@@ -75,6 +75,7 @@ import { DatePipe } from "@angular/common";
 import { CheckoutComponent } from './Components/Customer/checkout/checkout.component';
 import { CheckoutConfirmationComponent } from './Components/Common/checkout-confirmation/checkout-confirmation.component';
 import { CheckoutFailedComponent } from './Components/Common/checkout-failed/checkout-failed.component';
+import { OrderDetailsComponent } from './Components/Common/order-details/order-details.component';
 
 
 
@@ -119,6 +120,7 @@ import { CheckoutFailedComponent } from './Components/Common/checkout-failed/che
     CheckoutComponent,
     CheckoutConfirmationComponent,
     CheckoutFailedComponent,
+    OrderDetailsComponent,
   ],
   imports: [
     BrowserModule,

@@ -3,9 +3,13 @@
     padding: 0px;
 }
 
+
+
+
 .container-fluid {
     background-color: #f4f6f8;
-    height: 100vh;
+    overflow: hidden;
+    height: 90%;
 
 
     .title-row {
@@ -22,11 +26,17 @@
 
     .details {
         background-color: white;
+        height: 800px;
+        overflow: auto;
     }
 
 
 
     .row {
+
+
+       
+
         .sidebar {
             padding-left: 40px;
 

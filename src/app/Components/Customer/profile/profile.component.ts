@@ -11,7 +11,7 @@ import { MyOrdersComponent } from './../my-orders/my-orders.component';
 export class ProfileComponent implements OnInit {
   @ViewChild('dynamicComponent', { read: ViewContainerRef })
   dynamicComponentContainer: ViewContainerRef;
-  selectedComponent: any = MyDetailsComponent;
+  selectedComponent: any = MyOrdersComponent;
 
   MyDetailsComponent = MyDetailsComponent;
   MyBalanceComponent = MyBalanceComponent;

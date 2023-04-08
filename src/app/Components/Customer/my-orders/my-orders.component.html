@@ -1,1 +1,59 @@
-<p>my-orders works!</p>
+<div class="container-fluid">
+
+    <app-order-details *ngIf="showOrderFlag" [order]="selectedOrder" (close)="closeModal()"></app-order-details>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="title">My Orders</div>
+            <div class="second-title">Order Information</div>
+            <div class="text-center">
+                <hr class="mx-auto">
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+
+
+        <div class="col-sm-12 col-md-11 py-4">
+            <div class="Order-container row mb-5" *ngFor="let orders of Orders" (click)="showOrder(orders)">
+
+                <div class="order-title-container col-sm-12 col-md-3 ">
+                    <h3 class="order-title">Order ID:</h3>
+                    <h4 class="order-ID">{{orders.OrderID}}</h4>
+                    <h4 class="order-ID">{{orders.OrderDate}}</h4>
+                </div>
+
+                <div class="order-info-container col-sm-12 col-md-3 ">
+
+                    <div class="delivery-cost-container ">
+                        <h4 class="order-total-cost-title">Cost:</h4>
+                        <h4 class="order-total-cost">€{{orders.OrderTotal}}</h4>
+                    </div>
+
+                    <div class="delivery-status-container ">
+                        <h4 class="order-delivery-status-title">Delivery Status:</h4>
+                        <h4 class="order-delivery-status">{{orders.OrderStatus}}</h4>
+                    </div>
+
+
+                </div>
+
+                <div class="order-address-container col-sm-12 col-md-6 ">
+                    <h4 class="order-address">City: {{orders.deliveryAddress.city}}</h4>
+                    <h4 class="order-address">County: {{orders.deliveryAddress.county}}</h4>
+                    <h4 class="order-address">Apt/Suit/etc: {{orders.deliveryAddress.aptSuite}}</h4>
+                    <h4 class="order-address">EirCode: {{orders.deliveryAddress.eirCode}}</h4>
+                    <h4 class="order-address">Street Address: {{orders.deliveryAddress.streetAddress}}</h4>
+
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-sm-12 col-md-9 py-4">
+
+
+
+        </div>
+    </div>

@@ -10,6 +10,12 @@ export interface Supplier {
   Products: Product[];
 }
 
+export interface smallSupplierInfo{
+  shop_name: string;
+  SupplierID: string;
+}
+
+
 export interface Product {
   product_desc: string;
   SupplierID: string;
@@ -20,6 +26,7 @@ export interface Product {
   product_quantity?:number;
   product_in_basket?:boolean;
   isEditing?:boolean;
+  SupplierShopName?:string;
 }
 
 export interface Customer{
