@@ -61,4 +61,5 @@ export class ShopConfigurationComponent implements OnInit {
   closePopup() {
     this.displayStyle = 'none';
   }
+  
 }

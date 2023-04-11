@@ -51,7 +51,13 @@
                 <div class="NoSupplierSelected" *ngIf="!supplierSelected">
                     Select a Supplier
                 </div>
+
+                <div class="NoSupplierSelected" *ngIf="supplierSelected && products.length == 0">
+                    No products available
+                </div>
+
                 <div class="inner-container">
+
                     <div class="delivery" *ngFor="let product of products | productFilter: searchProductText"
                         [ngClass]="{'in-basket':product.product_in_basket}">
                         <div *ngIf="searchText === '' || product.product_name.toLowerCase().includes(searchText)">

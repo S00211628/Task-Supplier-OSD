@@ -8,6 +8,7 @@ export interface Supplier {
   Email: string;
   isClicked?:boolean,
   Products: Product[];
+  Orders:Order[];
 }
 
 export interface smallSupplierInfo{
