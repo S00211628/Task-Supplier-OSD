@@ -38,17 +38,17 @@ const routes: Routes = [
   {
     path: 'shop-configuration',
     component: ShopConfigurationComponent,
-    canActivate: [IsLoggedInGuard, ],
+    canActivate: [IsLoggedInGuard, ShopConfigurationGuard ],
   },
   {
     path: 'edit-supplier-profile',
     component: ShopProfileSetupComponent,
-    canActivate: [IsLoggedInGuard, ],
+    canActivate: [IsLoggedInGuard,ShopConfigurationGuard ],
   },
   {
     path: 'suppliers',
     component: DeliveryViewComponent,
-    canActivate: [IsLoggedInGuard, ],
+    canActivate: [IsLoggedInGuard,ShopConfigurationGuard ],
   },
   {
     path: 'my-orders',
@@ -88,7 +88,7 @@ const routes: Routes = [
   {
     path: 'list-products',
     component: ListProductsMainComponent,
-    canActivate: [IsLoggedInGuard, ],
+    canActivate: [IsLoggedInGuard,ShopConfigurationGuard ],
   },
   {
     path: 'suppliers/:supplierId/edit-supplier',
